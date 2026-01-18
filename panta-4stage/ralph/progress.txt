@@ -1,0 +1,39 @@
+## Codebase Patterns
+- TypeScript interfaces go in src/types/ directory
+- Export interfaces AND default values for form initialization
+- Use union types for finite sets (e.g., ViolationType, CargoType)
+- Build command has pre-existing issues with /_global-error page - use `npx tsc --noEmit` for type checking
+- ESLint has dependency issues - may need `npm install` to fix
+- Field naming follows camelCase convention
+- Nullable boolean fields use `boolean | null` pattern for "not yet answered" state
+
+---
+
+## 2026-01-18 - US-001
+- What was implemented:
+  - Created src/types/intake.ts with comprehensive TypeScript interfaces
+  - SmartIntakeData as the main form data interface combining all sections
+  - Knockout interface with 6 boolean screening fields
+  - RiskProfile interface with hazmat, radius, fleet, cargo, E&S market flags
+  - Business interface with ACORD 125 fields (legal name, FEIN, DOT, MC, address, etc.)
+  - Operations interface with safety programs, telematics, MVR checks
+  - Vehicle interface with all vehicle details plus lienholder support
+  - Driver interface with accidents and violations history
+  - PriorInsurance, LossHistory, CoveragePreferences interfaces
+  - Reusable sub-interfaces: Address, Claim, Violation, Accident
+  - Type unions for finite sets: ViolationType, ClaimType, CargoType, HazmatType, EntityType, etc.
+  - Default values for all interfaces for form initialization
+  - StageProps generic interface for component props
+
+- Files changed:
+  - src/types/intake.ts (created - 666 lines)
+
+- **Learnings for future iterations:**
+  - The existing page.tsx has an inline FormData interface that will need to be migrated to use the new SmartIntakeData interface
+  - Use `npx tsc --noEmit` for typecheck since there's no typecheck script defined
+  - The build has pre-existing issues unrelated to types (React key warnings, /_global-error page error)
+  - Knockout fields should use `boolean | null` to distinguish "not answered yet" from "answered No"
+  - Vehicle and Driver interfaces support dynamic arrays for multiple entries
+  - E&S market flags array in RiskProfile for tracking conditions that push applicant to Excess & Surplus market
+
+---
