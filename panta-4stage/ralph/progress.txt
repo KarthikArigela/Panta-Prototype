@@ -4,6 +4,10 @@
 - Use union types for finite sets (e.g., ViolationType, CargoType)
 - Build command has pre-existing issues with /_global-error page - use `npx tsc --noEmit` for type checking
 - ESLint has dependency issues - may need `npm install` to fix
+- Use pnpm instead of npm - npm has semver issues with the project's eslint setup
+- Zod validation schemas go in src/lib/validators.ts
+- Export Zod-inferred types alongside schemas for type safety
+- Use .refine() for conditional validation (e.g., hazmatTypes required when hazmat=true)
 - Field naming follows camelCase convention
 - Nullable boolean fields use `boolean | null` pattern for "not yet answered" state
 
@@ -35,5 +39,35 @@
   - Knockout fields should use `boolean | null` to distinguish "not answered yet" from "answered No"
   - Vehicle and Driver interfaces support dynamic arrays for multiple entries
   - E&S market flags array in RiskProfile for tracking conditions that push applicant to Excess & Surplus market
+
+---
+
+## 2026-01-18 - US-002
+- What was implemented:
+  - Created src/lib/validators.ts with comprehensive Zod validation schemas
+  - Added zod v3.23.8 dependency to package.json
+  - knockoutSchema: 6 boolean fields with nullable for "not yet answered" state
+  - riskProfileSchema: Conditional validation requiring hazmatTypes when hazmat=true
+  - businessSchema: FEIN format (XX-XXXXXXX), DOT (7 digits), MC format validation
+  - vehicleSchema: 17-character VIN validation with alphanumeric pattern (excluding I, O, Q)
+  - driverSchema: Age validation (18-100), date format YYYY-MM-DD
+  - addressSchema: Required street, city, state (2-char code), zip (5 or 9 digit)
+  - smartIntakeSchema: Combines all sub-schemas for full form validation
+  - All schemas export Zod-inferred types (e.g., BusinessInput, VehicleInput)
+  - Stage validation helpers: validateKnockoutStage(), validateRiskProfileStage(), validateBusinessStage()
+  - Switched to pnpm for package management due to npm semver issues
+
+- Files changed:
+  - src/lib/validators.ts (created - ~700 lines)
+  - package.json (added zod dependency)
+  - pnpm-lock.yaml (created - new lockfile)
+
+- **Learnings for future iterations:**
+  - npm has semver issues with eslint in this project - use pnpm instead
+  - Zod .refine() is perfect for conditional validation (e.g., "if A then B required")
+  - Use z.literal('') with .or() to allow empty strings for optional fields with format validation
+  - VIN validation excludes I, O, Q per industry standard
+  - Export both schemas AND inferred types for React Hook Form integration
+  - Stage validation helpers encapsulate business logic (e.g., knockout = any true answer blocks)
 
 ---
