@@ -16,6 +16,11 @@
 - React Hook Form + Zod: Use SmartIntakeData type (not Zod-inferred type) for useForm<> to avoid type mismatch with optional arrays
 - When using zodResolver with a type that differs from Zod schema output, cast with `as never` to avoid type errors
 - form.watch() triggers ESLint incompatible-library warning - this is expected behavior with React Compiler, not an error
+- Components go in src/components/intake/ directory
+- Use existing CSS classes from globals.css - no need to install shadcn/ui components
+- Brand colors are CSS variables: --color-primary (Forest Green), --color-accent (Vibrant Green), --color-danger (Red)
+- Dev server runs on port 3001 (not default 3000)
+- Stage component pattern: accept `form: UseFormReturn<SmartIntakeData>` prop, use watch() for reactive values, setValue() for updates
 
 ---
 
@@ -128,4 +133,31 @@
   - Use useLocalStorageState (not useLocalStorage) for simpler integration with React Hook Form's watch()
   - Storage key 'panta-smart-intake' for consistent form data persistence
 
+---
+
+## 2026-01-18 - US-005
+- What was implemented:
+  - Created src/components/intake/KnockoutStage.tsx - Stage 1 Knockout Questions UI
+  - Component displays all 6 knockout questions with Yes/No toggle buttons
+  - Questions use plain English: authority revoked, safety rating unsatisfactory, driver license revoked, fraud conviction, bankruptcy filed, insurance cancelled for non-payment
+  - Shows decline message with phone number when any question answered Yes
+  - Integrated with useIntakeForm hook via React Hook Form
+  - Updated src/app/page.tsx to use new component architecture
+  - Removed old inline stage components (Stage1Knockout, Stage2Basics, Stage3Operations, Stage4Safety, Stage5Documents)
+  - Updated progress indicator to use STAGE_CONFIG from useIntakeForm hook
+  - Simplified navigation logic using goToNextStage/goToPrevStage from hook
+
+- Files changed:
+  - src/components/intake/KnockoutStage.tsx (created - 128 lines)
+  - src/app/page.tsx (major refactor - simplified from 838 to 78 lines)
+
+- **Learnings for future iterations:**
+  - Components go in src/components/intake/ directory
+  - Use existing CSS classes from globals.css (yes-no-btn, knockout-alert, card-header, form-group, etc.)
+  - Brand colors are defined as CSS variables (--color-primary, --color-accent, --color-danger)
+  - Dev server runs on port 3001 (default Next.js port is 3000)
+  - The KnockoutStage pattern: accept form from useIntakeForm hook, use watch() for reactive values, setValue() for updates
+  - All 6 questions should be displayed at once (not one at a time) - the PRD wording was unclear but implementation shows all at once for better UX
+  - Knockout alert should remain visible while questions are shown so user can correct their answers
+  - TypeScript compilation succeeds with `npx tsc --noEmit`
 ---
