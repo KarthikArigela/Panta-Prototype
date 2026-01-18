@@ -13,6 +13,9 @@
 - Hooks go in src/hooks/ directory
 - Use useSyncExternalStore for SSR-safe localStorage hooks (avoids hydration mismatch)
 - Pre-existing lint errors in page.tsx (setState in effect) - do not attempt to fix unless specifically tasked
+- React Hook Form + Zod: Use SmartIntakeData type (not Zod-inferred type) for useForm<> to avoid type mismatch with optional arrays
+- When using zodResolver with a type that differs from Zod schema output, cast with `as never` to avoid type errors
+- form.watch() triggers ESLint incompatible-library warning - this is expected behavior with React Compiler, not an error
 
 ---
 
@@ -94,5 +97,35 @@
   - ESLint's react-hooks/set-state-in-effect catches setState in effects - this is a pre-existing issue in page.tsx
   - The hook provides two versions: useLocalStorage (SSR-safe with storage events) and useLocalStorageState (simpler)
   - Storage event dispatch is needed for same-tab updates (native storage events only fire for other tabs)
+
+---
+
+## 2026-01-18 - US-004
+- What was implemented:
+  - Created src/hooks/useIntakeForm.ts - central hook for managing form state across all 4 stages
+  - Added react-hook-form@7.71.1 and @hookform/resolvers@5.2.2 dependencies via pnpm
+  - React Hook Form integration with Zod resolver (zodResolver from @hookform/resolvers)
+  - localStorage persistence using useLocalStorageState from useLocalStorage.ts
+  - Stage management: currentStage (1-4), goToNextStage(), goToPrevStage(), goToStage()
+  - Stage validation: canProceed() validates current stage, getStageErrors() returns error messages
+  - Per-stage validation logic for knockout, riskProfile, business/operations, and documents
+  - Knockout detection: isKnockedOut state tracks if any knockout question was answered "yes"
+  - Reset functionality: resetForm() with optional confirmation dialog
+  - State restoration: restores saved state from localStorage on mount
+  - Additional helpers: saveNow(), hasSavedProgress(), continueFromSaved(), startFresh()
+  - Exported STAGE_CONFIG for UI components (label, description per stage)
+
+- Files changed:
+  - src/hooks/useIntakeForm.ts (created - ~430 lines)
+  - package.json (added react-hook-form and @hookform/resolvers dependencies)
+  - pnpm-lock.yaml (updated with new dependencies)
+
+- **Learnings for future iterations:**
+  - Use SmartIntakeData type (from types/intake.ts) instead of Zod-inferred SmartIntakeInput type for useForm<> generic
+  - The Zod schema has optional arrays with .default([]) which creates type mismatch with required arrays in SmartIntakeData
+  - Cast zodResolver with `as never` to work around type incompatibility between schema output and form data type
+  - ESLint warns about form.watch() incompatibility with React Compiler - this is a known limitation, not a bug
+  - Use useLocalStorageState (not useLocalStorage) for simpler integration with React Hook Form's watch()
+  - Storage key 'panta-smart-intake' for consistent form data persistence
 
 ---

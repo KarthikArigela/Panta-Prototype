@@ -81,8 +81,8 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-18. Created src/hooks/useIntakeForm.ts with React Hook Form + Zod resolver integration. Added react-hook-form@7.71.1 and @hookform/resolvers@5.2.2 dependencies. Hook features: currentStage (1-4), goToNextStage/goToPrevStage/goToStage navigation, canProceed validation per stage, getStageErrors, resetForm with confirmation dialog, localStorage persistence via useLocalStorageState, saved state restoration on mount, knockout detection. Also includes STAGE_CONFIG export for UI and helper functions: saveNow, hasSavedProgress, continueFromSaved, startFresh."
     },
     {
       "id": "US-005",
