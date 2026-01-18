@@ -10,6 +10,9 @@
 - Use .refine() for conditional validation (e.g., hazmatTypes required when hazmat=true)
 - Field naming follows camelCase convention
 - Nullable boolean fields use `boolean | null` pattern for "not yet answered" state
+- Hooks go in src/hooks/ directory
+- Use useSyncExternalStore for SSR-safe localStorage hooks (avoids hydration mismatch)
+- Pre-existing lint errors in page.tsx (setState in effect) - do not attempt to fix unless specifically tasked
 
 ---
 
@@ -69,5 +72,27 @@
   - VIN validation excludes I, O, Q per industry standard
   - Export both schemas AND inferred types for React Hook Form integration
   - Stage validation helpers encapsulate business logic (e.g., knockout = any true answer blocks)
+
+---
+
+## 2026-01-18 - US-003
+- What was implemented:
+  - Created src/hooks/useLocalStorage.ts with SSR-safe localStorage persistence
+  - Uses useSyncExternalStore React 18+ pattern for proper SSR hydration
+  - Debounced saves (2 second delay) to avoid performance issues during rapid form typing
+  - Graceful JSON parse error handling with console warnings
+  - Cross-tab synchronization via storage events
+  - Also exported: useLocalStorageState (simpler useState-based version), clearLocalStorageKey, hasLocalStorageKey utilities
+  - Full TypeScript generics support for type-safe storage
+
+- Files changed:
+  - src/hooks/useLocalStorage.ts (created - 290 lines)
+
+- **Learnings for future iterations:**
+  - useSyncExternalStore is the modern React 18+ way to sync external stores (like localStorage) with React
+  - ESLint's react-hooks/refs rule prevents updating refs during render - use useEffect instead
+  - ESLint's react-hooks/set-state-in-effect catches setState in effects - this is a pre-existing issue in page.tsx
+  - The hook provides two versions: useLocalStorage (SSR-safe with storage events) and useLocalStorageState (simpler)
+  - Storage event dispatch is needed for same-tab updates (native storage events only fire for other tabs)
 
 ---
