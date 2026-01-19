@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useIntakeForm } from "@/hooks/useIntakeForm";
 import { ProgressIndicator } from "@/components/intake/ProgressIndicator";
 import { KnockoutStage } from "@/components/intake/KnockoutStage";
@@ -11,11 +12,14 @@ import { DriverSection } from "@/components/intake/DriverSection";
 import PriorInsuranceSection from "@/components/intake/PriorInsuranceSection";
 import { CoveragePreferencesSection } from "@/components/intake/CoveragePreferencesSection";
 import { DocumentGateStage } from "@/components/intake/DocumentGateStage";
+import DownloadPacket from "@/components/intake/DownloadPacket";
 
 // ===========================
 // MAIN COMPONENT
 // ===========================
 export default function SmartIntake() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const {
     form,
     currentStage,
@@ -33,9 +37,36 @@ export default function SmartIntake() {
   } = useIntakeForm();
 
 
+  // Handle form submission
+  const handleSubmit = () => {
+    if (currentStage === totalStages && canProceed()) {
+      setIsSubmitted(true);
+    }
+  };
+
   // ===========================
   // RENDER FORM
   // ===========================
+
+  // Show download packet after submission
+  if (isSubmitted) {
+    return (
+      <>
+        <ProgressIndicator
+          currentStage={currentStage}
+          totalStages={totalStages}
+          hasRestoredState={hasRestoredState}
+          hasSavedProgress={hasSavedProgress}
+          continueFromSaved={continueFromSaved}
+          startFresh={startFresh}
+          saveNow={saveNow}
+          resetForm={resetForm}
+        />
+        <DownloadPacket form={form} />
+      </>
+    );
+  }
+
   return (
     <>
       {/* Progress Indicator */}
@@ -84,7 +115,7 @@ export default function SmartIntake() {
             </button>
             <button
               className="btn btn-primary"
-              onClick={goToNextStage}
+              onClick={currentStage === totalStages ? handleSubmit : goToNextStage}
               disabled={!canProceed()}
             >
               {currentStage === totalStages ? "Submit Application" : "Continue →"}
