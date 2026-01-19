@@ -5,6 +5,7 @@ import { KnockoutStage } from "@/components/intake/KnockoutStage";
 import { RiskClassifierStage } from "@/components/intake/RiskClassifierStage";
 import { BusinessInfoSection } from "@/components/intake/BusinessInfoSection";
 import { OperationsSafetySection } from "@/components/intake/OperationsSafetySection";
+import { VehicleScheduleSection } from "@/components/intake/VehicleScheduleSection";
 
 // ===========================
 // MAIN COMPONENT
@@ -60,6 +61,7 @@ export default function SmartIntake() {
             </div>
             <BusinessInfoSection form={form} />
             <OperationsSafetySection form={form} />
+            <VehicleScheduleSection form={form} />
           </>
         )}
         {currentStage === 4 && <div className="card-header"><h2>Stage 4 - Coming Soon</h2></div>}
