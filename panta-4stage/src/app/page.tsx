@@ -1,6 +1,7 @@
 "use client";
 
-import { useIntakeForm, STAGE_CONFIG } from "@/hooks/useIntakeForm";
+import { useIntakeForm } from "@/hooks/useIntakeForm";
+import { ProgressIndicator } from "@/components/intake/ProgressIndicator";
 import { KnockoutStage } from "@/components/intake/KnockoutStage";
 import { RiskClassifierStage } from "@/components/intake/RiskClassifierStage";
 import { BusinessInfoSection } from "@/components/intake/BusinessInfoSection";
@@ -19,10 +20,16 @@ export default function SmartIntake() {
     form,
     currentStage,
     totalStages,
+    hasRestoredState,
     isKnockedOut,
     canProceed,
     goToNextStage,
     goToPrevStage,
+    saveNow,
+    resetForm,
+    hasSavedProgress,
+    continueFromSaved,
+    startFresh,
   } = useIntakeForm();
 
 
@@ -31,26 +38,17 @@ export default function SmartIntake() {
   // ===========================
   return (
     <>
-      {/* Progress Bar */}
-      <div className="progress-container">
-        {STAGE_CONFIG.map((stage) => (
-          <div
-            key={stage.id}
-            className={`progress-step ${
-              currentStage === stage.id
-                ? "active"
-                : currentStage > stage.id
-                ? "completed"
-                : ""
-            }`}
-          >
-            <div className="progress-circle">
-              {currentStage > stage.id ? "✓" : stage.id}
-            </div>
-            <span className="progress-label">{stage.label}</span>
-          </div>
-        ))}
-      </div>
+      {/* Progress Indicator */}
+      <ProgressIndicator
+        currentStage={currentStage}
+        totalStages={totalStages}
+        hasRestoredState={hasRestoredState}
+        hasSavedProgress={hasSavedProgress}
+        continueFromSaved={continueFromSaved}
+        startFresh={startFresh}
+        saveNow={saveNow}
+        resetForm={resetForm}
+      />
 
       {/* Card Content */}
       <div className="card">
