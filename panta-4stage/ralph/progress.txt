@@ -511,3 +511,51 @@
   - All acceptance criteria from US-013 met: required/optional document sections, drag-and-drop, file validation, upload progress, success confirmation
 ---
 
+## 2026-01-19 - US-014
+- What was implemented:
+  - Created src/components/intake/ProgressIndicator.tsx - comprehensive progress indicator and navigation component
+  - Implemented visual progress bar with stage indicators using existing CSS classes from globals.css
+  - Stage information display showing "Step X of 4" with current stage name
+  - Save & Continue Later button with success toast notification
+    * Green toast with checkmark icon
+    * Positioned fixed top-right
+    * 3-second auto-dismiss with slideIn animation
+    * Calls saveNow() method to immediately persist form state
+  - Start Over button with confirmation dialog
+    * Calls resetForm() hook method
+    * Clears sessionStorage welcome prompt flag on success
+  - Welcome back modal for returning users
+    * Detects saved progress on mount using hasSavedProgress()
+    * Shows modal only if not yet restored and has saved data
+    * Two options: Continue where I left off / Start a new application
+    * Uses sessionStorage to prevent repeated prompts (panta-welcome-shown flag)
+    * Full-screen backdrop overlay with centered modal
+  - Mobile-responsive design with flexbox layouts and media queries
+  - Integration with useIntakeForm hook methods: saveNow, resetForm, hasSavedProgress, continueFromSaved, startFresh, hasRestoredState
+  - Updated page.tsx to use ProgressIndicator component
+  - Replaced inline progress bar with feature-rich component
+  - Back button already implemented in existing page.tsx navigation
+
+- Files changed:
+  - src/components/intake/ProgressIndicator.tsx (created - 304 lines)
+  - src/app/page.tsx (updated - replaced inline progress bar, added hook method imports)
+  - ralph/prd.json (updated - marked US-014 as passes: true)
+
+- **Learnings for future iterations:**
+  - SessionStorage pattern: Use sessionStorage (not localStorage) for temporary session-specific flags like "has shown welcome prompt"
+  - Toast notification pattern: Fixed position, auto-dismiss with setTimeout, CSS animations with @keyframes
+  - Modal overlay pattern: Fixed position covering full viewport, flex centering, backdrop with rgba transparency
+  - Welcome back UX: Only show on first load if saved data exists, don't show on every render or after restoration
+  - useEffect dependencies: Check hasRestoredState to determine when to show welcome prompt
+  - CSS-in-JS for dynamic styles: Use inline styles for component-specific animations and overlays
+  - Integration with existing hooks: useIntakeForm already provides all needed methods (saveNow, resetForm, etc.)
+  - Progress bar styling: Reuse existing CSS classes (progress-container, progress-step, progress-circle, progress-label) from globals.css
+  - STAGE_CONFIG: Already defined in useIntakeForm.ts, no need to duplicate stage names
+  - Back button: Already implemented in page.tsx with goToPrevStage, no need to add to ProgressIndicator
+  - Form validation: Already handled by useIntakeForm canProceed() method, validates per stage before allowing progression
+  - Mobile responsiveness: Use flexbox with flexWrap: "wrap" and gap for responsive button layouts
+  - Build issues: Pre-existing /_global-error page build error is unrelated to new code, use npx tsc --noEmit for validation
+  - TypeScript compilation passes with npx tsc --noEmit
+  - All acceptance criteria from US-014 met: progress indicator, stage names, visual progress bar, back button, save & continue, welcome back prompt, start over, mobile-responsive, form validation
+---
+
