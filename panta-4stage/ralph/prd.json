@@ -347,8 +347,8 @@
         "Typecheck passes"
       ],
       "priority": 16,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-19. Created src/lib/pdf/acord125Generator.ts with comprehensive ACORD 125 PDF generation using pdf-lib. Added pdf-lib@1.17.1 dependency. Implemented generateAcord125() function that creates a professional multi-page PDF with all ACORD 125 sections: Named Insured (legal name, DBA, mailing address, phone, FEIN, website), Entity Type checkboxes (Individual, Partnership, Corporation, LLC, Other), Business Information (years in business, annual revenue, employees), Operations Description (DOT/MC numbers, cargo description), Prior Insurance (carrier, policy, dates, premium), Coverage Requested (liability limit, deductibles, hired/non-owned auto), Lines of Business (Truckers and Motor Carrier checkboxes always checked), Loss History table (up to 5 claims with date, type, amounts, description), Knockout Questions (all marked 'No' since applicant passed screening). Added downloadAcord125() helper for browser download. PDF uses Helvetica fonts, professional layout with section headers, automatic page breaks, checkboxes for entity type and lines of business. TypeScript compilation passes with npx tsc --noEmit. All acceptance criteria met."
     },
     {
       "id": "US-017",
@@ -370,8 +370,8 @@
         "Typecheck passes"
       ],
       "priority": 17,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-19. Created src/lib/pdf/acord127Generator.ts with comprehensive ACORD 127 PDF generation using pdf-lib. Implemented generateAcord127() function that creates a professional multi-page PDF with all ACORD 127 sections: Named Insured (legal name, DOT, MC), Garaging Address (business or custom garaging address), Operations Questions Q1-Q17 (interstate commerce, radius, maintenance program, states of operation, cargo types, fleet size, hazmat with types, refrigerated cargo with reefer breakdown, trailer interchange with details, MVR checks, family drivers, leases on with motor carrier, new venture, accidents count, safety program with components, telematics with features and fleet percentage), Driver Schedule (up to 4 drivers with name, DOB, license, state, experience, date hired, violations summary, accidents summary), Vehicle Schedule (up to 4 vehicles with year, make, model, VIN, body type, GVW, stated value, radius, for hire, garaging address, lienholder). Added note when >4 vehicles to reference ACORD 129 continuation. Added downloadAcord127() helper for browser download. PDF uses Helvetica fonts, professional layout with section headers, Q&A format for operations questions, automatic page breaks, multi-line text wrapping for long fields. Integrated with mapToAcord127() from acord-mappings.ts. TypeScript compilation passes with npx tsc --noEmit. All acceptance criteria met."
     },
     {
       "id": "US-018",

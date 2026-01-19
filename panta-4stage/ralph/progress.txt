@@ -636,3 +636,136 @@
   - This utility prepares data for PDF generation in US-016, US-017, US-018
 ---
 
+
+## 2026-01-19 - US-016
+- What was implemented:
+  - Created src/lib/pdf/acord125Generator.ts - ACORD 125 PDF generator using pdf-lib
+  - Added pdf-lib@1.17.1 dependency via pnpm
+  - Implemented generateAcord125() function that creates professional multi-page PDF
+  - Implemented downloadAcord125() browser download helper function
+  - PDF includes all ACORD 125 sections:
+    * Header with form title, generated date
+    * Named Insured section (legal name, DBA, mailing address, phone, FEIN, website)
+    * Entity Type checkboxes (Individual, Partnership, Corporation, LLC, Other)
+    * Business Information (years in business, annual revenue, full/part-time employees)
+    * Operations Description (DOT/MC numbers, cargo description with multi-line support)
+    * Prior Insurance (currently insured, carrier, policy, dates, premium)
+    * Coverage Requested (liability limit, comprehensive/collision deductibles, hired/non-owned auto)
+    * Lines of Business checkboxes (Truckers and Motor Carrier - always checked)
+    * Loss History table (up to 5 claims with date, type, amounts paid/reserved, description)
+    * Knockout Questions (all marked "No" since applicant passed screening)
+    * Footer with form version and disclaimer
+  - PDF generation features:
+    * Uses pdf-lib PDFDocument.create() for programmatic PDF creation
+    * Embedded Helvetica and Helvetica-Bold fonts
+    * Letter size pages (612x792 points)
+    * Professional layout with section headers, underlines, proper spacing
+    * Automatic page breaks when content exceeds page height
+    * Checkbox rendering with visual boxes and checkmarks
+    * Multi-line text support for operations description
+    * Conditional field display (e.g., DBA, MC Number only if present)
+  - Integrated with existing mapToAcord125() from acord-mappings.ts
+
+- Files changed:
+  - src/lib/pdf/acord125Generator.ts (created - 324 lines)
+  - package.json (added pdf-lib dependency)
+  - pnpm-lock.yaml (updated with new dependencies)
+  - ralph/prd.json (updated - marked US-016 as passes: true)
+
+- **Learnings for future iterations:**
+  - Create pdf directory structure before creating files: mkdir -p src/lib/pdf
+  - Since ACORD forms are proprietary templates, generate PDFs programmatically with pdf-lib
+  - pdf-lib usage patterns:
+    * await PDFDocument.create() for new document
+    * await pdfDoc.embedFont(StandardFonts.Helvetica) for fonts
+    * pdfDoc.addPage([width, height]) for new pages
+    * page.drawText(), page.drawLine(), page.drawRectangle() for content
+    * await pdfDoc.save() returns Uint8Array
+  - Uint8Array type compatibility: Use new Uint8Array(pdfBytes) when creating Blob to satisfy TypeScript
+  - Layout patterns:
+    * Track yPosition for vertical placement, decrement after each element
+    * Check yPosition < threshold to add new page before content
+    * Use helper functions: addText(), addSectionHeader(), addField(), addCheckbox()
+    * Section spacing with visual underlines for readability
+    * Left margin consistent at 40 points, line height 14 points
+  - Checkbox rendering: Draw rectangle border, add checkmark "✓" if checked, label next to box
+  - Multi-line text: Split by \n and render each line separately
+  - Conditional sections: Check field values before rendering (e.g., if DBA exists, if currently insured)
+  - Integration with mapping utility: Import mapToAcord125() and FieldMapping type from acord-mappings.ts
+  - Browser download pattern: Create Blob, URL.createObjectURL, createElement('a'), set href/download, click, revoke URL
+  - Filename sanitization: businessName.replace(/[^a-zA-Z0-9]/g, '_') for safe filenames
+  - All acceptance criteria from US-016 met: pdf directory, generator file, all field mappings, Uint8Array return, typecheck passes
+  - TypeScript compilation passes with npx tsc --noEmit
+  - Next steps: US-017 (ACORD 127) and US-018 (ACORD 129) will follow similar patterns
+---
+
+
+## 2026-01-19 - US-017
+Thread: N/A
+- What was implemented:
+  - Created src/lib/pdf/acord127Generator.ts - ACORD 127 PDF generator using pdf-lib
+  - Implemented generateAcord127() function that creates a professional multi-page PDF
+  - Implemented downloadAcord127() browser download helper function
+  - PDF includes all ACORD 127 sections:
+    * Header with form title, generated date
+    * Named Insured section (legal name, DOT, MC)
+    * Garaging Address (business garaging or mailing address)
+    * Operations Questions Q1-Q17 with Yes/No answers and conditional details:
+      - Q1: Interstate Commerce
+      - Q2: Radius of Operation
+      - Q3: Vehicle Maintenance Program
+      - Q4: States of Operation (wrapped text for long lists)
+      - Q5: Cargo Types (wrapped text)
+      - Q6: Fleet Size
+      - Q7: Hazmat Cargo with conditional Q7a Hazmat Types
+      - Q8: Refrigerated Cargo with conditional Q8a Reefer Breakdown Coverage
+      - Q9: Trailer Interchange with conditional Q9a Count, Q9b Zones, Q9c Radius
+      - Q10: MVR Checks Before Hiring
+      - Q11: Family Drivers
+      - Q12: Leases On to Other Carrier with conditional Q12a Motor Carrier
+      - Q13: New Venture
+      - Q14: Accidents in Last 3 Years (count)
+      - Q15: Safety Program with conditional Q15a Safety Components
+      - Q17: Telematics/ELD with conditional Q17a Features and Q17b Fleet Percentage
+    * Driver Schedule (up to 4 drivers with name, DOB, license, state, experience, date hired)
+      - Violations summary (formatted as semicolon-separated list)
+      - Accidents summary (formatted with at-fault status)
+    * Vehicle Schedule (up to 4 vehicles with year, make, model, VIN, body type, GVW, stated value, radius, for hire)
+      - Garaging address (formatted as single line)
+      - Lienholder information (name and address or "None")
+    * Note when >4 vehicles referencing ACORD 129 continuation
+    * Footer with form version and disclaimer
+  - PDF generation features:
+    * Uses pdf-lib PDFDocument.create() for programmatic PDF creation
+    * Embedded Helvetica and Helvetica-Bold fonts
+    * Letter size pages (612x792 points)
+    * Professional layout with section headers, underlines, proper spacing
+    * Automatic page breaks when content exceeds page height
+    * Q&A format for operations questions (question on left, answer on right)
+    * Multi-line text wrapping for long fields (states, cargo types, violations, accidents, etc.)
+    * Conditional field display (only show sub-questions when parent is Yes)
+  - Integrated with existing mapToAcord127() from acord-mappings.ts
+
+- Files changed:
+  - src/lib/pdf/acord127Generator.ts (created - 420 lines)
+  - ralph/prd.json (updated - marked US-017 as passes: true)
+
+- **Learnings for future iterations:**
+  - ACORD 127 is the trucking application supplement (operations, drivers, vehicles)
+  - Follow same pattern as ACORD 125: header, sections, footer
+  - Q&A format pattern: addQA() helper with question on left, answer on right (400px offset)
+  - Conditional sub-questions: Check parent answer (e.g., if Q7_HazmatCargo === 'Yes' then show Q7a)
+  - Multi-line text wrapping: Use regex .match(/.{1,70}/g) to wrap long text at 70 characters
+  - Driver violations and accidents formatted as summaries (not individual entries like claims in 125)
+  - Vehicle garaging address formatted as single line (not separate street/city/state/zip fields)
+  - Lienholder formatted as "name, address" string
+  - Note about ACORD 129 continuation appears at bottom of vehicle schedule when >4 vehicles
+  - Integration pattern: Import mapToAcord127 and FieldMapping type from acord-mappings.ts
+  - Helper functions reused from ACORD 125: addText, addSectionHeader, addField
+  - New helper addQA for question/answer pairs with wider label (400px offset vs 250px for addField)
+  - Browser download pattern same as ACORD 125: Blob, createObjectURL, createElement('a'), click, revoke
+  - Filename sanitization: businessName.replace(/[^a-zA-Z0-9]/g, '_')
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria from US-017 met: generator file, operations questions, driver/vehicle tables, lienholder mapping, >4 vehicles flag, Uint8Array return, typecheck passes
+  - Next story: US-018 (ACORD 129) follows same pattern for continuation vehicles (5+)
+---
