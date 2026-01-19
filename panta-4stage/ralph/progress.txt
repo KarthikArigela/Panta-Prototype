@@ -457,3 +457,57 @@
   - Dev server already running on port 3001
 ---
 
+
+## 2026-01-19 - US-013
+- What was implemented:
+  - Created src/components/intake/DocumentGateStage.tsx - Stage 4 Document Upload Gate
+  - Added react-dropzone@14.3.8 dependency for drag-and-drop file uploads
+  - Comprehensive document upload form with required and optional sections:
+    * Required documents section: Loss Runs, MC/DOT Authority Letter (with tooltips explaining each)
+    * Optional documents section: Vehicle Schedule, Driver List, Current Dec Page, IFTA Credentials (with tooltips)
+    * Each document type has its own upload zone
+  - File upload features:
+    * Drag-and-drop functionality using react-dropzone
+    * File type validation: accepts PDF, JPG, PNG only
+    * File size validation: 10MB limit per file
+    * Simulated upload progress bar (0-100% with visual indicator)
+    * Success confirmation with checkmark when files uploaded
+    * Remove document button for each uploaded file
+    * File metadata display: filename and size in KB
+  - Success indicator when all required docs uploaded:
+    * Green success box with checkmark icon
+    * Message: "All required documents uploaded - You can now submit your application"
+  - Submit button validation already implemented in useIntakeForm hook:
+    * Validates that loss_runs and authority_letter documents exist in documents array
+    * Button disabled until both required documents uploaded
+  - Integrated into page.tsx Stage 4 (replaced "Coming Soon" placeholder)
+  - Progress indicator already shows "Step 4 of 4" from STAGE_CONFIG
+
+- Files changed:
+  - src/components/intake/DocumentGateStage.tsx (created - 450 lines)
+  - src/app/page.tsx (updated - added import and Stage 4 content)
+  - package.json (added react-dropzone dependency)
+  - pnpm-lock.yaml (updated with new dependencies)
+  - ralph/prd.json (updated - marked US-013 as passes: true)
+
+- **Learnings for future iterations:**
+  - react-dropzone usage pattern: useDropzone hook with accept, maxSize, multiple options
+  - Accept MIME types specified as object: { "application/pdf": [".pdf"], "image/jpeg": [".jpg", ".jpeg"], ... }
+  - File upload simulation pattern: Use setTimeout and setInterval to simulate progress for demo/prototype
+  - Upload state management: Track uploading files by unique ID (filename + timestamp) with progress percentage
+  - Document type filtering: Filter documents array by type to show uploaded docs per zone
+  - Remove document pattern: Find document index by type + filename, then filter documents array
+  - Drag-and-drop visual states: Use isDragActive to change border color and background when dragging
+  - Tooltip pattern reused: Inline span with title attribute and ⓘ symbol (established in CoveragePreferencesSection)
+  - Success indicator pattern: Green background (#d4edda), border (#c3e6cb), text (#155724) for success state
+  - File size display: Convert bytes to KB with toFixed(1) for user-friendly display
+  - Upload progress bar: Nested div pattern with width percentage transition for smooth animation
+  - Stage 4 validation already implemented in useIntakeForm hook (validates required doc types exist)
+  - DocumentType enum values: loss_runs, authority_letter, vehicle_schedule, driver_list, current_dec_page, ifta_credentials
+  - UploadedDocument interface: type, fileName, fileSize, mimeType, uploadedAt, fileReference (optional)
+  - Component pattern: DocumentUploadZone sub-component handles individual document upload zones
+  - Multiple false prevents uploading multiple files at once per zone (one file per document type)
+  - TypeScript compilation passes with npx tsc --noEmit
+  - All acceptance criteria from US-013 met: required/optional document sections, drag-and-drop, file validation, upload progress, success confirmation
+---
+
