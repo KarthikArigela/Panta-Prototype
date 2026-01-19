@@ -239,8 +239,8 @@
         "Verify in browser using native Claude Code browser tool"
       ],
       "priority": 11,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-19. Created src/components/intake/PriorInsuranceSection.tsx with comprehensive prior insurance and claims history collection. Implemented all fields: currently insured Yes/No toggle, conditional current insurance details (carrier name, policy number, annual premium with currency formatting, effective date, expiration date), why shopping selector (6 options: renewal_coming_up, want_better_rates, need_higher_limits, non_renewed, cancelled, other), claims in last 5 years Yes/No toggle, dynamic claims array with add/remove functionality. Per claim: date of loss, type dropdown (6 types: Collision, Cargo Damage, Bodily Injury Liability, Property Damage Liability, Comprehensive, Other), amount paid/reserved with currency formatting, still open Yes/No, description textarea. Collapsible section UI matching BusinessInfoSection pattern. Integrated into page.tsx Stage 3 after DriverSection. TypeScript compilation passes. Fixed field name mappings to match intake.ts types (carrierName not currentCarrier, shoppingReason not whyShopping, dateOfLoss not date)."
     },
     {
       "id": "US-012",
