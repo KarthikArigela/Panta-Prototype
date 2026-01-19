@@ -9,6 +9,7 @@ import { VehicleScheduleSection } from "@/components/intake/VehicleScheduleSecti
 import { DriverSection } from "@/components/intake/DriverSection";
 import PriorInsuranceSection from "@/components/intake/PriorInsuranceSection";
 import { CoveragePreferencesSection } from "@/components/intake/CoveragePreferencesSection";
+import { DocumentGateStage } from "@/components/intake/DocumentGateStage";
 
 // ===========================
 // MAIN COMPONENT
@@ -70,7 +71,7 @@ export default function SmartIntake() {
             <CoveragePreferencesSection form={form} />
           </>
         )}
-        {currentStage === 4 && <div className="card-header"><h2>Stage 4 - Coming Soon</h2></div>}
+        {currentStage === 4 && <DocumentGateStage form={form} />}
 
         {/* Navigation */}
         {!isKnockedOut && (
