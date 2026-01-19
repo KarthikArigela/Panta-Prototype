@@ -277,3 +277,47 @@
   - Browser verification: App loads correctly, Stage 1 knockout questions display properly
 ---
 
+## 2026-01-19 - US-009
+- What was implemented:
+  - Created src/components/intake/VehicleScheduleSection.tsx - Stage 3.3 Vehicle Schedule Section
+  - Comprehensive vehicle schedule with dynamic add/remove functionality
+  - All vehicle fields implemented:
+    * Year dropdown (1990 to current year + 1, currently 2027)
+    * Make and Model text inputs with placeholders
+    * VIN input with 17-character validation and uppercase conversion
+    * Body type selector with 7 options (Tractor, Straight Truck, Box Truck, Flatbed, Tanker, Dump Truck, Other)
+    * GVW (Gross Vehicle Weight) with comma formatting for pounds
+    * Stated Value with currency formatting ($)
+    * Radius of operation with 4 options (Local <50mi, Regional 50-200mi, Long Regional 200-500mi, Long Haul 500+mi)
+    * For hire Yes/No toggle
+    * Garaging address toggle (Same as Business or Different Address)
+    * Conditional garaging address fields (street, city, state, zip) when different from business
+    * Lienholder Yes/No toggle
+    * Conditional lienholder fields (name and full address) when Yes
+  - Running count displays "X trucks added" in collapsible section header
+  - Add Truck button to add new vehicles dynamically using defaultVehicle template
+  - Remove button on each vehicle card
+  - Integrated into page.tsx Stage 3 after OperationsSafetySection
+  - Collapsible section UI matching BusinessInfoSection and OperationsSafetySection patterns
+
+- Files changed:
+  - src/components/intake/VehicleScheduleSection.tsx (created - 632 lines)
+  - src/app/page.tsx (updated - added import and component)
+  - ralph/prd.json (updated - marked US-009 as passes: true)
+
+- **Learnings for future iterations:**
+  - Dynamic array pattern: Use vehicles.map() to render each vehicle, updateVehicle() helper to update specific fields
+  - Add/remove pattern: Spread operator to add ([...vehicles, defaultVehicle]), filter to remove (vehicles.filter((_, i) => i !== index))
+  - Nested object updates: Spread existing nested object when updating single field to preserve other fields
+  - Year dropdown generation: Array.from({ length: currentYear - 1989 + 1 }, (_, i) => currentYear - i + 1)
+  - VIN validation: maxLength={17}, toUpperCase() on change
+  - Currency formatting pattern reused from BusinessInfoSection
+  - Conditional field patterns: Check boolean, render indented section with borderLeft visual hierarchy
+  - Lienholder and garagingAddress are optional nested objects - must check existence before accessing properties
+  - Vehicle index display: Use map index + 1 for human-readable "Vehicle #1, #2, etc."
+  - Remove button styling: Use danger color, positioned in header flex layout
+  - Grid layouts: Use gridTemplateColumns for responsive year/make/model (1fr 2fr 2fr) and GVW/value (1fr 1fr)
+  - TypeScript compilation passes with npx tsc --noEmit
+  - Dev server runs on port 3001 (started with npm run dev)
+---
+
