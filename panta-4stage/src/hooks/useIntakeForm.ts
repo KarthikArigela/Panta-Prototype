@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -134,11 +134,19 @@ export function useIntakeForm(): UseIntakeFormReturn {
   // Watch form values for persistence
   const watchedValues = form.watch();
 
+  // Track last saved values to prevent infinite loops
+  const lastSavedRef = useRef<string>(JSON.stringify(storedData));
+
   // Persist form values to localStorage when they change
   useEffect(() => {
     // Only persist if we have meaningful changes (not just initial render)
     if (hasRestoredState || currentStage > 1) {
-      setStoredData(watchedValues);
+      const currentSerialized = JSON.stringify(watchedValues);
+      // Only save if values actually changed
+      if (currentSerialized !== lastSavedRef.current) {
+        lastSavedRef.current = currentSerialized;
+        setStoredData(watchedValues);
+      }
     }
   }, [watchedValues, setStoredData, hasRestoredState, currentStage]);
 

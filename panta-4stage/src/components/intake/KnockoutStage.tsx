@@ -109,6 +109,7 @@ export function KnockoutStage({ form }: KnockoutStageProps) {
               type="button"
               className={`yes-no-btn ${question.value === true ? "selected-yes" : ""}`}
               onClick={() => handleYesNoClick(question.field, true)}
+              suppressHydrationWarning
             >
               ❌ Yes
             </button>
@@ -116,6 +117,7 @@ export function KnockoutStage({ form }: KnockoutStageProps) {
               type="button"
               className={`yes-no-btn ${question.value === false ? "selected-no" : ""}`}
               onClick={() => handleYesNoClick(question.field, false)}
+              suppressHydrationWarning
             >
               ✅ No
             </button>
