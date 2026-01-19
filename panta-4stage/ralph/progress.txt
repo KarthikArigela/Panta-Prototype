@@ -234,3 +234,46 @@
   - Stage 3 is titled "Business Details" in the main page
   - TypeScript compilation passes with npx tsc --noEmit
 ---
+## 2026-01-19 - US-008
+- What was implemented:
+  - Created src/components/intake/OperationsSafetySection.tsx - Stage 3.2 Operations & Safety Section
+  - Comprehensive operations and safety information form with all required fields:
+    * Cargo description textarea with detailed placeholder example
+    * States of operation multi-select with all 50 US states + DC (grid layout)
+    * Safety program Yes/No with conditional checkboxes:
+      - Written Safety Manual
+      - Designated Safety Director
+      - Monthly Safety Meetings
+      - OSHA Compliance Program
+    * Vehicle maintenance program Yes/No
+    * Telematics/ELD Yes/No with conditional checkboxes:
+      - Driver Safety Monitoring
+      - Fuel Tracking
+      - Maintenance Alerts
+      - Mileage Tracking
+      - GPS Tracking
+    * Fleet percentage slider (0-100%) when telematics=Yes
+    * MVR checks before hiring Yes/No
+  - Collapsible section UI with toggle (matches BusinessInfoSection pattern)
+  - All form inputs use watch() for reactive values and setValue() for updates
+  - Integrated into page.tsx Stage 3 (after BusinessInfoSection)
+
+- Files changed:
+  - src/components/intake/OperationsSafetySection.tsx (created - 419 lines)
+  - src/app/page.tsx (updated - added import and component)
+  - ralph/prd.json (updated - marked US-008 as passes: true)
+
+- **Learnings for future iterations:**
+  - Multi-select state grid pattern: Use grid with auto-fill columns for compact state selection
+  - Conditional sub-sections pattern: Use marginLeft + paddingLeft + borderLeft for visual hierarchy
+  - Checkbox list pattern: Use flex column layout with styled labels containing input + span
+  - Range slider pattern: Combine <input type="range"> with visual percentage display
+  - Clear dependent fields when parent is set to No (e.g., clear safetyProgramComponents when hasSafetyProgram=false)
+  - Use gridTemplateColumns: "repeat(auto-fill, minmax(60px, 1fr))" for responsive state grid
+  - Telematics features and safety program components use array patterns with .includes() checks
+  - All 51 states (50 + DC) defined as USState type union in intake.ts
+  - Stage 3 has multiple sections (BusinessInfo, OperationsSafety, etc.) all rendered together
+  - TypeScript compilation passes with npx tsc --noEmit
+  - Browser verification: App loads correctly, Stage 1 knockout questions display properly
+---
+
