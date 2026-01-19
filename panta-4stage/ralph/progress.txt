@@ -321,3 +321,50 @@
   - Dev server runs on port 3001 (started with npm run dev)
 ---
 
+## 2026-01-19 - US-010
+- What was implemented:
+  - Created src/components/intake/DriverSection.tsx - Stage 3.4 Driver Section
+  - Comprehensive driver information collection with dynamic add/remove functionality
+  - All required driver fields implemented:
+    * Full legal name (required text input)
+    * Date of birth (required date picker)
+    * Driver's license number (required text input)
+    * License state (required dropdown with all 50 US states + DC)
+    * Years of CDL experience (required number input, 0-60 range)
+    * Date hired (required date picker)
+  - Accidents in last 3 years section with Yes/No toggle
+    * Conditional dynamic accidents array with add/remove functionality
+    * Per accident: Date, Description (textarea), At-fault Yes/No toggle
+  - Moving violations in last 3 years section with Yes/No toggle
+    * Conditional dynamic violations array with add/remove functionality
+    * Per violation: Date, Type dropdown (5 options: Speeding, Reckless Driving, DUI/DWI, Logbook Violation, Other), Location
+  - Running count displays "X drivers added" in collapsible section header
+  - Add Driver button to add new drivers dynamically using defaultDriver template
+  - Remove button on each driver card (shows when >1 driver)
+  - Collapsible section UI matching BusinessInfoSection, OperationsSafetySection, VehicleScheduleSection patterns
+  - Integrated into page.tsx Stage 3 (after VehicleScheduleSection)
+
+- Files changed:
+  - src/components/intake/DriverSection.tsx (created - 478 lines)
+  - src/app/page.tsx (updated - added import and component)
+  - ralph/prd.json (updated - marked US-010 as passes: true)
+
+- **Learnings for future iterations:**
+  - Nested dynamic arrays pattern: Accidents and violations are arrays within each driver object
+  - Update nested array: Spread parent array, spread specific driver, update nested array, set parent array
+  - Add to nested array: Spread driver's accidents/violations array and append new default object
+  - Remove from nested array: Use filter to remove specific index from nested array
+  - Update nested array item: Spread nested array, spread specific item, update field, update parent
+  - Conditional nested sections: Check hasAccidents/hasViolations boolean, show/hide nested array UI
+  - Auto-add first item pattern: When user selects Yes, automatically add first accident/violation if array is empty
+  - Clear nested arrays when toggling to No: Reset accidents/violations to empty array when hasAccidents/hasViolations = false
+  - Nested card styling: Use backgroundColor #f9f9f9 for nested cards to create visual hierarchy
+  - Sub-item numbering: Use nested map index + 1 for "Accident #1", "Violation #1", etc.
+  - Grid layout for related fields: Use 1fr 1fr for DOB/License, Experience/Date Hired
+  - ViolationType enum: speeding, reckless_driving, dui_dwi, logbook_violation, other
+  - Accident interface: date, description, atFault (boolean), amountPaid (optional, not used in form)
+  - Violation interface: date, type, description (optional, not shown in form), location (optional)
+  - All acceptance criteria from US-010 met: dynamic drivers, all fields, accidents, violations, running count, remove buttons
+  - TypeScript compilation passes with npx tsc --noEmit
+---
+
