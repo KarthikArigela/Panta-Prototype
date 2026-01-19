@@ -190,3 +190,47 @@
   - TypeScript compilation passed with npx tsc --noEmit
   - All acceptance criteria from US-006 met: 8 questions, conditional logic, cargo options, E&S flags, progress indicator
 ---
+## 2026-01-19 - US-007
+- What was implemented:
+  - Created src/components/intake/BusinessInfoSection.tsx - Stage 3.1 Business Information Section
+  - Comprehensive business information form with all required fields:
+    * Legal business name (required text input)
+    * DBA (optional text input)
+    * Business mailing address (street, city, state, zip - all required)
+    * Business phone with auto-formatting: (555) 123-4567
+    * FEIN with format validation and auto-formatting: XX-XXXXXXX
+    * Entity type selector with 5 options (LLC, Corporation, Sole Proprietor, Partnership, Other)
+    * Website (optional URL input)
+    * Date business started (date picker)
+    * USDOT Number (7 digits, required, numeric only)
+    * MC Number (optional, auto-formatted as MC-XXXXXX)
+    * Annual gross revenue with currency formatting ($)
+    * Full-time employee count (number input, required)
+    * Part-time employee count (number input, required)
+    * Garaging address toggle (same as business or different)
+    * Conditional garaging address fields (shown when different from business address)
+  - Collapsible section UI with toggle (open/closed state managed with useState)
+  - All form inputs use watch() for reactive values and setValue() for updates
+  - Integrated into page.tsx for Stage 3 with header and section
+
+- Files changed:
+  - src/components/intake/BusinessInfoSection.tsx (created - 429 lines)
+  - src/app/page.tsx (updated - added import and Stage 3 content)
+  - ralph/prd.json (updated - marked US-007 as passes: true)
+
+- **Learnings for future iterations:**
+  - Collapsible sections pattern: Use useState for open/closed state, click handler on header div
+  - Auto-formatting patterns: Clean input with regex, apply format, update with setValue()
+  - Phone format: (XXX) XXX-XXXX with maxLength={14}
+  - FEIN format: XX-XXXXXXX with maxLength={10}
+  - MC format: MC-XXXXXX with maxLength={9}
+  - Currency formatting: Use toLocaleString("en-US", {style: "currency", currency: "USD"})
+  - Use grid layout for city/state/zip: gridTemplateColumns: "2fr 1fr 1fr"
+  - Use grid layout for employee counts: gridTemplateColumns: "1fr 1fr"
+  - Conditional fields pattern: Check boolean value, render div when true
+  - Use existing CSS classes: form-group, form-label, form-sublabel, form-input, yes-no-grid, yes-no-btn, option-card, options-grid
+  - Mark required fields with red asterisk: <span style={{ color: "var(--color-danger)" }}>*</span>
+  - Use form-sublabel for helper text below labels
+  - Stage 3 is titled "Business Details" in the main page
+  - TypeScript compilation passes with npx tsc --noEmit
+---

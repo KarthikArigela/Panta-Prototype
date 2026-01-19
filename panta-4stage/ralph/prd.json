@@ -153,8 +153,8 @@
         "Verify in browser using native Claude Code browser tool"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-19. Created src/components/intake/BusinessInfoSection.tsx with collapsible section UI. Implemented all fields: legal name, DBA, mailing address, phone (auto-formatted), FEIN (XX-XXXXXXX format), entity type selector (5 options), website, date started, DOT number (7 digits), MC number (MC-XXXXXX format), annual revenue (currency formatted), employee counts, garaging address toggle with conditional fields. Uses existing CSS classes. TypeScript compilation passes."
     },
     {
       "id": "US-008",
