@@ -259,8 +259,8 @@
         "Verify in browser using native Claude Code browser tool"
       ],
       "priority": 12,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-19. Created src/components/intake/CoveragePreferencesSection.tsx with comprehensive coverage preferences form. Implemented all fields: liability limit selector (4 options: $1M CSL Most Common, $750K, $500K, Other with conditional custom input), comprehensive deductible selector (4 options: $1000, $2500, $5000, Other with conditional custom input), collision deductible selector (4 options: $1000, $2500, $5000, Other with conditional custom input), hired auto coverage Yes/No toggle with tooltip explanation, non-owned auto coverage Yes/No toggle with tooltip explanation. Collapsible section UI matching established BusinessInfoSection pattern. Currency formatting for custom limits/deductibles. Integrated into page.tsx Stage 3 after PriorInsuranceSection. TypeScript compilation passes. Progress indicator already shows 'Step 3 of 4' from STAGE_CONFIG."
     },
     {
       "id": "US-013",

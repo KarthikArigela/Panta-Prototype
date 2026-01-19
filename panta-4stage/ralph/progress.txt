@@ -417,3 +417,43 @@
   - All acceptance criteria from US-011 met: collapsible section, all fields, conditional logic, dynamic claims array, claim types dropdown
 ---
 
+## 2026-01-19 - US-012
+- What was implemented:
+  - Created src/components/intake/CoveragePreferencesSection.tsx - Stage 3.6 Coverage Preferences Section
+  - Comprehensive coverage preferences form with all required fields:
+    * Liability limit selector with 4 radio-style button options:
+      - $1M CSL (with "Most Common" label)
+      - $750K
+      - $500K
+      - Other (with conditional custom amount input field, currency formatted)
+    * Comprehensive deductible selector with 4 options ($1000, $2500, $5000, Other with conditional custom input)
+    * Collision deductible selector with 4 options ($1000, $2500, $5000, Other with conditional custom input)
+    * Hired auto coverage Yes/No toggle with tooltip: "Coverage for vehicles you rent or lease short-term (e.g., rental trucks)"
+    * Non-owned auto coverage Yes/No toggle with tooltip: "Coverage for vehicles your employees use for business but that you don't own"
+  - Collapsible section UI matching BusinessInfoSection, OperationsSafetySection patterns
+  - Currency formatting for custom liability limit and deductible amounts
+  - Clear dependent fields pattern: When switching from "Other" to predefined option, clear custom amount
+  - Integrated into page.tsx Stage 3 (after PriorInsuranceSection)
+
+- Files changed:
+  - src/components/intake/CoveragePreferencesSection.tsx (created - 340 lines)
+  - src/app/page.tsx (updated - added import and component)
+  - ralph/prd.json (updated - marked US-012 as passes: true)
+
+- **Learnings for future iterations:**
+  - Tooltip pattern: Use inline span with title attribute and ⓘ symbol for helper text
+  - Conditional "Other" input pattern: Check if selected option is "other", render custom input field, clear when switching away
+  - LiabilityLimit type uses string literals: "500000", "750000", "1000000", "other" (not numeric)
+  - DeductibleAmount type uses string literals: "1000", "2500", "5000", "other"
+  - Custom amounts stored in separate optional fields: liabilityLimitOther, comprehensiveDeductibleOther, collisionDeductibleOther
+  - Grid layout for 4 options: gridTemplateColumns: "1fr 1fr 1fr 1fr"
+  - Radio-style button pattern: Use option-card with active class when selected
+  - Tooltip cursor: Use cursor: "help" for tooltip icon
+  - Description sublabels explain what each coverage type covers (helps non-insurance experts understand)
+  - Yes/No toggles for boolean coverage options (hiredAutoCoverage, nonOwnedAutoCoverage)
+  - Progress indicator already shows "Step 3 of 4" from STAGE_CONFIG (no changes needed)
+  - All acceptance criteria from US-012 met: collapsible section, liability/comprehensive/collision selectors, hired/non-owned toggles with tooltips
+  - TypeScript compilation passes with npx tsc --noEmit
+  - Dev server already running on port 3001
+---
+
