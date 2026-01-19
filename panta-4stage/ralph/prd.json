@@ -388,8 +388,8 @@
         "Typecheck passes"
       ],
       "priority": 18,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-19. Created src/lib/pdf/acord129Generator.ts with ACORD 129 PDF generation using pdf-lib. Implemented generateAcord129() function that creates professional multi-page PDF only when vehicles.length > 4. Returns null if not needed. PDF includes: Named Insured section (business name, DOT, MC), Vehicle Schedule Continuation section with vehicles 5+ (all vehicle fields: year, make, model, VIN, body type, GVW, stated value, radius, for hire, garaging address, lienholder). Multi-line text wrapping for long addresses. Automatic page breaks when content exceeds page height. Added downloadAcord129() helper for browser download. Integrated with mapToAcord129() from acord-mappings.ts. TypeScript compilation passes with npx tsc --noEmit. All acceptance criteria met."
     },
     {
       "id": "US-019",

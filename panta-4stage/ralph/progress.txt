@@ -769,3 +769,56 @@ Thread: N/A
   - All acceptance criteria from US-017 met: generator file, operations questions, driver/vehicle tables, lienholder mapping, >4 vehicles flag, Uint8Array return, typecheck passes
   - Next story: US-018 (ACORD 129) follows same pattern for continuation vehicles (5+)
 ---
+
+## 2026-01-19 - US-018
+Thread: N/A
+- What was implemented:
+  - Created src/lib/pdf/acord129Generator.ts - ACORD 129 PDF generator using pdf-lib
+  - Implemented generateAcord129() function that creates professional multi-page PDF
+  - Implemented downloadAcord129() browser download helper function
+  - PDF only generated when vehicles.length > 4 (returns null if not needed)
+  - PDF includes all ACORD 129 sections:
+    * Header with form title, generated date
+    * Named Insured section (business name, DOT, MC)
+    * Vehicle Schedule Continuation section (vehicles 5+ only)
+    * Per vehicle: year, make, model, VIN, body type, GVW, stated value, radius, for hire
+    * Garaging address (formatted as single line with multi-line wrapping for long addresses)
+    * Lienholder information (name and address or "None")
+    * Note about continuation from ACORD 127
+    * Footer with form version and disclaimer
+  - PDF generation features:
+    * Uses pdf-lib PDFDocument.create() for programmatic PDF creation
+    * Embedded Helvetica and Helvetica-Bold fonts
+    * Letter size pages (612x792 points)
+    * Professional layout with section headers, underlines, proper spacing
+    * Automatic page breaks when content exceeds page height (checks yPosition < 250 for vehicles)
+    * Multi-line text wrapping for long fields (garaging address, lienholder)
+    * Vehicle header numbering continues from ACORD 127 (Vehicle #5, #6, etc.)
+  - Integrated with existing mapToAcord129() from acord-mappings.ts
+
+- Files changed:
+  - src/lib/pdf/acord129Generator.ts (created - 211 lines)
+  - ralph/prd.json (updated - marked US-018 as passes: true)
+
+- **Learnings for future iterations:**
+  - ACORD 129 is the vehicle schedule continuation for fleets with >4 vehicles
+  - Follow same PDF generation pattern as ACORD 125 and 127: header, sections, footer
+  - Conditional generation: Always check if PDF is needed before generating (vehicles.length > 4)
+  - Return null when not needed to avoid unnecessary PDF generation
+  - Vehicle numbering continues from ACORD 127 (starts at 5, not 1)
+  - Use totalVehicles = data.vehicles.length to get accurate count
+  - Loop from i=5 to i<=totalVehicles to map continuation vehicles
+  - Field mapping keys: Vehicle5_Year, Vehicle5_Make, etc. (not Vehicle1_Year)
+  - Multi-line wrapping pattern: wrapText() helper with regex .match(/.{1,70}/g)
+  - Conditional multi-line rendering: Check field length/content before wrapping
+  - Garaging address and lienholder may be long strings - handle with wrapping and indent
+  - Page break threshold higher for vehicles (250) than regular text (40) to fit vehicle card
+  - Helper functions reused from ACORD 125/127: addText, addSectionHeader, addField, wrapText
+  - New helper addVehicle() encapsulates single vehicle rendering logic
+  - Browser download pattern same as ACORD 125/127: Blob with new Uint8Array(), createObjectURL, click, revoke
+  - Blob type casting: Use new Uint8Array(pdfBytes) to satisfy TypeScript type checking
+  - Filename sanitization: businessName.replace(/[^a-zA-Z0-9]/g, '_')
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria from US-018 met: generator file, vehicles.length > 4 check, vehicles 5+ mapping, all vehicle fields, multiple pages, Uint8Array | null return, typecheck passes
+  - Next story: US-019 (ZIP Package Generation) will bundle all PDFs together
+---
