@@ -161,3 +161,32 @@
   - Knockout alert should remain visible while questions are shown so user can correct their answers
   - TypeScript compilation succeeds with `npx tsc --noEmit`
 ---
+## 2026-01-19 - US-006
+- What was implemented:
+  - Created src/components/intake/RiskClassifierStage.tsx - Stage 2 Risk Classifier Questions UI
+  - All 8 risk classifier questions with proper conditional logic:
+    1. Hazmat question with conditional hazmat types selector (Flammables, Corrosives, Explosives, Radioactive, Other)
+    2. Farthest travel distance with 4 radius options (Local, Regional, Long Regional, Long Haul) - shows info note for Long Haul
+    3. Fleet size input with fleet discount eligibility note when >10 trucks
+    4. Cargo types multi-select with 10 options (General Freight, Refrigerated, Dry Van, Flatbed, Tanker, Auto Hauler, Household Goods, Intermodal, Oversized, Other)
+    5. Lease-on question with conditional motor carrier text field
+    6. Refrigerated cargo question with conditional reefer breakdown coverage sub-question
+    7. Trailer interchange question with conditional count/zones/radius fields
+    8. New venture question and accidents count input
+  - E&S market warning displays when newVenture=true OR accidentsLast3Years>2
+  - Integrated into page.tsx (replaced "Stage 2 - Coming Soon" placeholder)
+  - Progress indicator already shows "Step 2 of 4" from STAGE_CONFIG
+
+- Files changed:
+  - src/components/intake/RiskClassifierStage.tsx (created - 423 lines)
+  - src/app/page.tsx (updated imports and stage 2 content)
+
+- **Learnings for future iterations:**
+  - Component pattern established: watch() for reactive values, setValue() for updates, conditional rendering based on field values
+  - Multi-select patterns: use array.includes() to check selection, spread operator to toggle items in array
+  - E&S market flags array in RiskProfile interface exists but wasn't used - the warning logic directly checks newVenture and accidentsLast3Years
+  - Use inline styles for conditional UI elements (info boxes, warnings) to avoid creating new CSS classes
+  - Form inputs use controlled components pattern with value={field || ""} to handle null initial values
+  - TypeScript compilation passed with npx tsc --noEmit
+  - All acceptance criteria from US-006 met: 8 questions, conditional logic, cargo options, E&S flags, progress indicator
+---
