@@ -324,8 +324,8 @@
         "Typecheck passes"
       ],
       "priority": 15,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-19. Created src/lib/acord-mappings.ts with comprehensive ACORD form field mappings. Implemented ACORD_125_FIELD_MAP (commercial insurance application with named insured, entity type, prior insurance, loss history, coverage preferences), ACORD_127_FIELD_MAP (trucking supplement with operations questions, driver schedule, vehicle schedule), ACORD_129_FIELD_MAP (vehicle schedule continuation for fleets >4 vehicles). Created mapping functions: mapToAcord125() (returns FieldMapping object with formatted values for all ACORD 125 fields including entity type checkboxes, up to 5 claims, knockout questions all marked No), mapToAcord127() (returns FieldMapping with operations Q&A, up to 4 drivers with violations/accidents summaries, up to 4 vehicles with garaging/lienholder info), mapToAcord129() (returns FieldMapping for continuation vehicles 5+ or null if not needed). Added helper functions for formatting: formatEntityType, formatClaimType, formatViolationType, formatBodyType, formatRadius, formatCurrency, formatLiabilityLimit, formatDeductible, formatAddress, calculateYearsInBusiness. All acceptance criteria met: entity type checkbox mapping, loss history table mapping (up to 5 claims), driver table mapping (up to 4 drivers with violations/accidents), vehicle table mapping (up to 4 vehicles with garaging/lienholder). TypeScript compilation passes with npx tsc --noEmit."
     },
     {
       "id": "US-016",

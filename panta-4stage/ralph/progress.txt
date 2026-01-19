@@ -559,3 +559,80 @@
   - All acceptance criteria from US-014 met: progress indicator, stage names, visual progress bar, back button, save & continue, welcome back prompt, start over, mobile-responsive, form validation
 ---
 
+## 2026-01-19 - US-015
+- What was implemented:
+  - Created src/lib/acord-mappings.ts - comprehensive ACORD form field mapping utility
+  - Implemented ACORD_125_FIELD_MAP object with field mappings for commercial insurance application:
+    * Named Insured section (legal name, DBA, mailing address, phone, FEIN, website)
+    * Entity type checkbox mappings (Individual, Partnership, Corporation, LLC, Other)
+    * Business information (years in business, annual revenue, employees)
+    * Operations description with DOT/MC numbers
+    * Prior insurance section (carrier, policy number, effective/expiration dates, annual premium)
+    * Coverage preferences (liability limits, deductibles, hired/non-owned auto)
+    * Lines of business (Truckers, Motor Carrier - always checked)
+    * Loss history table (up to 5 claims with date, type, amounts, description)
+    * Knockout questions (all marked "No" since applicant passed screening)
+  - Implemented ACORD_127_FIELD_MAP object for trucking application supplement:
+    * Operations questions Q1-Q17 (interstate commerce, radius, maintenance, hazmat, etc.)
+    * Driver schedule (up to 4 drivers with name, DOB, license, experience, violations, accidents)
+    * Vehicle schedule (up to 4 vehicles with year, make, model, VIN, body type, GVW, value, radius, garaging, lienholder)
+    * Garaging address handling
+  - Implemented ACORD_129_FIELD_MAP object for vehicle schedule continuation (for fleets >4 vehicles)
+  - Created mapToAcord125() function returning FieldMapping object:
+    * Maps all business, prior insurance, loss history, and coverage preference fields
+    * Formats entity type as checkbox booleans
+    * Formats currency values with proper $ formatting
+    * Calculates years in business from dateStarted
+    * Maps up to 5 claims with formatted claim types
+    * All knockout questions marked "No"
+  - Created mapToAcord127() function returning FieldMapping object:
+    * Maps operations questions with Yes/No formatting
+    * Formats radius, cargo types, hazmat types, safety components, telematics features
+    * Maps up to 4 drivers with violations and accidents summaries
+    * Maps up to 4 vehicles with formatted body type, radius, garaging, lienholder
+    * Handles conditional garaging address (business vs custom per vehicle)
+  - Created mapToAcord129() function returning FieldMapping | null:
+    * Returns null if vehicles.length <= 4 (not needed)
+    * Maps continuation vehicles (5+) with same vehicle field structure
+    * Includes named insured and policy number header
+  - Added helper functions for formatting:
+    * formatEntityType() - converts entity type enum to display label
+    * formatClaimType() - converts claim type enum to display label
+    * formatViolationType() - converts violation type enum to display label
+    * formatBodyType() - converts vehicle body type enum to display label
+    * formatRadius() - converts radius enum to display label with mileage
+    * formatCurrency() - formats numbers as currency with $ and 2 decimals
+    * formatLiabilityLimit() - formats liability limit with M/K suffixes or custom amount
+    * formatDeductible() - formats deductible amount or custom amount
+    * formatAddress() - formats address object as single line string
+    * calculateYearsInBusiness() - calculates years from dateStarted to current date
+  - Added needsAcord129() utility to check if continuation form needed
+
+- Files changed:
+  - src/lib/acord-mappings.ts (created - 697 lines)
+  - ralph/prd.json (updated - marked US-015 as passes: true)
+
+- **Learnings for future iterations:**
+  - ACORD forms have specific field naming conventions - use descriptive field names matching PDF field names
+  - ACORD 125 is the main commercial insurance application (business info, prior insurance, loss history, coverage)
+  - ACORD 127 is the trucking supplement (operations, drivers, vehicles)
+  - ACORD 129 is the vehicle schedule continuation for fleets with >4 vehicles
+  - Field mappings return objects with PDF field names as keys and formatted values
+  - Entity types should map to checkbox booleans (e.g., entityType === 'llc' → LLC: true, others: false)
+  - Loss history table limited to 5 claims on ACORD 125
+  - Driver schedule limited to 4 drivers on ACORD 127 (would need continuation for more)
+  - Vehicle schedule limited to 4 vehicles on ACORD 127 (ACORD 129 for overflow)
+  - Helper functions handle all enum → display label conversions
+  - Currency formatting uses toLocaleString with 2 decimal places
+  - Liability limits format with M (millions) or K (thousands) suffixes
+  - Address formatting as single line: "street, city, state zip"
+  - Garaging address can be different per vehicle or default to business garaging address
+  - Lienholder information formatted as "name, address" string
+  - Violations and accidents formatted as semicolon-separated summaries per driver
+  - All boolean values in mappings formatted as "Yes"/"No" strings for PDF fields
+  - Knockout questions all marked "No" because applicant passed screening to reach this point
+  - FieldMapping interface uses [fieldName: string]: string | number | boolean | undefined
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - This utility prepares data for PDF generation in US-016, US-017, US-018
+---
+
