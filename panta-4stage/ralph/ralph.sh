@@ -59,13 +59,9 @@ for i in $(seq 1 $MAX_ITERATIONS); do
   echo "  Ralph Iteration $i of $MAX_ITERATIONS"
   echo "═══════════════════════════════════════════════════════"
   
-  if [ ! -f "$SCRIPT_DIR/prompt.md" ]; then
-    echo "Error: prompt.md not found at $SCRIPT_DIR/prompt.md"
-    exit 1
-  fi
-  
-  # Run claude using input redirection - most robust method
-  OUTPUT=$(claude --dangerously-skip-permissions < "$SCRIPT_DIR/prompt.md" 2>&1 | tee /dev/stderr) || true
+  # Run claude with the ralph prompt
+  PROMPT_TEXT=$(cat "$SCRIPT_DIR/prompt.md")
+  OUTPUT=$(claude "$PROMPT_TEXT" --dangerously-skip-permissions 2>&1 | tee /dev/stderr) || true
   
   # Check for completion signal
   if echo "$OUTPUT" | grep -q "<promise>COMPLETE</promise>"; then
