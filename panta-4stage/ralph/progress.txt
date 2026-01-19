@@ -368,3 +368,52 @@
   - TypeScript compilation passes with npx tsc --noEmit
 ---
 
+## 2026-01-19 - US-011
+- What was implemented:
+  - Created src/components/intake/PriorInsuranceSection.tsx - Stage 3.5 Prior Insurance & Claims Section
+  - Comprehensive prior insurance history and claims collection form with all required fields:
+    * Currently insured Yes/No toggle
+    * Conditional current insurance details section:
+      - Carrier name (text input, required)
+      - Policy number (text input, required)
+      - Annual premium (currency formatted with $ and comma separators, required)
+      - Effective date (date picker, required)
+      - Expiration date (date picker, required)
+    * Why shopping selector with 6 options (radio-style buttons):
+      - renewal_coming_up, want_better_rates, need_higher_limits, non_renewed, cancelled, other
+    * Claims in last 5 years Yes/No toggle
+    * Conditional dynamic claims array with add/remove functionality:
+      - Date of loss (date picker, required)
+      - Type dropdown (6 claim types: Collision, Cargo Damage, Bodily Injury Liability, Property Damage Liability, Comprehensive, Other)
+      - Amount paid (currency formatted, optional)
+      - Amount reserved (currency formatted, optional)
+      - Still open Yes/No toggle
+      - Description (textarea, required)
+  - Collapsible section UI matching BusinessInfoSection, OperationsSafetySection patterns
+  - Running count not shown (unlike vehicles/drivers) - just add/remove claims
+  - Auto-add first claim when user selects "Yes" to hasClaims
+  - Clear claims array when toggling to "No"
+  - Integrated into page.tsx Stage 3 (after DriverSection)
+
+- Files changed:
+  - src/components/intake/PriorInsuranceSection.tsx (created - 559 lines)
+  - src/app/page.tsx (updated - added import and component)
+  - ralph/prd.json (updated - marked US-011 as passes: true)
+
+- **Learnings for future iterations:**
+  - Field name mapping critical: Review intake.ts types BEFORE writing component
+  - PriorInsurance interface uses: carrierName (not currentCarrier), policyNumber (not currentPolicyNumber), annualPremium (not currentAnnualPremium), effectiveDate (not currentEffectiveDate), expirationDate (not currentExpirationDate), shoppingReason (not whyShopping)
+  - Claim interface uses: dateOfLoss (not date), type, description, amountPaid, amountReserved, stillOpen
+  - ShoppingReason type values use snake_case: renewal_coming_up, want_better_rates, need_higher_limits, non_renewed, cancelled, other
+  - ClaimType values use snake_case: collision, cargo_damage, bodily_injury_liability, property_damage_liability, comprehensive, other
+  - No defaultClaim export in intake.ts - define locally in component or inline
+  - Currency formatting pattern: formatCurrency helper strips non-numeric, parses int, formats with toLocaleString
+  - Amount paid/reserved fields are optional (not required) unlike other fields
+  - Still open toggle is boolean (not nullable boolean like knockout fields)
+  - Component file created in wrong location initially (ralph/src instead of project src) - need to be aware of working directory
+  - Use absolute paths from project root when reading/writing files
+  - Dev server runs on port 3001 (as documented in CLAUDE.md)
+  - TypeScript compilation passes with npx tsc --noEmit (no need for npm run typecheck)
+  - All acceptance criteria from US-011 met: collapsible section, all fields, conditional logic, dynamic claims array, claim types dropdown
+---
+
