@@ -945,3 +945,26 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-022
 ---
+
+## 2026-01-20 - US-023
+Thread: N/A
+- What was implemented:
+  - Added green confirmation message to RiskClassifierStage.tsx hazmat question section
+  - Confirmation message displays when hazmat === false (not when null or true)
+  - Message text: "✅ Got it - we'll skip the hazmat questions."
+  - Styling: green background rgba(34, 197, 94, 0.1), rounded corners 8px, 0.75rem padding, 0.9rem font size, secondary text color
+  - Message positioned below Yes/No buttons, above hazmat types selector (when Yes selected)
+  - When user changes from No to Yes, confirmation hides and hazmat types selector shows
+  
+- Files changed:
+  - src/components/intake/RiskClassifierStage.tsx (added conditional confirmation message after yes-no-grid)
+  - ralph/prd.json (updated US-023 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - Confirmation messages provide reassurance when users select "No" to complex questions
+  - Use hazmat === false condition (not just !hazmat) to exclude null state
+  - Green background rgba(34, 197, 94, 0.1) matches existing positive feedback styling
+  - Position confirmation message between buttons and conditional follow-up questions
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-023
+---
