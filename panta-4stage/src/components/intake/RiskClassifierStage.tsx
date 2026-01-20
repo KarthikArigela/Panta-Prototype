@@ -121,14 +121,14 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
       {/* Question 2: Farthest Travel Distance */}
       <div className="form-group">
         <div className="question-counter">Question 2 of 8</div>
-        <label className="form-label">What&apos;s the farthest distance your trucks travel from your home base?</label>
-        <span className="form-sublabel">This is also called &quot;radius of operation&quot;</span>
+        <label className="form-label">Where do your trucks typically go?</label>
+        <span className="form-sublabel">Think about your farthest regular route</span>
         <div className="options-grid">
           {[
-            { value: "local", label: "Local", desc: "Less than 50 miles" },
-            { value: "regional", label: "Regional", desc: "50-200 miles" },
-            { value: "long_regional", label: "Long Regional", desc: "200-500 miles" },
-            { value: "long_haul", label: "Long Haul", desc: "Over 500 miles" },
+            { value: "local", label: "Around town", desc: "Under 50 miles" },
+            { value: "regional", label: "Nearby states", desc: "50-200 miles" },
+            { value: "long_regional", label: "Multi-state", desc: "200-500 miles" },
+            { value: "long_haul", label: "Cross-country", desc: "Over 500 miles" },
           ].map((option) => (
             <div
               key={option.value}
