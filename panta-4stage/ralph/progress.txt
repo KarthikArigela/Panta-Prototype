@@ -968,3 +968,27 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-023
 ---
+
+## 2026-01-20 - US-024
+Thread: N/A
+- What was implemented:
+  - Added time estimate banner to KnockoutStage.tsx above 'Quick Check' heading
+  - Banner heading: "📋 Get Your Quote in Under 10 Minutes" (1.1rem font size, 600 weight, 0.25rem bottom margin)
+  - Banner subtext: "No 40-page forms. Just 4 quick sections." (0.9rem font size)
+  - Created .time-estimate CSS class in globals.css with styling: light green background rgba(34, 197, 94, 0.1), rounded corners (var(--radius-md)), centered text, 1rem padding, 1.5rem bottom margin
+  - Banner positioned before card-header to be first thing user sees on Stage 1
+  
+- Files changed:
+  - src/components/intake/KnockoutStage.tsx (added time-estimate banner before card-header)
+  - src/app/globals.css (added .time-estimate CSS class before .card)
+  - ralph/prd.json (updated US-024 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - Time estimates reduce form abandonment by setting user expectations
+  - Positioning banner before header ensures visibility as first element
+  - Light green background matches positive, encouraging tone
+  - "Under 10 Minutes" communicates speed, "4 quick sections" breaks down the task
+  - Emphasizing "No 40-page forms" addresses common pain point with insurance applications
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-024
+---
