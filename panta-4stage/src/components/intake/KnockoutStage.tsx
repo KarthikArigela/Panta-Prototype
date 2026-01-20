@@ -82,6 +82,15 @@ export function KnockoutStage({ form }: KnockoutStageProps) {
 
   return (
     <>
+      <div className="time-estimate">
+        <div style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "0.25rem" }}>
+          📋 Get Your Quote in Under 10 Minutes
+        </div>
+        <div style={{ fontSize: "0.9rem" }}>
+          No 40-page forms. Just 4 quick sections.
+        </div>
+      </div>
+
       <div className="card-header">
         <h2>🔍 Quick Check</h2>
         <p>Let&apos;s make sure we can help you before going further.</p>
