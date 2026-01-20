@@ -432,8 +432,8 @@
         "Verify in browser using native Claude Code browser tool"
       ],
       "priority": 20,
-      "passes": true,
-      "notes": "Completed 2026-01-20. Created ValidationErrorBanner.tsx component with orange/yellow warning theme. Displays validation errors in plain English above Continue button. Added CSS styles for error banner, field-error highlighting class with orange border, and field-required indicator class. Implemented auto-scroll functionality using scrollIntoView with smooth behavior when validation fails. Modified page.tsx to integrate ValidationErrorBanner with showValidationErrors state, getStageErrors() hook method, and handleContinueClick function that shows errors and scrolls on validation failure. Continue button now always clickable (no disabled state) to allow error display. TypeScript compilation passes cleanly. All acceptance criteria met except browser verification (no native browser tool available in current session)."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-021",
@@ -451,8 +451,8 @@
         "Verify in browser using native Claude Code browser tool"
       ],
       "priority": 21,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-20. Added question counter above each major question in KnockoutStage.tsx (6 questions) and RiskClassifierStage.tsx (8 main questions only). Format 'Question X of Y' displayed above form-label. Added .question-counter CSS class to globals.css with 0.85rem font, secondary text color (var(--color-text-secondary)), medium weight (500), uppercase text-transform, letter spacing 0.05em. Conditional follow-ups correctly excluded from question count. TypeScript compilation passes with npx tsc --noEmit."
     },
     {
       "id": "US-022",

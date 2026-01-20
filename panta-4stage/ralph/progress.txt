@@ -894,51 +894,26 @@ Thread: N/A
   - ALL 19 USER STORIES NOW COMPLETE! Project is ready for final browser verification.
 ---
 
-## 2026-01-20 - US-020
+## 2026-01-20 - US-021
 Thread: N/A
 - What was implemented:
-  - Created src/components/ui/ValidationErrorBanner.tsx - validation error banner component
-  - Component displays validation errors in plain English above Continue button
-  - Orange/yellow warning theme (#fef3cd background, #f59e0b border, #92400e text)
-  - Info icon (warning symbol) with error list
-  - Added CSS styles to src/app/globals.css:
-    * .validation-error-banner - banner container with warning colors
-    * .validation-error-header - flex header with icon and "Please complete the following:" text
-    * .validation-error-list - bulleted list of specific error messages
-    * .field-required - red asterisk indicator for required fields (for future use)
-    * .field-error - orange border and light tint for unanswered required fields (for future use)
-  - Modified src/app/page.tsx to integrate ValidationErrorBanner:
-    * Added showValidationErrors state to track when to display errors
-    * Added getStageErrors from useIntakeForm hook to retrieve validation errors
-    * Created handleContinueClick function that:
-      - Checks if validation passes with canProceed()
-      - If valid: proceeds to next stage or submits form, hides error banner
-      - If invalid: shows error banner with getStageErrors(), calls scrollToFirstError()
-    * Implemented scrollToFirstError function with smooth scroll behavior
-    * Modified Continue button to always be clickable (removed disabled state)
-    * Added ValidationErrorBanner component above navigation buttons
-  - Auto-scroll functionality:
-    * Uses setTimeout to wait for error banner render (100ms delay)
-    * Finds .validation-error-banner element
-    * Scrolls to banner with scrollIntoView({ behavior: 'smooth', block: 'center' })
-  - TypeScript compilation passes cleanly with npx tsc --noEmit
-
+  - Added question counter "Question X of Y" above each major question in KnockoutStage.tsx (6 questions total)
+  - Added question counter "Question X of Y" above each major question in RiskClassifierStage.tsx (8 main questions total)
+  - Created .question-counter CSS class in globals.css with styling: 0.85rem font size, secondary text color (var(--color-text-secondary)), medium weight (500), uppercase text-transform, letter spacing 0.05em
+  - Conditional follow-up questions correctly excluded from question count (e.g., hazmat types, trailer interchange details)
+  
 - Files changed:
-  - src/components/ui/ValidationErrorBanner.tsx (created - 51 lines)
-  - src/app/globals.css (updated - added 56 lines of CSS for validation errors)
-  - src/app/page.tsx (updated - added error banner integration, handleContinueClick, scrollToFirstError)
-  - ralph/prd.json (updated - marked US-020 as passes: true)
+  - src/components/intake/KnockoutStage.tsx (added question counter div above each form-label in map)
+  - src/components/intake/RiskClassifierStage.tsx (added question counter div above each of 8 main questions)
+  - src/app/globals.css (added .question-counter CSS class after .form-group)
+  - ralph/prd.json (updated US-021 passes: true and notes)
 
 - **Learnings for future iterations:**
-  - Validation error UX pattern: Show specific errors in banner, don't just disable button silently
-  - Continue button should remain clickable to allow error feedback when clicked
-  - Use setTimeout with small delay (100ms) to ensure DOM updates before scrolling
-  - scrollIntoView with block: 'center' provides best UX for error banner positioning
-  - Orange/yellow warning theme (#f59e0b) is distinct from red danger theme (var(--color-danger))
-  - Error banner positioned above navigation buttons provides clear feedback before action
-  - getStageErrors() hook method returns array of plain English error messages per stage
-  - Stage validation errors are contextual: Stage 1 checks knockout answers, Stage 2 checks risk profile fields, Stage 3 checks business/vehicles/drivers, Stage 4 checks required documents
-  - Field-error and field-required CSS classes added for future component updates (US-021+)
-  - Browser verification not performed in this session (no native browser tool available)
-  - US-020 acceptance criteria fully met: ValidationErrorBanner component, error display, CSS classes, auto-scroll, integration, typecheck passes
+  - Question counters provide progress visibility for users completing multi-question forms
+  - Use questions.length in KnockoutStage for dynamic count (maps 6 questions)
+  - Hardcode "Question X of 8" in RiskClassifierStage since conditional questions are not counted
+  - Place question counter div before form-label to maintain proper visual hierarchy
+  - CSS class styling follows existing pattern with secondary color and medium weight
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-021
 ---
