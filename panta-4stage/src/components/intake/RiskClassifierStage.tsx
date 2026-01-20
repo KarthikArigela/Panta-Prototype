@@ -91,6 +91,15 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
           </button>
         </div>
 
+        {/* Confirmation message when hazmat = false */}
+        {hazmat === false && (
+          <div style={{ marginTop: "0.75rem", padding: "0.75rem", background: "rgba(34, 197, 94, 0.1)", borderRadius: "8px" }}>
+            <span style={{ fontSize: "0.9rem", color: "var(--color-text-secondary)" }}>
+              ✅ Got it - we&apos;ll skip the hazmat questions.
+            </span>
+          </div>
+        )}
+
         {/* Conditional: Hazmat Types */}
         {hazmat === true && (
           <div style={{ marginTop: "1rem" }}>
