@@ -414,6 +414,119 @@
       "priority": 19,
       "passes": true,
       "notes": "Completed 2026-01-19. Created src/lib/pdf/zipPackager.ts with comprehensive ZIP package generation using JSZip 3.10.1. Implemented generateSubmissionPackageZip() function that bundles all ACORD PDFs and uploaded documents. ZIP package includes: ACORD_125_[BusinessName].pdf, ACORD_127_[BusinessName].pdf, ACORD_129_[BusinessName].pdf (if vehicles>4), all uploaded documents with clear names (Loss_Runs_[BusinessName].pdf, MC_DOT_Authority_Letter_[BusinessName].pdf, etc.). ZIP filename format: Panta_Submission_[BusinessName]_[YYYY-MM-DD].zip. Added downloadSubmissionPackage() helper for browser download with URL.createObjectURL. Added getSubmissionPackageDocumentCount() utility to count total documents. Created src/components/intake/DownloadPacket.tsx with comprehensive submission UI: success icon, success message 'Your submission packet is ready!', document count display, download button with loading/complete states, what's included list, what happens next section. Integrated into page.tsx with isSubmitted state - shows after clicking Submit Application on Stage 4. Added jszip dependency. Updated tsconfig.json to exclude ralph directory from type checking. TypeScript compilation passes with npx tsc --noEmit. All acceptance criteria met."
+    },
+    {
+      "id": "US-020",
+      "title": "Validation Error Display and Auto-Scroll",
+      "description": "As a trucking owner, I want to see exactly which questions I missed so I don't abandon the form when the Continue button is disabled.",
+      "acceptanceCriteria": [
+        "Create src/components/ui/ValidationErrorBanner.tsx component",
+        "Display error banner above Continue button when validation fails",
+        "Error banner shows specific missing fields in plain English",
+        "Add yellow/orange highlight border class to unanswered required fields",
+        "When user clicks disabled Continue button, scroll to first unanswered required field",
+        "Use smooth scroll behavior with scrollIntoView({ behavior: 'smooth' })",
+        "Add 'Required' indicator next to required field labels",
+        "Integrate ValidationErrorBanner into page.tsx navigation section",
+        "Typecheck passes",
+        "Verify in browser using native Claude Code browser tool"
+      ],
+      "priority": 20,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-021",
+      "title": "Question Progress Indicators",
+      "description": "As a trucking owner, I want to see 'Question X of Y' on each question so I know how much is left.",
+      "acceptanceCriteria": [
+        "Add question counter above each major question in KnockoutStage.tsx",
+        "Format: 'Question 1 of 6' styled smaller than question label",
+        "Add question counter above each major question in RiskClassifierStage.tsx",
+        "Format: 'Question 1 of 8' for main questions only",
+        "Do NOT count conditional follow-ups as separate questions",
+        "Counter styling: 0.85rem font, secondary text color, medium weight",
+        "Add CSS class .question-counter to index.css",
+        "Typecheck passes",
+        "Verify in browser using native Claude Code browser tool"
+      ],
+      "priority": 21,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-022",
+      "title": "Reword Radius of Operation to Route-Based Language",
+      "description": "As a trucking owner, I think in terms of routes not miles, so I need route-based language.",
+      "acceptanceCriteria": [
+        "Update RiskClassifierStage.tsx radius question label to 'Where do your trucks typically go?'",
+        "Update sublabel to 'Think about your farthest regular route'",
+        "Change option label 'Local' to 'Around town' (desc: 'Under 50 miles')",
+        "Change option label 'Regional' to 'Nearby states' (desc: '50-200 miles')",
+        "Change option label 'Long Regional' to 'Multi-state' (desc: '200-500 miles')",
+        "Change option label 'Long Haul' to 'Cross-country' (desc: 'Over 500 miles')",
+        "Keep internal values unchanged: local, regional, long_regional, long_haul",
+        "Typecheck passes",
+        "Verify in browser using native Claude Code browser tool"
+      ],
+      "priority": 22,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-023",
+      "title": "Hazmat No Path Confirmation Message",
+      "description": "As a trucking owner who doesn't haul hazmat, I want confirmation that I can skip hazmat questions.",
+      "acceptanceCriteria": [
+        "Update RiskClassifierStage.tsx hazmat question section",
+        "When hazmat === false, show green confirmation message below buttons",
+        "Confirmation text: '✅ Got it - we'll skip the hazmat questions.'",
+        "Message styling: green background rgba(34, 197, 94, 0.1), rounded corners, 0.75rem padding",
+        "Message only shows when hazmat === false, not when hazmat === null",
+        "When user changes to Yes, hide confirmation and show hazmat types",
+        "Typecheck passes",
+        "Verify in browser using native Claude Code browser tool"
+      ],
+      "priority": 23,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-024",
+      "title": "Time to Complete Estimate at Start",
+      "description": "As a trucking owner with limited time, I want to know upfront how long this will take.",
+      "acceptanceCriteria": [
+        "Update KnockoutStage.tsx header section",
+        "Add time estimate banner above 'Quick Check' heading",
+        "Banner heading: '📋 Get Your Quote in Under 10 Minutes'",
+        "Banner subtext: 'No 40-page forms. Just 4 quick sections.'",
+        "Banner styling: light green background, rounded corners, centered text, 1rem padding",
+        "Add CSS class .time-estimate to index.css",
+        "Typecheck passes",
+        "Verify in browser using native Claude Code browser tool"
+      ],
+      "priority": 24,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-025",
+      "title": "Info Tooltips for Insurance Jargon",
+      "description": "As a trucking owner unfamiliar with insurance jargon, I want tooltips that explain terms in plain English.",
+      "acceptanceCriteria": [
+        "Create src/components/ui/InfoTooltip.tsx component",
+        "Tooltip displays as small (i) info icon next to question labels",
+        "On hover, show tooltip content in floating box with arrow pointer",
+        "Tooltip box styling: white background, shadow, rounded corners, max-width 300px",
+        "Add tooltip to KnockoutStage Q2 (DOT Safety Rating): 'Most carriers have Satisfactory or no rating.'",
+        "Add tooltip to RiskClassifierStage Q7 (Trailer Interchange): 'Swapping trailers with other carriers at rail yards.'",
+        "Tooltip closes when mouse leaves or clicking outside",
+        "Typecheck passes",
+        "Verify in browser using native Claude Code browser tool"
+      ],
+      "priority": 25,
+      "passes": false,
+      "notes": ""
     }
   ]
 }
