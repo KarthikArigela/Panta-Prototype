@@ -525,8 +525,8 @@
         "Verify in browser using native Claude Code browser tool"
       ],
       "priority": 25,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-20. Created src/components/ui/InfoTooltip.tsx component with hover-based tooltip functionality. Tooltip displays as small (i) info icon next to question labels. On hover, shows floating box with white background, shadow, rounded corners, max-width 300px, arrow pointer. Tooltip closes when mouse leaves icon. Added tooltip to KnockoutStage Q2 (DOT Safety Rating): 'Most carriers have Satisfactory or no rating.' Added tooltip to RiskClassifierStage Q7 (Trailer Interchange): 'Swapping trailers with other carriers at rail yards.' Imported InfoTooltip component in both stage files. TypeScript compilation passes with npx tsc --noEmit."
     }
   ]
 }

@@ -992,3 +992,37 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-024
 ---
+
+## 2026-01-20 - US-025
+Thread: N/A
+- What was implemented:
+  - Created src/components/ui/InfoTooltip.tsx reusable tooltip component
+  - Tooltip displays as small (i) info icon (18px circle with border) next to question labels
+  - On hover, shows floating box positioned above icon with:
+    * White background, shadow (0 4px 12px rgba(0, 0, 0, 0.15)), rounded corners (8px)
+    * Max-width 300px, min-width 200px, 0.75rem padding
+    * Arrow pointer below box pointing to icon
+    * Z-index 1000 to appear above other elements
+  - Icon hover effect: border and text color change to primary color
+  - Tooltip closes when mouse leaves icon (onMouseLeave event)
+  - Added tooltip to KnockoutStage Q2 (DOT Safety Rating): "Most carriers have Satisfactory or no rating."
+  - Added tooltip to RiskClassifierStage Q7 (Trailer Interchange): "Swapping trailers with other carriers at rail yards."
+  - Imported InfoTooltip component in KnockoutStage and RiskClassifierStage
+  
+- Files changed:
+  - src/components/ui/InfoTooltip.tsx (created - reusable tooltip component)
+  - src/components/intake/KnockoutStage.tsx (imported InfoTooltip, added tooltip property to Q2, conditionally render tooltip in label)
+  - src/components/intake/RiskClassifierStage.tsx (imported InfoTooltip, added inline InfoTooltip to Q7 label)
+  - ralph/prd.json (updated US-025 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - Tooltips improve accessibility by explaining insurance jargon in plain English
+  - Position tooltips above icon (bottom: calc(100% + 8px)) to avoid covering content below
+  - Arrow pointer created with CSS borders (8px triangle)
+  - Use cursor: help on icon to indicate hover functionality
+  - pointerEvents: none on tooltip box prevents mouse interaction with tooltip itself
+  - InfoTooltip is reusable - can be added to any question label throughout the form
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-025
+  - ALL 25 USER STORIES NOW COMPLETE!
+---
