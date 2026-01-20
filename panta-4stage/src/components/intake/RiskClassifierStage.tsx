@@ -2,6 +2,7 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { SmartIntakeData, HazmatType, CargoType } from "@/types/intake";
+import { InfoTooltip } from "@/components/ui/InfoTooltip";
 
 interface RiskClassifierStageProps {
   form: UseFormReturn<SmartIntakeData>;
@@ -313,7 +314,10 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
       {/* Question 7: Trailer Interchange */}
       <div className="form-group">
         <div className="question-counter">Question 7 of 8</div>
-        <label className="form-label">Do you use trailer interchange?</label>
+        <label className="form-label">
+          Do you use trailer interchange?
+          <InfoTooltip content="Swapping trailers with other carriers at rail yards." />
+        </label>
         <span className="form-sublabel">
           Swapping trailers with other carriers (requires special coverage)
         </span>

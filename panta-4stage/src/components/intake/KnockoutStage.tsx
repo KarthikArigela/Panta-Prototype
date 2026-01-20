@@ -2,6 +2,7 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { SmartIntakeData } from "@/types/intake";
+import { InfoTooltip } from "@/components/ui/InfoTooltip";
 
 interface KnockoutStageProps {
   form: UseFormReturn<SmartIntakeData>;
@@ -49,6 +50,7 @@ export function KnockoutStage({ form }: KnockoutStageProps) {
       label: "Is your current DOT Safety Rating 'Unsatisfactory'?",
       sublabel: "Check your FMCSA profile if you're not sure. Most carriers have 'Satisfactory' or no rating.",
       value: safetyRatingUnsatisfactory,
+      tooltip: "Most carriers have Satisfactory or no rating.",
     },
     {
       field: "driverLicenseRevoked" as const,
@@ -112,7 +114,10 @@ export function KnockoutStage({ form }: KnockoutStageProps) {
       {questions.map((question, index) => (
         <div key={question.field} className="form-group" style={{ marginTop: index > 0 ? "2rem" : 0 }}>
           <div className="question-counter">Question {index + 1} of {questions.length}</div>
-          <label className="form-label">{question.label}</label>
+          <label className="form-label">
+            {question.label}
+            {"tooltip" in question && question.tooltip && <InfoTooltip content={question.tooltip} />}
+          </label>
           <span className="form-sublabel">{question.sublabel}</span>
           <div className="yes-no-grid">
             <button
