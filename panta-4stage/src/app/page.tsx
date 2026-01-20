@@ -13,12 +13,14 @@ import PriorInsuranceSection from "@/components/intake/PriorInsuranceSection";
 import { CoveragePreferencesSection } from "@/components/intake/CoveragePreferencesSection";
 import { DocumentGateStage } from "@/components/intake/DocumentGateStage";
 import DownloadPacket from "@/components/intake/DownloadPacket";
+import { ValidationErrorBanner } from "@/components/ui/ValidationErrorBanner";
 
 // ===========================
 // MAIN COMPONENT
 // ===========================
 export default function SmartIntake() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showValidationErrors, setShowValidationErrors] = useState(false);
 
   const {
     form,
@@ -27,6 +29,7 @@ export default function SmartIntake() {
     hasRestoredState,
     isKnockedOut,
     canProceed,
+    getStageErrors,
     goToNextStage,
     goToPrevStage,
     saveNow,
@@ -36,12 +39,45 @@ export default function SmartIntake() {
     startFresh,
   } = useIntakeForm();
 
-
   // Handle form submission
   const handleSubmit = () => {
     if (currentStage === totalStages && canProceed()) {
       setIsSubmitted(true);
     }
+  };
+
+  // Handle Continue button click with validation error display
+  const handleContinueClick = () => {
+    if (currentStage === totalStages) {
+      // Last stage - submit
+      if (canProceed()) {
+        setShowValidationErrors(false);
+        handleSubmit();
+      } else {
+        setShowValidationErrors(true);
+        scrollToFirstError();
+      }
+    } else {
+      // Navigate to next stage
+      if (goToNextStage()) {
+        setShowValidationErrors(false);
+      } else {
+        setShowValidationErrors(true);
+        scrollToFirstError();
+      }
+    }
+  };
+
+  // Scroll to first unanswered required field
+  const scrollToFirstError = () => {
+    // Wait for next tick to ensure error banner is rendered
+    setTimeout(() => {
+      // Try to find first unanswered field or error banner
+      const errorBanner = document.querySelector('.validation-error-banner');
+      if (errorBanner) {
+        errorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
   };
 
   // ===========================
@@ -102,6 +138,14 @@ export default function SmartIntake() {
         )}
         {currentStage === 4 && <DocumentGateStage form={form} />}
 
+        {/* Validation Error Banner */}
+        {!isKnockedOut && showValidationErrors && (
+          <ValidationErrorBanner
+            errors={getStageErrors()}
+            show={true}
+          />
+        )}
+
         {/* Navigation */}
         {!isKnockedOut && (
           <div className="button-row">
@@ -115,8 +159,7 @@ export default function SmartIntake() {
             </button>
             <button
               className="btn btn-primary"
-              onClick={currentStage === totalStages ? handleSubmit : goToNextStage}
-              disabled={!canProceed()}
+              onClick={handleContinueClick}
             >
               {currentStage === totalStages ? "Submit Application" : "Continue →"}
             </button>
