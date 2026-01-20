@@ -212,6 +212,15 @@ h3 {
   margin-bottom: 1.5rem;
 }
 
+.question-counter {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .form-label {
   display: block;
   font-weight: 500;

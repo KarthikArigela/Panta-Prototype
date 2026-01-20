@@ -102,6 +102,7 @@ export function KnockoutStage({ form }: KnockoutStageProps) {
       {/* Render all questions (even if knocked out, so user can change answers) */}
       {questions.map((question, index) => (
         <div key={question.field} className="form-group" style={{ marginTop: index > 0 ? "2rem" : 0 }}>
+          <div className="question-counter">Question {index + 1} of {questions.length}</div>
           <label className="form-label">{question.label}</label>
           <span className="form-sublabel">{question.sublabel}</span>
           <div className="yes-no-grid">

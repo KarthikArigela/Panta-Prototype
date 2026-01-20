@@ -69,6 +69,7 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
 
       {/* Question 1: Hazmat */}
       <div className="form-group">
+        <div className="question-counter">Question 1 of 8</div>
         <label className="form-label">Do you haul hazardous materials (HAZMAT)?</label>
         <span className="form-sublabel">
           This includes anything requiring a placard or special DOT endorsement.
@@ -119,6 +120,7 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
 
       {/* Question 2: Farthest Travel Distance */}
       <div className="form-group">
+        <div className="question-counter">Question 2 of 8</div>
         <label className="form-label">What&apos;s the farthest distance your trucks travel from your home base?</label>
         <span className="form-sublabel">This is also called &quot;radius of operation&quot;</span>
         <div className="options-grid">
@@ -150,6 +152,7 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
 
       {/* Question 3: Fleet Size */}
       <div className="form-group">
+        <div className="question-counter">Question 3 of 8</div>
         <label className="form-label">How many trucks/tractors do you have in total?</label>
         <span className="form-sublabel">Include owned and leased power units</span>
         <input
@@ -176,6 +179,7 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
 
       {/* Question 4: Cargo Types */}
       <div className="form-group">
+        <div className="question-counter">Question 4 of 8</div>
         <label className="form-label">What types of cargo do you haul?</label>
         <span className="form-sublabel">Select all that apply</span>
         <div className="options-grid">
@@ -205,6 +209,7 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
 
       {/* Question 5: Lease On */}
       <div className="form-group">
+        <div className="question-counter">Question 5 of 8</div>
         <label className="form-label">Do you lease on to another motor carrier?</label>
         <span className="form-sublabel">
           This means you operate under someone else&apos;s authority
@@ -245,6 +250,7 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
 
       {/* Question 6: Refrigerated Cargo */}
       <div className="form-group">
+        <div className="question-counter">Question 6 of 8</div>
         <label className="form-label">Do you haul refrigerated cargo?</label>
         <span className="form-sublabel">Temperature-controlled reefer trailers</span>
         <div className="yes-no-grid">
@@ -297,6 +303,7 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
 
       {/* Question 7: Trailer Interchange */}
       <div className="form-group">
+        <div className="question-counter">Question 7 of 8</div>
         <label className="form-label">Do you use trailer interchange?</label>
         <span className="form-sublabel">
           Swapping trailers with other carriers (requires special coverage)
@@ -371,6 +378,7 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
 
       {/* Question 8: New Venture & Accidents */}
       <div className="form-group">
+        <div className="question-counter">Question 8 of 8</div>
         <label className="form-label">Is this a new venture (less than 3 years in business)?</label>
         <div className="yes-no-grid">
           <button
