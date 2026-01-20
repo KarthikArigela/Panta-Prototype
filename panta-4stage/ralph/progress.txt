@@ -917,3 +917,31 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-021
 ---
+
+## 2026-01-20 - US-022
+Thread: N/A
+- What was implemented:
+  - Updated RiskClassifierStage.tsx radius question to use route-based language instead of technical distance terms
+  - Changed question label from "What's the farthest distance your trucks travel from your home base?" to "Where do your trucks typically go?"
+  - Changed sublabel from "This is also called 'radius of operation'" to "Think about your farthest regular route"
+  - Updated option labels to route-based language:
+    * "Local" → "Around town" (desc: "Under 50 miles")
+    * "Regional" → "Nearby states" (desc: "50-200 miles")
+    * "Long Regional" → "Multi-state" (desc: "200-500 miles")
+    * "Long Haul" → "Cross-country" (desc: "Over 500 miles")
+  - Internal values remain unchanged (local, regional, long_regional, long_haul) for backend compatibility
+  
+- Files changed:
+  - src/components/intake/RiskClassifierStage.tsx (updated Question 2 labels and options)
+  - ralph/prd.json (updated US-022 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - Route-based language is more intuitive for trucking owners than technical distance measurements
+  - "Around town" better conveys local delivery than "Local"
+  - "Nearby states" better describes short regional haul than "Regional"
+  - "Multi-state" clearly communicates medium-distance operations
+  - "Cross-country" is more relatable than "Long Haul"
+  - Keep internal enum values unchanged to avoid breaking backend/validation logic
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-022
+---
