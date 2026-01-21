@@ -475,13 +475,28 @@ export function DriverSection({ form }: DriverSectionProps) {
             </div>
           ))}
 
+          {/* Add Driver Button */}
           <button
             type="button"
             onClick={addDriver}
-            className="btn-primary"
-            style={{ width: "100%", marginTop: "1rem" }}
+            style={{
+              width: "100%",
+              padding: "1rem",
+              background: "var(--color-accent)",
+              color: "white",
+              border: "none",
+              borderRadius: "var(--radius-md)",
+              cursor: "pointer",
+              fontSize: "1rem",
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
+            }}
           >
-            + Add Driver
+            <span style={{ fontSize: "1.25rem" }}>+</span>
+            Add Driver
           </button>
         </div>
       )}

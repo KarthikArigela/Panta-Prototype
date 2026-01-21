@@ -1226,3 +1226,27 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-034
 ---
+
+## 2026-01-21 - US-035
+Thread: N/A
+- What was implemented:
+  - Updated radiusOptions array in VehicleScheduleSection.tsx to match RiskClassifierStage route-based language
+  - Changed "Local" → "Around town" (Under 50 miles)
+  - Changed "Regional" → "Nearby states" (50-200 miles)
+  - Changed "Long Regional" → "Multi-state" (200-500 miles)
+  - Changed "Long Haul" → "Cross-country" (Over 500 miles)
+  - Descriptions remain same (Under 50 miles, 50-200 miles, 200-500 miles, Over 500 miles)
+  - Internal values unchanged (local, regional, long_regional, long_haul)
+
+- Files changed:
+  - src/components/intake/VehicleScheduleSection.tsx (updated radiusOptions labels)
+  - ralph/prd.json (updated US-035 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - Consistent terminology across form stages improves UX and reduces confusion
+  - Route-based language established in US-022 for RiskClassifierStage
+  - Now VehicleScheduleSection matches RiskClassifierStage for consistency
+  - "Around town", "Nearby states", "Multi-state", "Cross-country" more intuitive than technical distance terms
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-035
+---
