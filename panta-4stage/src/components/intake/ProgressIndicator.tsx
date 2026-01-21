@@ -157,13 +157,12 @@ export function ProgressIndicator({
         {STAGE_CONFIG.map((stage) => (
           <div
             key={stage.id}
-            className={`progress-step ${
-              currentStage === stage.id
+            className={`progress-step ${currentStage === stage.id
                 ? "active"
                 : currentStage > stage.id
-                ? "completed"
-                : ""
-            }`}
+                  ? "completed"
+                  : ""
+              }`}
           >
             <div className="progress-circle">
               {currentStage > stage.id ? "✓" : stage.id}
@@ -181,7 +180,10 @@ export function ProgressIndicator({
           alignItems: "center",
           marginBottom: "24px",
           flexWrap: "wrap",
-          gap: "16px",
+          gap: "12px",
+          maxWidth: "700px",
+          margin: "0 auto 24px auto",
+          padding: "0 1rem",
         }}
       >
         {/* Current Stage Info */}

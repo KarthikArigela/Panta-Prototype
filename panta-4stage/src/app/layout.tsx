@@ -21,20 +21,25 @@ export default function RootLayout({
       </head>
       <body>
         <header style={{
-          padding: '1rem 2rem',
+          padding: '0.75rem 2rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'rgba(255,255,255,0.8)',
-          backdropFilter: 'blur(10px)',
+          background: '#0A3F2F',
           borderBottom: '1px solid var(--color-border)',
           position: 'sticky',
           top: 0,
           zIndex: 100
         }}>
-          <div style={{ fontWeight: 700, fontSize: '1.5rem', color: 'var(--color-primary)' }}>
-            🚚 PANTA
-          </div>
+          <span style={{
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontWeight: 600,
+            fontSize: '1.5rem',
+            color: '#D4C5A6',
+            letterSpacing: '0.02em'
+          }}>
+            Panta
+          </span>
         </header>
         <main style={{ padding: '2rem 1rem', minHeight: 'calc(100vh - 80px)' }}>
           {children}
