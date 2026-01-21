@@ -2,10 +2,12 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { SmartIntakeData, Vehicle, VehicleBodyType, VehicleRadius, defaultVehicle } from "@/types/intake";
-import { useState } from "react";
+
 
 interface VehicleScheduleSectionProps {
   form: UseFormReturn<SmartIntakeData>;
+  isExpanded?: boolean;
+  onToggle?: () => void;
 }
 
 /**
@@ -16,9 +18,8 @@ interface VehicleScheduleSectionProps {
  *
  * Based on US-009 acceptance criteria.
  */
-export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
+export function VehicleScheduleSection({ form, isExpanded = true, onToggle }: VehicleScheduleSectionProps) {
   const { watch, setValue } = form;
-  const [isOpen, setIsOpen] = useState(true);
 
   // Watch vehicles array and fleet size from Stage 2
   const vehicles = watch("vehicles") || [];
@@ -79,7 +80,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
     <div style={{ marginBottom: "2rem" }}>
       {/* Section Header (Collapsible) */}
       <div
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
         style={{
           padding: "1rem 1.5rem",
           background: "var(--color-surface)",
@@ -89,7 +90,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: isOpen ? "1rem" : 0,
+          marginBottom: isExpanded ? "1rem" : 0,
         }}
       >
         <div style={{ flex: 1 }}>
@@ -125,12 +126,12 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
           )}
         </div>
         <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>
-          {isOpen ? "−" : "+"}
+          {isExpanded ? "−" : "+"}
         </span>
       </div>
 
       {/* Section Content */}
-      {isOpen && (
+      {isExpanded && (
         <div
           style={{
             padding: "1.5rem",

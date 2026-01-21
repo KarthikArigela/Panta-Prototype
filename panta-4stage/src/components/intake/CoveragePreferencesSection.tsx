@@ -2,11 +2,12 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { SmartIntakeData, LiabilityLimit, DeductibleAmount } from "@/types/intake";
-import { useState } from "react";
 import { InfoTooltip } from "@/components/ui/InfoTooltip";
 
 interface CoveragePreferencesSectionProps {
   form: UseFormReturn<SmartIntakeData>;
+  isExpanded?: boolean;
+  onToggle?: () => void;
 }
 
 /**
@@ -17,9 +18,8 @@ interface CoveragePreferencesSectionProps {
  *
  * Based on US-012 acceptance criteria.
  */
-export function CoveragePreferencesSection({ form }: CoveragePreferencesSectionProps) {
+export function CoveragePreferencesSection({ form, isExpanded = true, onToggle }: CoveragePreferencesSectionProps) {
   const { watch, setValue } = form;
-  const [isOpen, setIsOpen] = useState(true);
 
   // Watch coverage preference fields
   const liabilityLimit = watch("coveragePreferences.liabilityLimit");
@@ -42,7 +42,7 @@ export function CoveragePreferencesSection({ form }: CoveragePreferencesSectionP
   return (
     <div style={{ marginBottom: "2rem" }}>
       <div
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
         style={{
           padding: "1rem 1.5rem",
           background: "var(--color-surface)",
@@ -52,16 +52,16 @@ export function CoveragePreferencesSection({ form }: CoveragePreferencesSectionP
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: isOpen ? "1rem" : 0,
+          marginBottom: isExpanded ? "1rem" : 0,
         }}
       >
         <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text)" }}>
           Coverage Preferences
         </h3>
-        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isOpen ? "−" : "+"}</span>
+        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isExpanded ? "−" : "+"}</span>
       </div>
 
-      {isOpen && (
+      {isExpanded && (
         <div
           style={{
             padding: "2rem",

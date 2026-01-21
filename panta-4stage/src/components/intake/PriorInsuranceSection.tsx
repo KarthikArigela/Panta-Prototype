@@ -2,11 +2,12 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { SmartIntakeData, ClaimType, Claim } from "@/types/intake";
-import { useState } from "react";
 import { InfoTooltip } from "@/components/ui/InfoTooltip";
 
 interface PriorInsuranceSectionProps {
   form: UseFormReturn<SmartIntakeData>;
+  isExpanded?: boolean;
+  onToggle?: () => void;
 }
 
 const CLAIM_TYPES: ClaimType[] = [
@@ -47,9 +48,9 @@ const defaultClaim: Claim = {
 
 export default function PriorInsuranceSection({
   form,
+  isExpanded = true,
+  onToggle,
 }: PriorInsuranceSectionProps) {
-  const [isOpen, setIsOpen] = useState(true);
-
   const priorInsurance = form.watch("priorInsurance");
   const lossHistory = form.watch("lossHistory");
 
@@ -97,7 +98,7 @@ export default function PriorInsuranceSection({
   return (
     <div style={{ marginBottom: "2rem" }}>
       <div
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
         style={{
           padding: "1rem 1.5rem",
           background: "var(--color-surface)",
@@ -107,16 +108,16 @@ export default function PriorInsuranceSection({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: isOpen ? "1rem" : 0,
+          marginBottom: isExpanded ? "1rem" : 0,
         }}
       >
         <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text)" }}>
           Prior Insurance &amp; Claims History
         </h3>
-        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isOpen ? "−" : "+"}</span>
+        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isExpanded ? "−" : "+"}</span>
       </div>
 
-      {isOpen && (
+      {isExpanded && (
         <div
           style={{
             padding: "2rem",
@@ -294,8 +295,8 @@ export default function PriorInsuranceSection({
                   key={reason.value}
                   type="button"
                   className={`option-card ${priorInsurance.shoppingReason === reason.value
-                      ? "selected"
-                      : ""
+                    ? "selected"
+                    : ""
                     }`}
                   onClick={() =>
                     updatePriorInsurance("shoppingReason", reason.value)

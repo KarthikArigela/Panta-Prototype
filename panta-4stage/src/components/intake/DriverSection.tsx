@@ -6,6 +6,8 @@ import { useState } from "react";
 
 interface DriverSectionProps {
   form: UseFormReturn<SmartIntakeData>;
+  isExpanded?: boolean;
+  onToggle?: () => void;
 }
 
 /**
@@ -16,9 +18,8 @@ interface DriverSectionProps {
  *
  * Based on US-010 acceptance criteria.
  */
-export function DriverSection({ form }: DriverSectionProps) {
+export function DriverSection({ form, isExpanded = true, onToggle }: DriverSectionProps) {
   const { watch, setValue } = form;
-  const [isOpen, setIsOpen] = useState(true);
   // Track which drivers are expanded (showing all fields) vs collapsed (quick add mode)
   const [expandedDrivers, setExpandedDrivers] = useState<Set<number>>(new Set());
 
@@ -166,7 +167,7 @@ export function DriverSection({ form }: DriverSectionProps) {
   return (
     <div style={{ marginBottom: "2rem" }}>
       <div
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
         style={{
           padding: "1rem 1.5rem",
           background: "var(--color-surface)",
@@ -176,7 +177,7 @@ export function DriverSection({ form }: DriverSectionProps) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: isOpen ? "1rem" : 0,
+          marginBottom: isExpanded ? "1rem" : 0,
         }}
       >
         <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text)" }}>
@@ -187,10 +188,10 @@ export function DriverSection({ form }: DriverSectionProps) {
             </span>
           )}
         </h3>
-        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isOpen ? "−" : "+"}</span>
+        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isExpanded ? "−" : "+"}</span>
       </div>
 
-      {isOpen && (
+      {isExpanded && (
         <div
           style={{
             padding: "2rem",
@@ -203,345 +204,345 @@ export function DriverSection({ form }: DriverSectionProps) {
             const isExpanded = expandedDrivers.has(driverIndex);
 
             return (
-            <div key={driverIndex} className="card" style={{ marginBottom: "1.5rem", position: "relative" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-                <h4>Driver #{driverIndex + 1}</h4>
-                {drivers.length > 1 && (
+              <div key={driverIndex} className="card" style={{ marginBottom: "1.5rem", position: "relative" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+                  <h4>Driver #{driverIndex + 1}</h4>
+                  {drivers.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeDriver(driverIndex)}
+                      className="btn-secondary"
+                      style={{
+                        padding: "0.5rem 1rem",
+                        fontSize: "0.9rem",
+                        backgroundColor: "var(--color-danger)",
+                        color: "white"
+                      }}
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+
+                {/* Full Name - Always visible */}
+                <div className="form-group">
+                  <label className="form-label">
+                    Full Legal Name <span className="field-required">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={driver.fullName || ""}
+                    onChange={(e) => updateDriver(driverIndex, "fullName", e.target.value)}
+                    placeholder="John Doe"
+                  />
+                </div>
+
+                {/* License State - Always visible for quick add */}
+                <div className="form-group">
+                  <label className="form-label">
+                    License State <span className="field-required">*</span>
+                  </label>
+                  <select
+                    className="form-input"
+                    value={driver.licenseState || ""}
+                    onChange={(e) => updateDriver(driverIndex, "licenseState", e.target.value as USState)}
+                  >
+                    <option value="">Select state...</option>
+                    {usStates.map((state) => (
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Years of Experience - Always visible for quick add */}
+                <div className="form-group">
+                  <label className="form-label">
+                    Years of CDL Experience <span className="field-required">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    className="form-input"
+                    value={driver.yearsExperience ?? ""}
+                    onChange={(e) => {
+                      const val = e.target.value === "" ? null : parseInt(e.target.value);
+                      updateDriver(driverIndex, "yearsExperience", val);
+                    }}
+                    min="0"
+                    max="60"
+                    placeholder="Years"
+                  />
+                </div>
+
+                {/* Expand Details Button - Only show if not expanded */}
+                {!isExpanded && (
                   <button
                     type="button"
-                    onClick={() => removeDriver(driverIndex)}
-                    className="btn-secondary"
+                    onClick={() => toggleDriverExpanded(driverIndex)}
                     style={{
+                      marginTop: "0.5rem",
                       padding: "0.5rem 1rem",
+                      background: "transparent",
+                      color: "var(--color-accent)",
+                      border: "1px solid var(--color-accent)",
+                      borderRadius: "var(--radius-sm)",
+                      cursor: "pointer",
                       fontSize: "0.9rem",
-                      backgroundColor: "var(--color-danger)",
-                      color: "white"
+                      fontWeight: 500,
+                      width: "100%"
                     }}
                   >
-                    Remove
+                    Expand Details (DOB, License, Hired Date, Accidents, Violations)
                   </button>
                 )}
-              </div>
 
-              {/* Full Name - Always visible */}
-              <div className="form-group">
-                <label className="form-label">
-                  Full Legal Name <span className="field-required">*</span>
-                </label>
-                <input
-                  type="text"
-                  className="form-input"
-                  value={driver.fullName || ""}
-                  onChange={(e) => updateDriver(driverIndex, "fullName", e.target.value)}
-                  placeholder="John Doe"
-                />
-              </div>
+                {/* Expanded fields - Only show when expanded */}
+                {isExpanded && (
+                  <>
+                    {/* DOB and License Number */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                      <div className="form-group">
+                        <label className="form-label">
+                          Date of Birth <span className="field-required">*</span>
+                        </label>
+                        <input
+                          type="date"
+                          className="form-input"
+                          value={driver.dateOfBirth || ""}
+                          onChange={(e) => updateDriver(driverIndex, "dateOfBirth", e.target.value)}
+                        />
+                      </div>
 
-              {/* License State - Always visible for quick add */}
-              <div className="form-group">
-                <label className="form-label">
-                  License State <span className="field-required">*</span>
-                </label>
-                <select
-                  className="form-input"
-                  value={driver.licenseState || ""}
-                  onChange={(e) => updateDriver(driverIndex, "licenseState", e.target.value as USState)}
-                >
-                  <option value="">Select state...</option>
-                  {usStates.map((state) => (
-                    <option key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                      <div className="form-group">
+                        <label className="form-label">
+                          Driver's License Number <span className="field-required">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-input"
+                          value={driver.licenseNumber || ""}
+                          onChange={(e) => updateDriver(driverIndex, "licenseNumber", e.target.value)}
+                          placeholder="License number"
+                        />
+                      </div>
+                    </div>
 
-              {/* Years of Experience - Always visible for quick add */}
-              <div className="form-group">
-                <label className="form-label">
-                  Years of CDL Experience <span className="field-required">*</span>
-                </label>
-                <input
-                  type="number"
-                  className="form-input"
-                  value={driver.yearsExperience ?? ""}
-                  onChange={(e) => {
-                    const val = e.target.value === "" ? null : parseInt(e.target.value);
-                    updateDriver(driverIndex, "yearsExperience", val);
-                  }}
-                  min="0"
-                  max="60"
-                  placeholder="Years"
-                />
-              </div>
-
-              {/* Expand Details Button - Only show if not expanded */}
-              {!isExpanded && (
-                <button
-                  type="button"
-                  onClick={() => toggleDriverExpanded(driverIndex)}
-                  style={{
-                    marginTop: "0.5rem",
-                    padding: "0.5rem 1rem",
-                    background: "transparent",
-                    color: "var(--color-accent)",
-                    border: "1px solid var(--color-accent)",
-                    borderRadius: "var(--radius-sm)",
-                    cursor: "pointer",
-                    fontSize: "0.9rem",
-                    fontWeight: 500,
-                    width: "100%"
-                  }}
-                >
-                  Expand Details (DOB, License, Hired Date, Accidents, Violations)
-                </button>
-              )}
-
-              {/* Expanded fields - Only show when expanded */}
-              {isExpanded && (
-                <>
-                  {/* DOB and License Number */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                    {/* Date Hired */}
                     <div className="form-group">
                       <label className="form-label">
-                        Date of Birth <span className="field-required">*</span>
+                        Date Hired <span className="field-required">*</span>
                       </label>
                       <input
                         type="date"
                         className="form-input"
-                        value={driver.dateOfBirth || ""}
-                        onChange={(e) => updateDriver(driverIndex, "dateOfBirth", e.target.value)}
+                        value={driver.dateHired || ""}
+                        onChange={(e) => updateDriver(driverIndex, "dateHired", e.target.value)}
                       />
                     </div>
+                  </>
+                )}
 
-                    <div className="form-group">
-                      <label className="form-label">
-                        Driver's License Number <span className="field-required">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        value={driver.licenseNumber || ""}
-                        onChange={(e) => updateDriver(driverIndex, "licenseNumber", e.target.value)}
-                        placeholder="License number"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Date Hired */}
+                {/* Accidents in Last 3 Years - Only in expanded mode */}
+                {isExpanded && (
                   <div className="form-group">
-                    <label className="form-label">
-                      Date Hired <span className="field-required">*</span>
-                    </label>
-                    <input
-                      type="date"
-                      className="form-input"
-                      value={driver.dateHired || ""}
-                      onChange={(e) => updateDriver(driverIndex, "dateHired", e.target.value)}
-                    />
+                    <label className="form-label">Accidents in Last 3 Years</label>
+                    <div className="yes-no-grid">
+                      <button
+                        type="button"
+                        className={`yes-no-btn ${driver.hasAccidents === true ? "active" : ""}`}
+                        onClick={() => {
+                          updateDriver(driverIndex, "hasAccidents", true);
+                          if (driver.accidents.length === 0) {
+                            addAccident(driverIndex);
+                          }
+                        }}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        type="button"
+                        className={`yes-no-btn ${driver.hasAccidents === false ? "active" : ""}`}
+                        onClick={() => {
+                          updateDriver(driverIndex, "hasAccidents", false);
+                          updateDriver(driverIndex, "accidents", []);
+                        }}
+                      >
+                        No
+                      </button>
+                    </div>
                   </div>
-                </>
-              )}
+                )}
 
-              {/* Accidents in Last 3 Years - Only in expanded mode */}
-              {isExpanded && (
-                <div className="form-group">
-                  <label className="form-label">Accidents in Last 3 Years</label>
-                  <div className="yes-no-grid">
-                    <button
-                      type="button"
-                      className={`yes-no-btn ${driver.hasAccidents === true ? "active" : ""}`}
-                      onClick={() => {
-                        updateDriver(driverIndex, "hasAccidents", true);
-                        if (driver.accidents.length === 0) {
-                          addAccident(driverIndex);
-                        }
-                      }}
-                    >
-                      Yes
-                    </button>
-                    <button
-                      type="button"
-                      className={`yes-no-btn ${driver.hasAccidents === false ? "active" : ""}`}
-                      onClick={() => {
-                        updateDriver(driverIndex, "hasAccidents", false);
-                        updateDriver(driverIndex, "accidents", []);
-                      }}
-                    >
-                      No
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Accident Details - Only in expanded mode */}
-              {isExpanded && driver.hasAccidents && (
-                <div style={{ marginLeft: "1rem", paddingLeft: "1rem", borderLeft: "3px solid var(--color-accent)" }}>
-                  {driver.accidents.map((accident, accidentIndex) => (
-                    <div key={accidentIndex} className="card" style={{ marginBottom: "1rem", backgroundColor: "#f9f9f9" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                        <h5 style={{ margin: 0 }}>Accident #{accidentIndex + 1}</h5>
-                        <button
-                          type="button"
-                          onClick={() => removeAccident(driverIndex, accidentIndex)}
-                          className="btn-secondary"
-                          style={{ padding: "0.25rem 0.75rem", fontSize: "0.85rem" }}
-                        >
-                          Remove
-                        </button>
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">Date</label>
-                        <input
-                          type="date"
-                          className="form-input"
-                          value={accident.date || ""}
-                          onChange={(e) => updateAccident(driverIndex, accidentIndex, "date", e.target.value)}
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">Description</label>
-                        <textarea
-                          className="form-input"
-                          value={accident.description || ""}
-                          onChange={(e) => updateAccident(driverIndex, accidentIndex, "description", e.target.value)}
-                          placeholder="Describe what happened..."
-                          rows={3}
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">At Fault?</label>
-                        <div className="yes-no-grid">
+                {/* Accident Details - Only in expanded mode */}
+                {isExpanded && driver.hasAccidents && (
+                  <div style={{ marginLeft: "1rem", paddingLeft: "1rem", borderLeft: "3px solid var(--color-accent)" }}>
+                    {driver.accidents.map((accident, accidentIndex) => (
+                      <div key={accidentIndex} className="card" style={{ marginBottom: "1rem", backgroundColor: "#f9f9f9" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                          <h5 style={{ margin: 0 }}>Accident #{accidentIndex + 1}</h5>
                           <button
                             type="button"
-                            className={`yes-no-btn ${accident.atFault === true ? "active" : ""}`}
-                            onClick={() => updateAccident(driverIndex, accidentIndex, "atFault", true)}
+                            onClick={() => removeAccident(driverIndex, accidentIndex)}
+                            className="btn-secondary"
+                            style={{ padding: "0.25rem 0.75rem", fontSize: "0.85rem" }}
                           >
-                            Yes
-                          </button>
-                          <button
-                            type="button"
-                            className={`yes-no-btn ${accident.atFault === false ? "active" : ""}`}
-                            onClick={() => updateAccident(driverIndex, accidentIndex, "atFault", false)}
-                          >
-                            No
+                            Remove
                           </button>
                         </div>
+
+                        <div className="form-group">
+                          <label className="form-label">Date</label>
+                          <input
+                            type="date"
+                            className="form-input"
+                            value={accident.date || ""}
+                            onChange={(e) => updateAccident(driverIndex, accidentIndex, "date", e.target.value)}
+                          />
+                        </div>
+
+                        <div className="form-group">
+                          <label className="form-label">Description</label>
+                          <textarea
+                            className="form-input"
+                            value={accident.description || ""}
+                            onChange={(e) => updateAccident(driverIndex, accidentIndex, "description", e.target.value)}
+                            placeholder="Describe what happened..."
+                            rows={3}
+                          />
+                        </div>
+
+                        <div className="form-group">
+                          <label className="form-label">At Fault?</label>
+                          <div className="yes-no-grid">
+                            <button
+                              type="button"
+                              className={`yes-no-btn ${accident.atFault === true ? "active" : ""}`}
+                              onClick={() => updateAccident(driverIndex, accidentIndex, "atFault", true)}
+                            >
+                              Yes
+                            </button>
+                            <button
+                              type="button"
+                              className={`yes-no-btn ${accident.atFault === false ? "active" : ""}`}
+                              onClick={() => updateAccident(driverIndex, accidentIndex, "atFault", false)}
+                            >
+                              No
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
 
-                  <button
-                    type="button"
-                    onClick={() => addAccident(driverIndex)}
-                    className="btn-secondary"
-                    style={{ marginTop: "0.5rem" }}
-                  >
-                    + Add Another Accident
-                  </button>
-                </div>
-              )}
-
-              {/* Moving Violations in Last 3 Years - Only in expanded mode */}
-              {isExpanded && (
-                <div className="form-group">
-                  <label className="form-label">Moving Violations in Last 3 Years</label>
-                  <div className="yes-no-grid">
                     <button
                       type="button"
-                      className={`yes-no-btn ${driver.hasViolations === true ? "active" : ""}`}
-                      onClick={() => {
-                        updateDriver(driverIndex, "hasViolations", true);
-                        if (driver.violations.length === 0) {
-                          addViolation(driverIndex);
-                        }
-                      }}
+                      onClick={() => addAccident(driverIndex)}
+                      className="btn-secondary"
+                      style={{ marginTop: "0.5rem" }}
                     >
-                      Yes
-                    </button>
-                    <button
-                      type="button"
-                      className={`yes-no-btn ${driver.hasViolations === false ? "active" : ""}`}
-                      onClick={() => {
-                        updateDriver(driverIndex, "hasViolations", false);
-                        updateDriver(driverIndex, "violations", []);
-                      }}
-                    >
-                      No
+                      + Add Another Accident
                     </button>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Violation Details - Only in expanded mode */}
-              {isExpanded && driver.hasViolations && (
-                <div style={{ marginLeft: "1rem", paddingLeft: "1rem", borderLeft: "3px solid var(--color-accent)" }}>
-                  {driver.violations.map((violation, violationIndex) => (
-                    <div key={violationIndex} className="card" style={{ marginBottom: "1rem", backgroundColor: "#f9f9f9" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                        <h5 style={{ margin: 0 }}>Violation #{violationIndex + 1}</h5>
-                        <button
-                          type="button"
-                          onClick={() => removeViolation(driverIndex, violationIndex)}
-                          className="btn-secondary"
-                          style={{ padding: "0.25rem 0.75rem", fontSize: "0.85rem" }}
-                        >
-                          Remove
-                        </button>
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">Date</label>
-                        <input
-                          type="date"
-                          className="form-input"
-                          value={violation.date || ""}
-                          onChange={(e) => updateViolation(driverIndex, violationIndex, "date", e.target.value)}
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">Type</label>
-                        <select
-                          className="form-input"
-                          value={violation.type || "speeding"}
-                          onChange={(e) => updateViolation(driverIndex, violationIndex, "type", e.target.value as ViolationType)}
-                        >
-                          {violationTypeOptions.map((option) => (
-                            <option key={option.value} value={option.value}>
-                              {option.label}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">Location</label>
-                        <input
-                          type="text"
-                          className="form-input"
-                          value={violation.location || ""}
-                          onChange={(e) => updateViolation(driverIndex, violationIndex, "location", e.target.value)}
-                          placeholder="City, State"
-                        />
-                      </div>
+                {/* Moving Violations in Last 3 Years - Only in expanded mode */}
+                {isExpanded && (
+                  <div className="form-group">
+                    <label className="form-label">Moving Violations in Last 3 Years</label>
+                    <div className="yes-no-grid">
+                      <button
+                        type="button"
+                        className={`yes-no-btn ${driver.hasViolations === true ? "active" : ""}`}
+                        onClick={() => {
+                          updateDriver(driverIndex, "hasViolations", true);
+                          if (driver.violations.length === 0) {
+                            addViolation(driverIndex);
+                          }
+                        }}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        type="button"
+                        className={`yes-no-btn ${driver.hasViolations === false ? "active" : ""}`}
+                        onClick={() => {
+                          updateDriver(driverIndex, "hasViolations", false);
+                          updateDriver(driverIndex, "violations", []);
+                        }}
+                      >
+                        No
+                      </button>
                     </div>
-                  ))}
+                  </div>
+                )}
 
-                  <button
-                    type="button"
-                    onClick={() => addViolation(driverIndex)}
-                    className="btn-secondary"
-                    style={{ marginTop: "0.5rem" }}
-                  >
-                    + Add Another Violation
-                  </button>
-                </div>
-              )}
-            </div>
+                {/* Violation Details - Only in expanded mode */}
+                {isExpanded && driver.hasViolations && (
+                  <div style={{ marginLeft: "1rem", paddingLeft: "1rem", borderLeft: "3px solid var(--color-accent)" }}>
+                    {driver.violations.map((violation, violationIndex) => (
+                      <div key={violationIndex} className="card" style={{ marginBottom: "1rem", backgroundColor: "#f9f9f9" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                          <h5 style={{ margin: 0 }}>Violation #{violationIndex + 1}</h5>
+                          <button
+                            type="button"
+                            onClick={() => removeViolation(driverIndex, violationIndex)}
+                            className="btn-secondary"
+                            style={{ padding: "0.25rem 0.75rem", fontSize: "0.85rem" }}
+                          >
+                            Remove
+                          </button>
+                        </div>
+
+                        <div className="form-group">
+                          <label className="form-label">Date</label>
+                          <input
+                            type="date"
+                            className="form-input"
+                            value={violation.date || ""}
+                            onChange={(e) => updateViolation(driverIndex, violationIndex, "date", e.target.value)}
+                          />
+                        </div>
+
+                        <div className="form-group">
+                          <label className="form-label">Type</label>
+                          <select
+                            className="form-input"
+                            value={violation.type || "speeding"}
+                            onChange={(e) => updateViolation(driverIndex, violationIndex, "type", e.target.value as ViolationType)}
+                          >
+                            {violationTypeOptions.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="form-group">
+                          <label className="form-label">Location</label>
+                          <input
+                            type="text"
+                            className="form-input"
+                            value={violation.location || ""}
+                            onChange={(e) => updateViolation(driverIndex, violationIndex, "location", e.target.value)}
+                            placeholder="City, State"
+                          />
+                        </div>
+                      </div>
+                    ))}
+
+                    <button
+                      type="button"
+                      onClick={() => addViolation(driverIndex)}
+                      className="btn-secondary"
+                      style={{ marginTop: "0.5rem" }}
+                    >
+                      + Add Another Violation
+                    </button>
+                  </div>
+                )}
+              </div>
             );
           })}
 

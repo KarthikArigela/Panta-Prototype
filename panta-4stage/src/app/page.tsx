@@ -22,6 +22,13 @@ export default function SmartIntake() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showValidationErrors, setShowValidationErrors] = useState(false);
 
+  // Accordion state for Stage 3
+  const [expandedSection, setExpandedSection] = useState<string | null>("business");
+
+  const toggleSection = (section: string) => {
+    setExpandedSection(current => current === section ? null : section);
+  };
+
   const {
     form,
     currentStage,
@@ -213,12 +220,36 @@ export default function SmartIntake() {
               <h2>📝 Business Details</h2>
               <p>Tell us about your trucking business so we can prepare your quote.</p>
             </div>
-            <BusinessInfoSection form={form} />
-            <OperationsSafetySection form={form} />
-            <VehicleScheduleSection form={form} />
-            <DriverSection form={form} />
-            <PriorInsuranceSection form={form} />
-            <CoveragePreferencesSection form={form} />
+            <BusinessInfoSection
+              form={form}
+              isExpanded={expandedSection === "business"}
+              onToggle={() => toggleSection("business")}
+            />
+            <OperationsSafetySection
+              form={form}
+              isExpanded={expandedSection === "operations"}
+              onToggle={() => toggleSection("operations")}
+            />
+            <VehicleScheduleSection
+              form={form}
+              isExpanded={expandedSection === "vehicles"}
+              onToggle={() => toggleSection("vehicles")}
+            />
+            <DriverSection
+              form={form}
+              isExpanded={expandedSection === "drivers"}
+              onToggle={() => toggleSection("drivers")}
+            />
+            <PriorInsuranceSection
+              form={form}
+              isExpanded={expandedSection === "insurance"}
+              onToggle={() => toggleSection("insurance")}
+            />
+            <CoveragePreferencesSection
+              form={form}
+              isExpanded={expandedSection === "coverage"}
+              onToggle={() => toggleSection("coverage")}
+            />
           </>
         )}
         {currentStage === 4 && <DocumentGateStage form={form} />}

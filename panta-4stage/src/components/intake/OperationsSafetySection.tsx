@@ -2,10 +2,12 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { SmartIntakeData, SafetyProgramComponent, TelematicsFeature, USState } from "@/types/intake";
-import { useState } from "react";
+
 
 interface OperationsSafetySectionProps {
   form: UseFormReturn<SmartIntakeData>;
+  isExpanded?: boolean;
+  onToggle?: () => void;
 }
 
 /**
@@ -16,9 +18,8 @@ interface OperationsSafetySectionProps {
  *
  * Based on US-008 acceptance criteria.
  */
-export function OperationsSafetySection({ form }: OperationsSafetySectionProps) {
+export function OperationsSafetySection({ form, isExpanded = true, onToggle }: OperationsSafetySectionProps) {
   const { watch, setValue } = form;
-  const [isOpen, setIsOpen] = useState(true);
 
   // Watch operations fields
   const cargoDescription = watch("operations.cargoDescription");
@@ -91,7 +92,7 @@ export function OperationsSafetySection({ form }: OperationsSafetySectionProps) 
     <div style={{ marginBottom: "2rem" }}>
       {/* Section Header (Collapsible) */}
       <div
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
         style={{
           padding: "1rem 1.5rem",
           background: "var(--color-surface)",
@@ -101,19 +102,19 @@ export function OperationsSafetySection({ form }: OperationsSafetySectionProps) 
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: isOpen ? "1rem" : 0,
+          marginBottom: isExpanded ? "1rem" : 0,
         }}
       >
         <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text)" }}>
           Operations & Safety
         </h3>
         <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>
-          {isOpen ? "−" : "+"}
+          {isExpanded ? "−" : "+"}
         </span>
       </div>
 
       {/* Section Content */}
-      {isOpen && (
+      {isExpanded && (
         <div
           style={{
             padding: "2rem",

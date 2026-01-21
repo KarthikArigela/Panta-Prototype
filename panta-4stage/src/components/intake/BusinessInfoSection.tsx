@@ -2,10 +2,12 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { SmartIntakeData, EntityType } from "@/types/intake";
-import { useState } from "react";
+
 
 interface BusinessInfoSectionProps {
   form: UseFormReturn<SmartIntakeData>;
+  isExpanded?: boolean;
+  onToggle?: () => void;
 }
 
 /**
@@ -16,9 +18,8 @@ interface BusinessInfoSectionProps {
  *
  * Based on US-007 acceptance criteria.
  */
-export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
+export function BusinessInfoSection({ form, isExpanded = true, onToggle }: BusinessInfoSectionProps) {
   const { watch, setValue } = form;
-  const [isOpen, setIsOpen] = useState(true);
 
   // Watch business fields
   const legalName = watch("business.legalName");
@@ -87,7 +88,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
     <div style={{ marginBottom: "2rem" }}>
       {/* Section Header (Collapsible) */}
       <div
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
         style={{
           padding: "1rem 1.5rem",
           background: "var(--color-surface)",
@@ -97,17 +98,17 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: isOpen ? "1rem" : 0,
+          marginBottom: isExpanded ? "1rem" : 0,
         }}
       >
         <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text)" }}>
           Business Information
         </h3>
-        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isOpen ? "−" : "+"}</span>
+        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isExpanded ? "−" : "+"}</span>
       </div>
 
       {/* Section Content */}
-      {isOpen && (
+      {isExpanded && (
         <div
           style={{
             padding: "1.5rem",
