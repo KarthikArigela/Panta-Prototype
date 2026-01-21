@@ -1,6 +1,6 @@
 {
   "project": "Panta Smart Intake",
-  "branchName": "ralph/smart-intake-trucking",
+  "branchName": "icp-dry-run-improvements",
   "description": "4-stage conditional logic form for trucking insurance intake with ACORD PDF generation",
   "userStories": [
     {
@@ -527,6 +527,185 @@
       "priority": 25,
       "passes": true,
       "notes": "Completed 2026-01-20. Created src/components/ui/InfoTooltip.tsx component with hover-based tooltip functionality. Tooltip displays as small (i) info icon next to question labels. On hover, shows floating box with white background, shadow, rounded corners, max-width 300px, arrow pointer. Tooltip closes when mouse leaves icon. Added tooltip to KnockoutStage Q2 (DOT Safety Rating): 'Most carriers have Satisfactory or no rating.' Added tooltip to RiskClassifierStage Q7 (Trailer Interchange): 'Swapping trailers with other carriers at rail yards.' Imported InfoTooltip component in both stage files. TypeScript compilation passes with npx tsc --noEmit."
-    }
+    },
+    {
+  "id": "US-026",
+  "title": "Field-Level Error Highlighting on Validation Failure",
+  "description": "As a trucking owner, I want invalid fields highlighted so I can see exactly what needs to be fixed.",
+  "acceptanceCriteria": [
+    "When Continue button clicked and validation fails, add .field-error class to first invalid field",
+    "scrollToFirstError() scrolls to first invalid FIELD (not just error banner)",
+    "Field error styling shows orange border and light orange background",
+    "Error class is removed when field becomes valid",
+    "Typecheck passes",
+    "Verify in browser using native Claude Code browser tool"
+  ],
+  "priority": 26,
+  "passes": false,
+  "notes": ""
+},
+{
+  "id": "US-027",
+  "title": "Required Field Visual Indicators",
+  "description": "As a trucking owner, I want to see which fields are required before I try to submit.",
+  "acceptanceCriteria": [
+    "Add 'Required' text or asterisk with .field-required class to all required fields in Stage 3",
+    "Required indicator appears next to label text (not inside input)",
+    "Style: red color (var(--color-danger)), 600 font weight",
+    "Apply to: Business name, address, phone, FEIN, entity type, DOT, revenue, employees, vehicles, drivers",
+    "Typecheck passes",
+    "Verify in browser using native Claude Code browser tool"
+  ],
+  "priority": 27,
+  "passes": false,
+  "notes": ""
+},
+{
+  "id": "US-028",
+  "title": "Insurance Conditional Fields Discovery Message",
+  "description": "As a trucking owner, I want to know that selecting 'Yes' for current insurance requires additional fields.",
+  "acceptanceCriteria": [
+    "When currentlyInsured === true, show helper message below the Yes/No buttons",
+    "Message text: 'Please provide your current insurance details below.'",
+    "Message styling: blue info background, rounded corners, 0.75rem padding",
+    "Message appears immediately when Yes selected, disappears when No selected",
+    "Typecheck passes",
+    "Verify in browser using native Claude Code browser tool"
+  ],
+  "priority": 28,
+  "passes": false,
+  "notes": ""
+},
+{
+  "id": "US-029",
+  "title": "Coverage Terminology Tooltips",
+  "description": "As a trucking owner unfamiliar with insurance, I want tooltips explaining coverage terms.",
+  "acceptanceCriteria": [
+    "Add InfoTooltip to 'Liability Limit' label: 'The maximum amount your insurance will pay for damages you cause to others.'",
+    "Add InfoTooltip to 'Comprehensive Deductible': 'What you pay out-of-pocket before insurance covers theft, weather damage, or vandalism.'",
+    "Add InfoTooltip to 'Collision Deductible': 'What you pay out-of-pocket before insurance covers damage from crashes.'",
+    "Tooltips use existing InfoTooltip component",
+    "Typecheck passes",
+    "Verify in browser using native Claude Code browser tool"
+  ],
+  "priority": 29,
+  "passes": false,
+  "notes": ""
+},
+{
+  "id": "US-030",
+  "title": "Fleet Size Progress Indicator",
+  "description": "As a trucking owner with multiple trucks, I want to see how many trucks I've added vs my fleet size.",
+  "acceptanceCriteria": [
+    "Read fleetSize from riskProfile (from Stage 2)",
+    "Display 'X of Y trucks added' instead of just 'X trucks added'",
+    "If fleetSize is 0 or undefined, fall back to 'X trucks added'",
+    "Show progress bar or visual indicator of completion percentage",
+    "Typecheck passes",
+    "Verify in browser using native Claude Code browser tool"
+  ],
+  "priority": 30,
+  "passes": false,
+  "notes": ""
+},
+{
+  "id": "US-031",
+  "title": "Quick Add Driver Mode",
+  "description": "As a trucking owner adding multiple drivers, I want a faster way to add basic driver info first.",
+  "acceptanceCriteria": [
+    "Add 'Quick Add' button next to 'Add Driver' button",
+    "Quick Add creates driver with only: Name, License State, Years Experience fields visible",
+    "Show 'Expand Details' link to reveal remaining fields (DOB, license number, date hired, accidents, violations)",
+    "Full 'Add Driver' button still available for complete entry",
+    "Typecheck passes",
+    "Verify in browser using native Claude Code browser tool"
+  ],
+  "priority": 31,
+  "passes": false,
+  "notes": ""
+},
+{
+  "id": "US-032",
+  "title": "Claims Amount Tooltips",
+  "description": "As a trucking owner, I need help understanding the difference between Amount Paid and Amount Reserved.",
+  "acceptanceCriteria": [
+    "Add InfoTooltip to 'Amount Paid' label: 'The total amount your insurance company has already paid for this claim.'",
+    "Add InfoTooltip to 'Amount Reserved' label: 'The amount your insurance company has set aside for future payments on this claim.'",
+    "Tooltips use existing InfoTooltip component from src/components/ui/InfoTooltip.tsx",
+    "Typecheck passes",
+    "Verify in browser using native Claude Code browser tool"
+  ],
+  "priority": 32,
+  "passes": false,
+  "notes": ""
+},
+{
+  "id": "US-033",
+  "title": "Stage 3 Section Progress Indicator",
+  "description": "As a trucking owner filling out a long form, I want to see how many sections I've completed.",
+  "acceptanceCriteria": [
+    "Add progress bar at top of Stage 3 showing 'X of 6 sections complete'",
+    "Sections: Business Info, Operations & Safety, Trucks, Drivers, Prior Insurance, Coverage Preferences",
+    "Section marked complete when all required fields in that section are filled",
+    "Progress bar uses Panta brand colors (Forest Green fill)",
+    "Shows section names with checkmarks for completed sections",
+    "Typecheck passes",
+    "Verify in browser using native Claude Code browser tool"
+  ],
+  "priority": 33,
+  "passes": false,
+  "notes": ""
+},
+{
+  "id": "US-034",
+  "title": "Update Shopping Reason Button Labels",
+  "description": "As a trucking owner, I want clearer labels for why I'm shopping for insurance.",
+  "acceptanceCriteria": [
+    "Change 'Non-renewed' to 'Carrier dropped/non-renewed me'",
+    "Change 'Cancelled' to 'Policy was cancelled'",
+    "Change 'Want better rates' to 'Looking for better rates'",
+    "Change 'Need higher limits' to 'Need higher coverage limits'",
+    "Keep internal values unchanged (non_renewed, cancelled, want_better_rates, need_higher_limits)",
+    "Typecheck passes",
+    "Verify in browser using native Claude Code browser tool"
+  ],
+  "priority": 34,
+  "passes": false,
+  "notes": ""
+},
+{
+"id": "US-035",
+"title": "Update Vehicle Radius of Operation Labels",
+"description": "As a trucking owner, I want consistent route-based language for vehicle radius in Stage 3.",
+"acceptanceCriteria": [
+"Update VehicleScheduleSection.tsx radius options to match RiskClassifierStage labels",
+"Change 'Local (Under 50 miles)' to 'Around town (Under 50 miles)'",
+"Change 'Regional (50-200 miles)' to 'Nearby states (50-200 miles)'",
+"Change 'Long Regional (200-500 miles)' to 'Multi-state (200-500 miles)'",
+"Change 'Long Haul (Over 500 miles)' to 'Cross-country (Over 500 miles)'",
+"Keep internal values unchanged: local, regional, long_regional, long_haul",
+"Typecheck passes",
+"Verify in browser using native Claude Code browser tool"
+],
+"priority": 35,
+"passes": false,
+"notes": ""
+},
+{
+"id": "US-036",
+"title": "Make Add Driver Button Match Add Truck UI",
+"description": "As a trucking owner, I want consistent UI for adding trucks and drivers.",
+"acceptanceCriteria": [
+"Update DriverSection.tsx 'Add Driver' button to match VehicleScheduleSection 'Add Truck' button styling",
+"Match button color, padding, icon placement, and hover state",
+"Match container layout and spacing around the button",
+"Ensure both buttons use same CSS classes or inline styles",
+"Typecheck passes",
+"Verify in browser using native Claude Code browser tool"
+],
+"priority": 36,
+"passes": false,
+"notes": ""
+}
   ]
 }
