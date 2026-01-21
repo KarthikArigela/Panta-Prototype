@@ -1180,3 +1180,24 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-030
 ---
+
+## 2026-01-21 - US-032
+Thread: N/A
+- What was implemented:
+  - Added InfoTooltip component to two claims amount labels in PriorInsuranceSection.tsx
+  - Amount Paid tooltip: "The total amount your insurance company has already paid for this claim."
+  - Amount Reserved tooltip: "The amount your insurance company has set aside for future payments on this claim."
+  - Imported InfoTooltip as named export from @/components/ui/InfoTooltip
+  - Used content prop
+
+- Files changed:
+  - src/components/intake/PriorInsuranceSection.tsx (imported InfoTooltip, added tooltips to Amount Paid and Amount Reserved labels)
+  - ralph/prd.json (updated US-032 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - InfoTooltip pattern established: Import as named export, use content prop
+  - Tooltips help clarify insurance terminology for non-insurance experts
+  - Amount Paid vs Amount Reserved: Common point of confusion for applicants
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-032
+---

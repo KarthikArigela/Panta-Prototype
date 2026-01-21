@@ -29,10 +29,10 @@ const CLAIM_TYPE_LABELS: Record<ClaimType, string> = {
 
 const SHOPPING_REASONS = [
   { value: "renewal_coming_up", label: "Renewal coming up" },
-  { value: "want_better_rates", label: "Want better rates" },
-  { value: "need_higher_limits", label: "Need higher limits" },
-  { value: "non_renewed", label: "Non-renewed" },
-  { value: "cancelled", label: "Cancelled" },
+  { value: "want_better_rates", label: "Looking for better rates" },
+  { value: "need_higher_limits", label: "Need higher coverage limits" },
+  { value: "non_renewed", label: "Carrier dropped/non-renewed me" },
+  { value: "cancelled", label: "Policy was cancelled" },
   { value: "other", label: "Other" },
 ];
 

@@ -167,7 +167,7 @@ I built a working prototype of the Smart Intake for trucking. Four-stage funnel:
 
 It is not a polished product. It is a proof of concept that demonstrates one thing: asking the right 5 questions in sequence, with conditional logic, produces better data than handing someone a 40-page PDF and hoping they fill it out correctly.
 
-[Prototype link to be added]
+(https://panta.karthikarigela.in/)
 
 ---
 

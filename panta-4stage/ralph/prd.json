@@ -636,8 +636,8 @@
     "Verify in browser using native Claude Code browser tool"
   ],
   "priority": 32,
-  "passes": false,
-  "notes": ""
+  "passes": true,
+  "notes": "Completed 2026-01-21. Added InfoTooltip component to two claims amount labels in PriorInsuranceSection.tsx. Amount Paid: 'The total amount your insurance company has already paid for this claim.' Amount Reserved: 'The amount your insurance company has set aside for future payments on this claim.' Imported InfoTooltip as named export from @/components/ui/InfoTooltip. Used content prop. TypeScript compilation passes with npx tsc --noEmit."
 },
 {
   "id": "US-033",
