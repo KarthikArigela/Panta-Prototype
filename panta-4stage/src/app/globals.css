@@ -294,6 +294,16 @@ h3 {
   background: rgba(37, 99, 235, 0.08);
 }
 
+.option-card.active {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: white;
+}
+
+.option-card.active strong {
+  color: white;
+}
+
 .option-card input {
   position: absolute;
   opacity: 0;
@@ -348,6 +358,31 @@ h3 {
   border-color: var(--color-accent);
   background: rgba(34, 197, 94, 0.1);
   color: var(--color-accent);
+}
+
+/* Generic yes/no selection states for vehicle schedule */
+.yes-no-btn.yes {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: white;
+}
+
+.yes-no-btn.no {
+  border-color: var(--color-danger);
+  background: var(--color-danger);
+  color: white;
+}
+
+.yes-no-btn.active {
+  border-color: var(--color-primary);
+  background: rgba(10, 63, 47, 0.1);
+  color: var(--color-primary);
+}
+
+.yes-no-btn.selected {
+  border-color: var(--color-primary);
+  background: rgba(10, 63, 47, 0.1);
+  color: var(--color-primary);
 }
 
 /* === Buttons === */

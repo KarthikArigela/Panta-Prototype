@@ -89,7 +89,6 @@ export function CoveragePreferencesSection({ form, isExpanded = true, onToggle }
                 }}
               >
                 <strong>$1M CSL</strong>
-                <span style={{ fontSize: "0.875rem", color: "#666" }}>Most Common</span>
               </button>
               <button
                 type="button"
