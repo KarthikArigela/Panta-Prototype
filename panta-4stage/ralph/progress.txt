@@ -1201,3 +1201,28 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-032
 ---
+
+## 2026-01-21 - US-034
+Thread: N/A
+- What was implemented:
+  - Updated SHOPPING_REASONS array in PriorInsuranceSection.tsx with clearer, more descriptive labels
+  - Changed "Non-renewed" → "Carrier dropped/non-renewed me"
+  - Changed "Cancelled" → "Policy was cancelled"
+  - Changed "Want better rates" → "Looking for better rates"
+  - Changed "Need higher limits" → "Need higher coverage limits"
+  - Internal values remain unchanged (non_renewed, cancelled, want_better_rates, need_higher_limits)
+
+- Files changed:
+  - src/components/intake/PriorInsuranceSection.tsx (updated SHOPPING_REASONS labels)
+  - ralph/prd.json (updated US-034 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - Clearer label wording improves UX for users unfamiliar with insurance terminology
+  - "Carrier dropped/non-renewed me" makes it personal and clear who took the action
+  - "Policy was cancelled" uses passive voice to reduce negative connotation
+  - "Looking for" sounds more active than "Want"
+  - "Coverage limits" clearer than just "limits"
+  - Keep internal enum values stable to avoid breaking backend/validation logic
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-034
+---

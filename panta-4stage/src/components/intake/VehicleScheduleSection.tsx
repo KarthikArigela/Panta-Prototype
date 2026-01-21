@@ -65,10 +65,10 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
   ];
 
   const radiusOptions: { value: VehicleRadius; label: string; desc: string }[] = [
-    { value: "local", label: "Local", desc: "Under 50 miles" },
-    { value: "regional", label: "Regional", desc: "50-200 miles" },
-    { value: "long_regional", label: "Long Regional", desc: "200-500 miles" },
-    { value: "long_haul", label: "Long Haul", desc: "Over 500 miles" },
+    { value: "local", label: "Around town", desc: "Under 50 miles" },
+    { value: "regional", label: "Nearby states", desc: "50-200 miles" },
+    { value: "long_regional", label: "Multi-state", desc: "200-500 miles" },
+    { value: "long_haul", label: "Cross-country", desc: "Over 500 miles" },
   ];
 
   // Generate year options from 1990 to current year + 1
