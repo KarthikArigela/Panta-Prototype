@@ -1250,3 +1250,27 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-035
 ---
+
+## 2026-01-21 - US-036
+Thread: N/A
+- What was implemented:
+  - Updated Add Driver button in DriverSection.tsx to match Add Truck button styling from VehicleScheduleSection.tsx
+  - Changed from className="btn-primary" to inline styles
+  - Matched all styling properties: width 100%, padding 1rem, background var(--color-accent), white text
+  - Matched layout: flexbox with centered content, gap 0.5rem for icon spacing
+  - Added plus icon (+) with fontSize 1.25rem before "Add Driver" text to match Add Truck
+  - Both buttons now have identical visual appearance for consistency
+
+- Files changed:
+  - src/components/intake/DriverSection.tsx (updated Add Driver button styling)
+  - ralph/prd.json (updated US-036 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - Consistent UI patterns across similar actions improve user experience
+  - Inline styles used for both buttons (not mixing CSS classes and inline styles)
+  - Icon + text pattern with flexbox layout provides clean visual separation
+  - var(--color-accent) for action buttons (vibrant green #22C55E)
+  - Plus icon fontSize slightly larger (1.25rem) than button text (1rem) for visual emphasis
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-036
+---
