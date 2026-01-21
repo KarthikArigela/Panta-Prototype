@@ -281,7 +281,7 @@ export function useIntakeForm(): UseIntakeFormReturn {
       case 4: {
         // Stage 4: Document uploads
         const docs = values.documents;
-        const requiredDocTypes = ['loss_runs', 'authority_letter'];
+        const requiredDocTypes = ['authority_letter'];
         const uploadedTypes = docs.map(d => d.type);
 
         const missingDocs = requiredDocTypes.filter(t => !uploadedTypes.includes(t as typeof uploadedTypes[number]));

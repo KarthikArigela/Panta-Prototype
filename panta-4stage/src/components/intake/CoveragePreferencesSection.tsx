@@ -299,14 +299,14 @@ export function CoveragePreferencesSection({ form, isExpanded = true, onToggle }
             <div className="yes-no-grid">
               <button
                 type="button"
-                className={hiredAutoCoverage === true ? "yes-no-btn active" : "yes-no-btn"}
+                className={hiredAutoCoverage === true ? "yes-no-btn yes" : "yes-no-btn"}
                 onClick={() => setValue("coveragePreferences.hiredAutoCoverage", true)}
               >
                 Yes
               </button>
               <button
                 type="button"
-                className={hiredAutoCoverage === false ? "yes-no-btn active" : "yes-no-btn"}
+                className={hiredAutoCoverage === false ? "yes-no-btn no" : "yes-no-btn"}
                 onClick={() => setValue("coveragePreferences.hiredAutoCoverage", false)}
               >
                 No
@@ -336,14 +336,14 @@ export function CoveragePreferencesSection({ form, isExpanded = true, onToggle }
             <div className="yes-no-grid">
               <button
                 type="button"
-                className={nonOwnedAutoCoverage === true ? "yes-no-btn active" : "yes-no-btn"}
+                className={nonOwnedAutoCoverage === true ? "yes-no-btn yes" : "yes-no-btn"}
                 onClick={() => setValue("coveragePreferences.nonOwnedAutoCoverage", true)}
               >
                 Yes
               </button>
               <button
                 type="button"
-                className={nonOwnedAutoCoverage === false ? "yes-no-btn active" : "yes-no-btn"}
+                className={nonOwnedAutoCoverage === false ? "yes-no-btn no" : "yes-no-btn"}
                 onClick={() => setValue("coveragePreferences.nonOwnedAutoCoverage", false)}
               >
                 No

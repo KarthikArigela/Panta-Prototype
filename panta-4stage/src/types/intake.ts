@@ -549,67 +549,75 @@ export interface StageProps<T> {
 }
 
 /**
- * Default empty values for initializing form state
+ * Demo default values for prototype - Pre-filled with Heavy Haul Hank's data
+ * This allows founders to navigate the prototype without entering data
  */
+
+// Stage 1: Knockout - All "No" (passing answers)
 export const defaultKnockout: Knockout = {
-  authorityRevoked: null,
-  safetyRatingUnsatisfactory: null,
-  driverLicenseRevoked: null,
-  fraudConviction: null,
-  bankruptcyFiled: null,
-  insuranceCancelledNonPayment: null,
+  authorityRevoked: false,
+  safetyRatingUnsatisfactory: false,
+  driverLicenseRevoked: false,
+  fraudConviction: false,
+  bankruptcyFiled: false,
+  insuranceCancelledNonPayment: false,
 };
 
 export const defaultAddress: Address = {
-  street: '',
-  city: '',
-  state: '',
-  zip: '',
+  street: '2847 Industrial Blvd',
+  city: 'Fresno',
+  state: 'CA',
+  zip: '93650',
 };
 
+// Stage 2: Risk Profile - Heavy Haul Hank's profile
 export const defaultRiskProfile: RiskProfile = {
-  hazmat: null,
+  hazmat: false,
   hazmatTypes: [],
-  radius: null,
-  fleetSize: null,
-  cargoTypes: [],
-  leasesOnToCarrier: null,
-  refrigeratedCargo: null,
-  reeferBreakdownCoverage: null,
-  trailerInterchange: null,
-  newVenture: null,
-  accidentsLast3Years: null,
+  radius: 'long_haul',
+  fleetSize: 3,
+  cargoTypes: ['flatbed', 'oversized'],
+  leasesOnToCarrier: false,
+  refrigeratedCargo: false,
+  reeferBreakdownCoverage: false,
+  trailerInterchange: false,
+  newVenture: false,
+  accidentsLast3Years: 2,
   esMarketFlags: [],
 };
 
+// Stage 3: Business Information
 export const defaultBusiness: Business = {
-  legalName: '',
+  legalName: "Heavy Haul Hank's Trucking LLC",
   mailingAddress: { ...defaultAddress },
-  phone: '',
-  fein: '',
-  entityType: null,
-  dateStarted: '',
-  dotNumber: '',
-  annualRevenue: null,
-  fullTimeEmployees: null,
-  partTimeEmployees: null,
+  phone: '(559) 234-5678',
+  fein: '45-6789123',
+  entityType: 'llc',
+  dateStarted: '2015-03-15',
+  dotNumber: '3847591',
+  mcNumber: 'MC-847591',
+  annualRevenue: 525000,
+  fullTimeEmployees: 2,
+  partTimeEmployees: 0,
   garagingAddressDifferent: false,
 };
 
+// Stage 3: Operations & Safety
 export const defaultOperations: Operations = {
-  cargoDescription: '',
-  statesOfOperation: [],
-  crossesStateLines: null,
-  hasSafetyProgram: null,
+  cargoDescription: 'Heavy machinery, industrial equipment, construction equipment. Oversized loads over 80,000 lbs.',
+  statesOfOperation: ['CA', 'AZ', 'OR'],
+  crossesStateLines: true,
+  hasSafetyProgram: false,
   safetyProgramComponents: [],
-  hasMaintenanceProgram: null,
-  hasTelematics: null,
-  telematicsFeatures: [],
-  telematicsFleetPercentage: null,
-  checksMVRs: null,
-  familyDrivers: null,
+  hasMaintenanceProgram: true,
+  hasTelematics: true,
+  telematicsFeatures: ['gps_tracking', 'maintenance_alerts'],
+  telematicsFleetPercentage: 100,
+  checksMVRs: true,
+  familyDrivers: false,
 };
 
+// Default empty vehicle (for adding new ones)
 export const defaultVehicle: Vehicle = {
   year: null,
   make: '',
@@ -624,6 +632,36 @@ export const defaultVehicle: Vehicle = {
   useBusinessGaragingAddress: true,
 };
 
+// Demo vehicles - Hank's trucks
+const demoVehicle1: Vehicle = {
+  year: 2019,
+  make: 'Peterbilt',
+  model: '579',
+  vin: '1XPFR8XK7PR123456',
+  bodyType: 'tractor',
+  gvw: 80000,
+  statedValue: 180000,
+  radius: 'long_haul',
+  forHire: true,
+  hasLienholder: false,
+  useBusinessGaragingAddress: true,
+};
+
+const demoVehicle2: Vehicle = {
+  year: 2017,
+  make: 'Freightliner',
+  model: 'Cascadia',
+  vin: '1XPFR8XK7PR789012',
+  bodyType: 'tractor',
+  gvw: 80000,
+  statedValue: 150000,
+  radius: 'long_haul',
+  forHire: true,
+  hasLienholder: false,
+  useBusinessGaragingAddress: true,
+};
+
+// Default empty driver (for adding new ones)
 export const defaultDriver: Driver = {
   fullName: '',
   dateOfBirth: '',
@@ -637,32 +675,74 @@ export const defaultDriver: Driver = {
   violations: [],
 };
 
+// Demo driver - Mike Johnson
+const demoDriver1: Driver = {
+  fullName: 'Mike Johnson',
+  dateOfBirth: '1985-06-15',
+  licenseNumber: 'D1234567',
+  licenseState: 'CA',
+  yearsExperience: 8,
+  dateHired: '2018-01-10',
+  hasAccidents: false,
+  accidents: [],
+  hasViolations: false,
+  violations: [],
+};
+
+// Stage 3: Prior Insurance
 export const defaultPriorInsurance: PriorInsurance = {
-  currentlyInsured: null,
+  currentlyInsured: true,
+  carrierName: 'Progressive Commercial',
+  policyNumber: 'PC-987654321',
+  annualPremium: 28000,
+  effectiveDate: '2024-01-15',
+  expirationDate: '2025-01-15',
+  shoppingReason: 'non_renewed',
 };
 
+// Stage 3: Loss History with 2 claims
 export const defaultLossHistory: LossHistory = {
-  hasClaims: null,
-  claims: [],
+  hasClaims: true,
+  claims: [
+    {
+      dateOfLoss: '2024-03-15',
+      type: 'collision',
+      description: 'Rear-end collision at intersection. Other driver ran red light. Not our fault. Minor damage to trailer. Claim resolved.',
+      amountPaid: 5000,
+      amountReserved: 0,
+      stillOpen: false,
+    },
+    {
+      dateOfLoss: '2024-06-22',
+      type: 'collision',
+      description: 'Side-swipe collision on highway. Other vehicle changed lanes into us. Not at fault. Minor damage to cab. Resolved.',
+      amountPaid: 3500,
+      amountReserved: 0,
+      stillOpen: false,
+    },
+  ],
 };
 
+// Stage 3: Coverage Preferences
 export const defaultCoveragePreferences: CoveragePreferences = {
-  liabilityLimit: null,
-  comprehensiveDeductible: null,
-  collisionDeductible: null,
-  hiredAutoCoverage: null,
-  nonOwnedAutoCoverage: null,
+  liabilityLimit: '1000000',
+  comprehensiveDeductible: '2500',
+  collisionDeductible: '2500',
+  hiredAutoCoverage: false,
+  nonOwnedAutoCoverage: false,
 };
 
+// Complete demo data for the prototype
 export const defaultSmartIntakeData: SmartIntakeData = {
   knockout: { ...defaultKnockout },
   riskProfile: { ...defaultRiskProfile },
   business: { ...defaultBusiness },
   operations: { ...defaultOperations },
-  vehicles: [],
-  drivers: [],
+  vehicles: [demoVehicle1, demoVehicle2],
+  drivers: [demoDriver1],
   priorInsurance: { ...defaultPriorInsurance },
   lossHistory: { ...defaultLossHistory },
   coveragePreferences: { ...defaultCoveragePreferences },
   documents: [],
 };
+

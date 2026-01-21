@@ -105,9 +105,9 @@ export async function generateAcord125(data: SmartIntakeData): Promise<Uint8Arra
       borderWidth: 1,
     });
 
-    // Draw checkmark if checked
+    // Draw checkmark if checked (using X for WinAnsi compatibility)
     if (checked) {
-      addText('✓', xPos + 1, yPosition - 1, fontSize, true);
+      addText('X', xPos + 1, yPosition - 1, fontSize, true);
     }
 
     // Add label

@@ -362,15 +362,15 @@ h3 {
 
 /* Generic yes/no selection states for vehicle schedule */
 .yes-no-btn.yes {
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: white;
+  border-color: var(--color-accent) !important;
+  background: var(--color-accent) !important;
+  color: white !important;
 }
 
 .yes-no-btn.no {
-  border-color: var(--color-danger);
-  background: var(--color-danger);
-  color: white;
+  border-color: var(--color-danger) !important;
+  background: var(--color-danger) !important;
+  color: white !important;
 }
 
 .yes-no-btn.active {
