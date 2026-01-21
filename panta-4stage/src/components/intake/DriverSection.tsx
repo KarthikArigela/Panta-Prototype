@@ -187,7 +187,7 @@ export function DriverSection({ form }: DriverSectionProps) {
               {/* Full Name */}
               <div className="form-group">
                 <label className="form-label">
-                  Full Legal Name <span style={{ color: "var(--color-danger)" }}>*</span>
+                  Full Legal Name <span className="field-required">*</span>
                 </label>
                 <input
                   type="text"
@@ -202,7 +202,7 @@ export function DriverSection({ form }: DriverSectionProps) {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                 <div className="form-group">
                   <label className="form-label">
-                    Date of Birth <span style={{ color: "var(--color-danger)" }}>*</span>
+                    Date of Birth <span className="field-required">*</span>
                   </label>
                   <input
                     type="date"
@@ -214,7 +214,7 @@ export function DriverSection({ form }: DriverSectionProps) {
 
                 <div className="form-group">
                   <label className="form-label">
-                    Driver's License Number <span style={{ color: "var(--color-danger)" }}>*</span>
+                    Driver's License Number <span className="field-required">*</span>
                   </label>
                   <input
                     type="text"
@@ -229,7 +229,7 @@ export function DriverSection({ form }: DriverSectionProps) {
               {/* License State */}
               <div className="form-group">
                 <label className="form-label">
-                  License State <span style={{ color: "var(--color-danger)" }}>*</span>
+                  License State <span className="field-required">*</span>
                 </label>
                 <select
                   className="form-input"
@@ -249,7 +249,7 @@ export function DriverSection({ form }: DriverSectionProps) {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                 <div className="form-group">
                   <label className="form-label">
-                    Years of CDL Experience <span style={{ color: "var(--color-danger)" }}>*</span>
+                    Years of CDL Experience <span className="field-required">*</span>
                   </label>
                   <input
                     type="number"
@@ -267,7 +267,7 @@ export function DriverSection({ form }: DriverSectionProps) {
 
                 <div className="form-group">
                   <label className="form-label">
-                    Date Hired <span style={{ color: "var(--color-danger)" }}>*</span>
+                    Date Hired <span className="field-required">*</span>
                   </label>
                   <input
                     type="date"

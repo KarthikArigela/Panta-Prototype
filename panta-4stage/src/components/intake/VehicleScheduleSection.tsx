@@ -162,7 +162,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr 2fr", gap: "1rem", marginBottom: "1rem" }}>
                 <div className="form-group">
                   <label className="form-label">
-                    Year <span style={{ color: "var(--color-danger)" }}>*</span>
+                    Year <span className="field-required">*</span>
                   </label>
                   <select
                     value={vehicle.year || ""}
@@ -180,7 +180,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
 
                 <div className="form-group">
                   <label className="form-label">
-                    Make <span style={{ color: "var(--color-danger)" }}>*</span>
+                    Make <span className="field-required">*</span>
                   </label>
                   <input
                     type="text"
@@ -193,7 +193,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
 
                 <div className="form-group">
                   <label className="form-label">
-                    Model <span style={{ color: "var(--color-danger)" }}>*</span>
+                    Model <span className="field-required">*</span>
                   </label>
                   <input
                     type="text"
@@ -208,7 +208,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
               {/* VIN */}
               <div className="form-group" style={{ marginBottom: "1rem" }}>
                 <label className="form-label">
-                  VIN (Vehicle Identification Number) <span style={{ color: "var(--color-danger)" }}>*</span>
+                  VIN (Vehicle Identification Number) <span className="field-required">*</span>
                 </label>
                 <input
                   type="text"
@@ -226,7 +226,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
               {/* Body Type */}
               <div className="form-group" style={{ marginBottom: "1rem" }}>
                 <label className="form-label">
-                  Body Type <span style={{ color: "var(--color-danger)" }}>*</span>
+                  Body Type <span className="field-required">*</span>
                 </label>
                 <div className="options-grid">
                   {bodyTypeOptions.map((option) => (
@@ -246,7 +246,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
                 <div className="form-group">
                   <label className="form-label">
-                    GVW (Gross Vehicle Weight) <span style={{ color: "var(--color-danger)" }}>*</span>
+                    GVW (Gross Vehicle Weight) <span className="field-required">*</span>
                   </label>
                   <input
                     type="text"
@@ -263,7 +263,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
 
                 <div className="form-group">
                   <label className="form-label">
-                    Stated Value <span style={{ color: "var(--color-danger)" }}>*</span>
+                    Stated Value <span className="field-required">*</span>
                   </label>
                   <input
                     type="text"
@@ -282,7 +282,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
               {/* Radius of Operation */}
               <div className="form-group" style={{ marginBottom: "1rem" }}>
                 <label className="form-label">
-                  Radius of Operation <span style={{ color: "var(--color-danger)" }}>*</span>
+                  Radius of Operation <span className="field-required">*</span>
                 </label>
                 <div className="yes-no-grid">
                   {radiusOptions.map((option) => (
@@ -302,7 +302,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
               {/* For Hire */}
               <div className="form-group" style={{ marginBottom: "1rem" }}>
                 <label className="form-label">
-                  Is this vehicle used for hire? <span style={{ color: "var(--color-danger)" }}>*</span>
+                  Is this vehicle used for hire? <span className="field-required">*</span>
                 </label>
                 <div className="yes-no-grid">
                   <button
@@ -355,7 +355,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
                 >
                   <div className="form-group" style={{ marginBottom: "1rem" }}>
                     <label className="form-label">
-                      Street Address <span style={{ color: "var(--color-danger)" }}>*</span>
+                      Street Address <span className="field-required">*</span>
                     </label>
                     <input
                       type="text"
@@ -377,7 +377,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
                   <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem" }}>
                     <div className="form-group">
                       <label className="form-label">
-                        City <span style={{ color: "var(--color-danger)" }}>*</span>
+                        City <span className="field-required">*</span>
                       </label>
                       <input
                         type="text"
@@ -398,7 +398,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
 
                     <div className="form-group">
                       <label className="form-label">
-                        State <span style={{ color: "var(--color-danger)" }}>*</span>
+                        State <span className="field-required">*</span>
                       </label>
                       <input
                         type="text"
@@ -420,7 +420,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
 
                     <div className="form-group">
                       <label className="form-label">
-                        ZIP <span style={{ color: "var(--color-danger)" }}>*</span>
+                        ZIP <span className="field-required">*</span>
                       </label>
                       <input
                         type="text"
@@ -475,7 +475,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
                 >
                   <div className="form-group" style={{ marginBottom: "1rem" }}>
                     <label className="form-label">
-                      Lienholder Name <span style={{ color: "var(--color-danger)" }}>*</span>
+                      Lienholder Name <span className="field-required">*</span>
                     </label>
                     <input
                       type="text"
@@ -498,7 +498,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
 
                   <div className="form-group" style={{ marginBottom: "1rem" }}>
                     <label className="form-label">
-                      Lienholder Street Address <span style={{ color: "var(--color-danger)" }}>*</span>
+                      Lienholder Street Address <span className="field-required">*</span>
                     </label>
                     <input
                       type="text"
@@ -523,7 +523,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
                   <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem" }}>
                     <div className="form-group">
                       <label className="form-label">
-                        City <span style={{ color: "var(--color-danger)" }}>*</span>
+                        City <span className="field-required">*</span>
                       </label>
                       <input
                         type="text"
@@ -547,7 +547,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
 
                     <div className="form-group">
                       <label className="form-label">
-                        State <span style={{ color: "var(--color-danger)" }}>*</span>
+                        State <span className="field-required">*</span>
                       </label>
                       <input
                         type="text"
@@ -572,7 +572,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
 
                     <div className="form-group">
                       <label className="form-label">
-                        ZIP <span style={{ color: "var(--color-danger)" }}>*</span>
+                        ZIP <span className="field-required">*</span>
                       </label>
                       <input
                         type="text"

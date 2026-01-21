@@ -119,7 +119,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           {/* Legal Business Name */}
           <div className="form-group">
             <label className="form-label">
-              Legal Business Name <span style={{ color: "var(--color-danger)" }}>*</span>
+              Legal Business Name <span className="field-required">*</span>
             </label>
             <span className="form-sublabel">As it appears on your tax documents</span>
             <input
@@ -150,7 +150,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           {/* Business Mailing Address */}
           <div className="form-group">
             <label className="form-label">
-              Business Mailing Address <span style={{ color: "var(--color-danger)" }}>*</span>
+              Business Mailing Address <span className="field-required">*</span>
             </label>
             <input
               type="text"
@@ -190,7 +190,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           {/* Business Phone */}
           <div className="form-group">
             <label className="form-label">
-              Business Phone <span style={{ color: "var(--color-danger)" }}>*</span>
+              Business Phone <span className="field-required">*</span>
             </label>
             <input
               type="tel"
@@ -208,7 +208,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           {/* FEIN */}
           <div className="form-group">
             <label className="form-label">
-              Federal Employer ID Number (FEIN) <span style={{ color: "var(--color-danger)" }}>*</span>
+              Federal Employer ID Number (FEIN) <span className="field-required">*</span>
             </label>
             <span className="form-sublabel">Format: XX-XXXXXXX</span>
             <input
@@ -227,7 +227,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           {/* Entity Type */}
           <div className="form-group">
             <label className="form-label">
-              Business Entity Type <span style={{ color: "var(--color-danger)" }}>*</span>
+              Business Entity Type <span className="field-required">*</span>
             </label>
             <div className="options-grid">
               {entityTypeOptions.map((option) => (
@@ -259,7 +259,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           {/* Date Business Started */}
           <div className="form-group">
             <label className="form-label">
-              Date Business Started <span style={{ color: "var(--color-danger)" }}>*</span>
+              Date Business Started <span className="field-required">*</span>
             </label>
             <input
               type="date"
@@ -272,7 +272,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           {/* USDOT Number */}
           <div className="form-group">
             <label className="form-label">
-              USDOT Number <span style={{ color: "var(--color-danger)" }}>*</span>
+              USDOT Number <span className="field-required">*</span>
             </label>
             <span className="form-sublabel">7-digit number assigned by FMCSA</span>
             <input
@@ -308,7 +308,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           {/* Annual Gross Revenue */}
           <div className="form-group">
             <label className="form-label">
-              Annual Gross Revenue <span style={{ color: "var(--color-danger)" }}>*</span>
+              Annual Gross Revenue <span className="field-required">*</span>
             </label>
             <span className="form-sublabel">Your business&apos;s total annual income</span>
             <input
@@ -327,7 +327,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div className="form-group">
               <label className="form-label">
-                Full-Time Employees <span style={{ color: "var(--color-danger)" }}>*</span>
+                Full-Time Employees <span className="field-required">*</span>
               </label>
               <input
                 type="number"
@@ -345,7 +345,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
 
             <div className="form-group">
               <label className="form-label">
-                Part-Time Employees <span style={{ color: "var(--color-danger)" }}>*</span>
+                Part-Time Employees <span className="field-required">*</span>
               </label>
               <input
                 type="number"
@@ -387,7 +387,7 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           {garagingAddressDifferent === true && (
             <div className="form-group">
               <label className="form-label">
-                Garaging Address <span style={{ color: "var(--color-danger)" }}>*</span>
+                Garaging Address <span className="field-required">*</span>
               </label>
               <span className="form-sublabel">Where vehicles are parked overnight</span>
               <input

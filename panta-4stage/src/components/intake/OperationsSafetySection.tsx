@@ -125,7 +125,7 @@ export function OperationsSafetySection({ form }: OperationsSafetySectionProps) 
           {/* Cargo Description */}
           <div className="form-group">
             <label className="form-label">
-              What do you haul? <span style={{ color: "var(--color-danger)" }}>*</span>
+              What do you haul? <span className="field-required">*</span>
             </label>
             <div className="form-sublabel">Describe the type of cargo or freight you transport</div>
             <textarea
@@ -141,7 +141,7 @@ export function OperationsSafetySection({ form }: OperationsSafetySectionProps) 
           {/* States of Operation */}
           <div className="form-group">
             <label className="form-label">
-              Which states do you operate in? <span style={{ color: "var(--color-danger)" }}>*</span>
+              Which states do you operate in? <span className="field-required">*</span>
             </label>
             <div className="form-sublabel">Select all that apply</div>
             <div style={{
@@ -182,7 +182,7 @@ export function OperationsSafetySection({ form }: OperationsSafetySectionProps) 
           {/* Safety Program */}
           <div className="form-group">
             <label className="form-label">
-              Do you have a written safety program? <span style={{ color: "var(--color-danger)" }}>*</span>
+              Do you have a written safety program? <span className="field-required">*</span>
             </label>
             <div className="yes-no-grid">
               <button
@@ -258,7 +258,7 @@ export function OperationsSafetySection({ form }: OperationsSafetySectionProps) 
           {/* Maintenance Program */}
           <div className="form-group">
             <label className="form-label">
-              Do you have a vehicle maintenance program? <span style={{ color: "var(--color-danger)" }}>*</span>
+              Do you have a vehicle maintenance program? <span className="field-required">*</span>
             </label>
             <div className="yes-no-grid">
               <button
@@ -293,7 +293,7 @@ export function OperationsSafetySection({ form }: OperationsSafetySectionProps) 
           {/* Telematics/ELD */}
           <div className="form-group">
             <label className="form-label">
-              Do you use telematics or ELD systems? <span style={{ color: "var(--color-danger)" }}>*</span>
+              Do you use telematics or ELD systems? <span className="field-required">*</span>
             </label>
             <div className="form-sublabel">Electronic Logging Devices or fleet management systems</div>
             <div className="yes-no-grid">
@@ -371,7 +371,7 @@ export function OperationsSafetySection({ form }: OperationsSafetySectionProps) 
               {/* Fleet Percentage Slider */}
               <div className="form-group" style={{ marginLeft: "1.5rem", paddingLeft: "1rem", borderLeft: "3px solid var(--color-border)" }}>
                 <label className="form-label">
-                  What percentage of your fleet has telematics? <span style={{ color: "var(--color-danger)" }}>*</span>
+                  What percentage of your fleet has telematics? <span className="field-required">*</span>
                 </label>
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginTop: "0.5rem" }}>
                   <input
@@ -404,7 +404,7 @@ export function OperationsSafetySection({ form }: OperationsSafetySectionProps) 
           {/* MVR Checks */}
           <div className="form-group">
             <label className="form-label">
-              Do you check Motor Vehicle Records (MVRs) before hiring drivers? <span style={{ color: "var(--color-danger)" }}>*</span>
+              Do you check Motor Vehicle Records (MVRs) before hiring drivers? <span className="field-required">*</span>
             </label>
             <div className="yes-no-grid">
               <button
