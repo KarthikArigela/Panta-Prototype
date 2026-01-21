@@ -148,6 +148,23 @@ export default function PriorInsuranceSection({
                 No
               </button>
             </div>
+
+            {/* Helper message when Yes selected */}
+            {priorInsurance.currentlyInsured === true && (
+              <div
+                style={{
+                  marginTop: "0.75rem",
+                  padding: "0.75rem",
+                  backgroundColor: "rgba(59, 130, 246, 0.1)",
+                  border: "1px solid rgba(59, 130, 246, 0.3)",
+                  borderRadius: "8px",
+                  fontSize: "0.9rem",
+                  color: "var(--color-text-secondary)",
+                }}
+              >
+                Please provide your current insurance details below.
+              </div>
+            )}
           </div>
 
           {/* Current Insurance Details - Conditional on Yes */}
