@@ -234,7 +234,7 @@ export function VehicleScheduleSection({ form, isExpanded = true, onToggle }: Ve
               {/* VIN */}
               <div className="form-group" style={{ marginBottom: "1rem" }}>
                 <label className="form-label">
-                  VIN (Vehicle Identification Number) <span className="field-required">*</span>
+                  VIN (Vehicle Identification Number) {!vehicle.vinPending && <span className="field-required">*</span>}
                 </label>
                 <input
                   type="text"
@@ -243,10 +243,28 @@ export function VehicleScheduleSection({ form, isExpanded = true, onToggle }: Ve
                   placeholder="17-character VIN"
                   maxLength={17}
                   className="form-input"
+                  disabled={vehicle.vinPending}
+                  style={vehicle.vinPending ? { backgroundColor: "#f5f5f5", color: "#999" } : {}}
                 />
                 <div className="form-sublabel">
                   {vehicle.vin?.length || 0}/17 characters
                 </div>
+                <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "0.5rem", cursor: "pointer" }}>
+                  <input
+                    type="checkbox"
+                    checked={vehicle.vinPending || false}
+                    onChange={(e) => {
+                      updateVehicle(index, "vinPending", e.target.checked);
+                      if (e.target.checked) {
+                        updateVehicle(index, "vin", "");
+                      }
+                    }}
+                    style={{ width: "18px", height: "18px", cursor: "pointer" }}
+                  />
+                  <span style={{ fontSize: "0.875rem", color: "var(--color-text-secondary)" }}>
+                    VIN with dispatcher - I'll provide later
+                  </span>
+                </label>
               </div>
 
               {/* Body Type */}
@@ -469,160 +487,7 @@ export function VehicleScheduleSection({ form, isExpanded = true, onToggle }: Ve
                 </div>
               )}
 
-              {/* Lienholder */}
-              <div className="form-group" style={{ marginBottom: "1rem" }}>
-                <label className="form-label">Does this vehicle have a lienholder?</label>
-                <div className="yes-no-grid">
-                  <button
-                    type="button"
-                    onClick={() => updateVehicle(index, "hasLienholder", true)}
-                    className={`yes-no-btn ${vehicle.hasLienholder === true ? "yes" : ""}`}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => updateVehicle(index, "hasLienholder", false)}
-                    className={`yes-no-btn ${vehicle.hasLienholder === false ? "no" : ""}`}
-                  >
-                    No
-                  </button>
-                </div>
-              </div>
 
-              {/* Conditional Lienholder Fields */}
-              {vehicle.hasLienholder && (
-                <div
-                  style={{
-                    marginLeft: "1rem",
-                    paddingLeft: "1rem",
-                    borderLeft: "3px solid var(--color-border)",
-                  }}
-                >
-                  <div className="form-group" style={{ marginBottom: "1rem" }}>
-                    <label className="form-label">
-                      Lienholder Name <span className="field-required">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      value={vehicle.lienholder?.name || ""}
-                      onChange={(e) =>
-                        updateVehicle(index, "lienholder", {
-                          name: e.target.value,
-                          address: vehicle.lienholder?.address || {
-                            street: "",
-                            city: "",
-                            state: "",
-                            zip: "",
-                          },
-                        })
-                      }
-                      placeholder="Bank or financing company name"
-                      className="form-input"
-                    />
-                  </div>
-
-                  <div className="form-group" style={{ marginBottom: "1rem" }}>
-                    <label className="form-label">
-                      Lienholder Street Address <span className="field-required">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      value={vehicle.lienholder?.address?.street || ""}
-                      onChange={(e) =>
-                        updateVehicle(index, "lienholder", {
-                          name: vehicle.lienholder?.name || "",
-                          address: {
-                            ...vehicle.lienholder?.address,
-                            street: e.target.value,
-                            city: vehicle.lienholder?.address?.city || "",
-                            state: vehicle.lienholder?.address?.state || "",
-                            zip: vehicle.lienholder?.address?.zip || "",
-                          },
-                        })
-                      }
-                      placeholder="123 Main St"
-                      className="form-input"
-                    />
-                  </div>
-
-                  <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "1rem" }}>
-                    <div className="form-group">
-                      <label className="form-label">
-                        City <span className="field-required">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        value={vehicle.lienholder?.address?.city || ""}
-                        onChange={(e) =>
-                          updateVehicle(index, "lienholder", {
-                            name: vehicle.lienholder?.name || "",
-                            address: {
-                              ...vehicle.lienholder?.address,
-                              street: vehicle.lienholder?.address?.street || "",
-                              city: e.target.value,
-                              state: vehicle.lienholder?.address?.state || "",
-                              zip: vehicle.lienholder?.address?.zip || "",
-                            },
-                          })
-                        }
-                        placeholder="City"
-                        className="form-input"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">
-                        State <span className="field-required">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        value={vehicle.lienholder?.address?.state || ""}
-                        onChange={(e) =>
-                          updateVehicle(index, "lienholder", {
-                            name: vehicle.lienholder?.name || "",
-                            address: {
-                              ...vehicle.lienholder?.address,
-                              street: vehicle.lienholder?.address?.street || "",
-                              city: vehicle.lienholder?.address?.city || "",
-                              state: e.target.value.toUpperCase(),
-                              zip: vehicle.lienholder?.address?.zip || "",
-                            },
-                          })
-                        }
-                        placeholder="State"
-                        maxLength={2}
-                        className="form-input"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">
-                        ZIP <span className="field-required">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        value={vehicle.lienholder?.address?.zip || ""}
-                        onChange={(e) =>
-                          updateVehicle(index, "lienholder", {
-                            name: vehicle.lienholder?.name || "",
-                            address: {
-                              ...vehicle.lienholder?.address,
-                              street: vehicle.lienholder?.address?.street || "",
-                              city: vehicle.lienholder?.address?.city || "",
-                              state: vehicle.lienholder?.address?.state || "",
-                              zip: e.target.value,
-                            },
-                          })
-                        }
-                        placeholder="ZIP"
-                        maxLength={10}
-                        className="form-input"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           ))}
 

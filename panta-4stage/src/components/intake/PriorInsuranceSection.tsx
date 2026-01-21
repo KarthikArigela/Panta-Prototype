@@ -480,7 +480,7 @@ export default function PriorInsuranceSection({
 
                     <div className="form-group">
                       <label className="form-label">
-                        Amount Reserved
+                        How much was paid out?
                         <InfoTooltip content="The amount your insurance company has set aside for future payments on this claim." />
                       </label>
                       <input

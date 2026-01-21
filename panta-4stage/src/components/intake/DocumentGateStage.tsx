@@ -31,8 +31,7 @@ export function DocumentGateStage({ form }: DocumentGateStageProps) {
   };
 
   // Check if all required documents are uploaded
-  const hasAllRequiredDocs =
-    hasDocument("loss_runs") && hasDocument("authority_letter");
+  const hasAllRequiredDocs = hasDocument("authority_letter");
 
   // Handle file drop/upload
   const onDrop = useCallback(
@@ -91,50 +90,50 @@ export function DocumentGateStage({ form }: DocumentGateStageProps) {
     label: string;
     tooltip: string;
   }> = [
-    {
-      type: "loss_runs",
-      label: "Loss Runs",
-      tooltip:
-        "A report from your current or prior insurance carrier showing your claims history for the last 5 years. If you don't have claims, a letter stating 'No Loss Runs' works.",
-    },
-    {
-      type: "authority_letter",
-      label: "MC/DOT Authority Letter",
-      tooltip:
-        "Official document from FMCSA showing your Motor Carrier (MC) and DOT numbers. You can download this from the FMCSA website.",
-    },
-  ];
+      {
+        type: "authority_letter",
+        label: "MC/DOT Authority Letter",
+        tooltip:
+          "Official document from FMCSA showing your Motor Carrier (MC) and DOT numbers. You can download this from the FMCSA website.",
+      },
+    ];
 
   const optionalDocs: Array<{
     type: DocumentType;
     label: string;
     tooltip: string;
   }> = [
-    {
-      type: "vehicle_schedule",
-      label: "Vehicle Schedule",
-      tooltip:
-        "List of all vehicles with VINs, makes, models, and values. Only needed if you prefer to upload instead of entering manually.",
-    },
-    {
-      type: "driver_list",
-      label: "Driver List",
-      tooltip:
-        "List of all drivers with license numbers and dates of birth. Only needed if you prefer to upload instead of entering manually.",
-    },
-    {
-      type: "current_dec_page",
-      label: "Current Dec Page",
-      tooltip:
-        "Declarations page from your current insurance policy showing coverage limits and deductibles.",
-    },
-    {
-      type: "ifta_credentials",
-      label: "IFTA Credentials",
-      tooltip:
-        "International Fuel Tax Agreement credentials if you operate in multiple states/provinces.",
-    },
-  ];
+      {
+        type: "loss_runs",
+        label: "Loss Runs",
+        tooltip:
+          "A report from your current or prior insurance carrier showing your claims history for the last 5 years. You can submit this within 3 days of application. Need help requesting? Contact your previous carrier.",
+      },
+      {
+        type: "vehicle_schedule",
+        label: "Vehicle Schedule",
+        tooltip:
+          "List of all vehicles with VINs, makes, models, and values. Only needed if you prefer to upload instead of entering manually.",
+      },
+      {
+        type: "driver_list",
+        label: "Driver List",
+        tooltip:
+          "List of all drivers with license numbers and dates of birth. Only needed if you prefer to upload instead of entering manually.",
+      },
+      {
+        type: "current_dec_page",
+        label: "Current Dec Page",
+        tooltip:
+          "Declarations page from your current insurance policy showing coverage limits and deductibles.",
+      },
+      {
+        type: "ifta_credentials",
+        label: "IFTA Credentials",
+        tooltip:
+          "International Fuel Tax Agreement credentials if you operate in multiple states/provinces.",
+      },
+    ];
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>

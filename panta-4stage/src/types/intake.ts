@@ -336,6 +336,8 @@ export interface Vehicle {
   garagingAddress?: Address;
   /** Use business garaging address? */
   useBusinessGaragingAddress: boolean;
+  /** VIN pending - will provide later? */
+  vinPending?: boolean;
 }
 
 // ===========================
