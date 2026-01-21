@@ -1,4 +1,4 @@
-# How I Ended Up Spending Two Week Understanding E&S Insurance
+# How I Ended Up Spending a Week Understanding E&S Insurance
 
 I found Panta while going through YC W26 companies. Honestly, most insurtech pitches are the same thing repackaged. "We're making insurance simple with AI." "Insurance in an app." "Disrupting the $X trillion industry." After a while, you stop reading.
 

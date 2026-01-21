@@ -3,6 +3,7 @@
 import { UseFormReturn } from "react-hook-form";
 import { SmartIntakeData, LiabilityLimit, DeductibleAmount } from "@/types/intake";
 import { useState } from "react";
+import { InfoTooltip } from "@/components/ui/InfoTooltip";
 
 interface CoveragePreferencesSectionProps {
   form: UseFormReturn<SmartIntakeData>;
@@ -73,6 +74,7 @@ export function CoveragePreferencesSection({ form }: CoveragePreferencesSectionP
           <div className="form-group">
             <label className="form-label">
               Liability Limit <span style={{ color: "var(--color-danger)" }}>*</span>
+              <InfoTooltip content="The maximum amount your insurance will pay for damages you cause to others." />
             </label>
             <p className="form-sublabel">
               Combined Single Limit (CSL) - Covers bodily injury and property damage
@@ -142,6 +144,7 @@ export function CoveragePreferencesSection({ form }: CoveragePreferencesSectionP
           <div className="form-group">
             <label className="form-label">
               Comprehensive Deductible <span style={{ color: "var(--color-danger)" }}>*</span>
+              <InfoTooltip content="What you pay out-of-pocket before insurance covers theft, weather damage, or vandalism." />
             </label>
             <p className="form-sublabel">
               Covers damage from theft, vandalism, weather, fire, and other non-collision events
@@ -210,6 +213,7 @@ export function CoveragePreferencesSection({ form }: CoveragePreferencesSectionP
           <div className="form-group">
             <label className="form-label">
               Collision Deductible <span style={{ color: "var(--color-danger)" }}>*</span>
+              <InfoTooltip content="What you pay out-of-pocket before insurance covers damage from crashes." />
             </label>
             <p className="form-sublabel">
               Covers damage to your vehicle from collisions with other vehicles or objects

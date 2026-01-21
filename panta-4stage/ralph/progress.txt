@@ -1105,3 +1105,27 @@ Thread: N/A
   - All acceptance criteria met from US-027 except browser verification (no native browser tool available)
 ---
 
+
+## 2026-01-21 - US-028
+Thread: N/A
+- What was implemented:
+  - Added blue info helper message to PriorInsuranceSection.tsx that displays when currentlyInsured === true
+  - Message text: "Please provide your current insurance details below."
+  - Message styling: blue background rgba(59, 130, 246, 0.1), blue border rgba(59, 130, 246, 0.3), rounded corners 8px, 0.75rem padding, 0.9rem font size
+  - Message positioned below Yes/No buttons using marginTop: "0.75rem"
+  - Conditional rendering: only shows when currentlyInsured === true (not when null or false)
+  - Message disappears when user selects No
+
+- Files changed:
+  - src/components/intake/PriorInsuranceSection.tsx (added conditional helper message after yes-no-grid)
+  - ralph/prd.json (updated US-028 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - Helper messages for conditional fields improve UX by setting user expectations
+  - Blue info background rgba(59, 130, 246, 0.1) provides visual distinction from green success and orange warning messages
+  - Positioning message below Yes/No buttons and above conditional fields creates clear visual flow
+  - Use currentlyInsured === true condition (not just currentlyInsured) to exclude null state
+  - Message pattern established: background, border, rounded corners, padding, secondary text color
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-028
+---
