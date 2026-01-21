@@ -1026,3 +1026,52 @@ Thread: N/A
   - All acceptance criteria met from US-025
   - ALL 25 USER STORIES NOW COMPLETE!
 ---
+
+## 2026-01-21 - US-026
+Thread: N/A
+- What was implemented:
+  - Updated scrollToFirstError() in page.tsx to find and scroll to first invalid FIELD (not just error banner)
+  - Added data-field-type and data-field-name attributes to form fields for targeting:
+    * KnockoutStage: Added to yes-no-grid elements for all 6 knockout questions
+    * RiskClassifierStage: Added to yes-no-grid, options-grid, and input fields for 4 main required questions (hazmat, radius, fleetSize, cargoTypes)
+    * BusinessInfoSection: Added to legalName input with required attribute
+    * DocumentGateStage: Added data-doc-required and data-doc-type attributes to document upload zones
+  - Implemented per-stage field detection logic in scrollToFirstError():
+    * Stage 1 (Knockout): Finds first unanswered knockout question (value === null)
+    * Stage 2 (Risk Profile): Finds first unanswered risk profile field (null, empty string, or empty array)
+    * Stage 3 (Business Details): Finds first invalid business field with required attribute
+    * Stage 4 (Documents): Finds first missing required document upload zone
+  - scrollToFirstError() now:
+    * Removes any existing field-error classes before adding new one
+    * Scrolls to first invalid field with smooth behavior and center alignment
+    * Adds field-error class to first invalid field for visual highlighting
+    * Falls back to error banner if no specific field found
+  - Added useEffect hook to automatically remove field-error class when fields become valid
+    * Watches all form fields using form.watch()
+    * Checks if field value is now valid (not null, not empty, not empty array)
+    * Removes field-error class from fields that are now valid
+  - CSS .field-error class already exists with orange border and light orange background (from US-020)
+  
+- Files changed:
+  - src/app/page.tsx (updated scrollToFirstError function, added useEffect for auto-removal, imported useEffect)
+  - src/components/intake/KnockoutStage.tsx (added data attributes to yes-no-grid)
+  - src/components/intake/RiskClassifierStage.tsx (added data attributes to yes-no-grid, options-grid, input fields)
+  - src/components/intake/BusinessInfoSection.tsx (added data attributes and required to legalName input)
+  - src/components/intake/DocumentGateStage.tsx (added data attributes to document upload zone container)
+  - ralph/prd.json (updated US-026 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - Data attributes pattern: Use data-field-type and data-field-name for field targeting in DOM queries
+  - Field detection requires stage-specific logic since different stages have different validation requirements
+  - Knockout fields check for null (not yet answered) vs false (answered No)
+  - Risk profile fields can be null, empty string, or empty array (for cargoTypes)
+  - Business fields use required attribute to identify which fields must be validated
+  - Document upload zones use data-doc-required="true" to identify required documents
+  - scrollIntoView with behavior: 'smooth' and block: 'center' provides best UX
+  - classList.add() and classList.remove() are idempotent (safe to call multiple times)
+  - useEffect dependency on form.watch() triggers when any form field changes
+  - Remove all field-error classes before adding new one to avoid multiple highlighted fields
+  - Fall back to error banner scroll if specific field not found (for edge cases)
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-026 except browser verification (no native browser tool available)
+---

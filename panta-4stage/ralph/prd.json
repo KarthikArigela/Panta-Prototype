@@ -541,8 +541,8 @@
     "Verify in browser using native Claude Code browser tool"
   ],
   "priority": 26,
-  "passes": false,
-  "notes": ""
+  "passes": true,
+  "notes": "Completed 2026-01-21. Updated scrollToFirstError() in page.tsx to find and scroll to first invalid field (not just error banner). Added data-field-type and data-field-name attributes to KnockoutStage (yes-no-grid), RiskClassifierStage (yes-no-grid, options-grid, input fields), BusinessInfoSection (legalName input), DocumentGateStage (document upload zones with data-doc-required). Implemented per-stage field detection logic in scrollToFirstError() for all 4 stages. Added useEffect to remove field-error class when fields become valid. CSS .field-error class already exists with orange border and light orange background. TypeScript compilation passes with npx tsc --noEmit."
 },
 {
   "id": "US-027",

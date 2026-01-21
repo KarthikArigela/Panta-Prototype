@@ -75,7 +75,7 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
         <span className="form-sublabel">
           This includes anything requiring a placard or special DOT endorsement.
         </span>
-        <div className="yes-no-grid">
+        <div className="yes-no-grid" data-field-type="riskProfile" data-field-name="hazmat">
           <button
             type="button"
             className={`yes-no-btn ${hazmat === true ? "selected-yes" : ""}`}
@@ -133,7 +133,7 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
         <div className="question-counter">Question 2 of 8</div>
         <label className="form-label">Where do your trucks typically go?</label>
         <span className="form-sublabel">Think about your farthest regular route</span>
-        <div className="options-grid">
+        <div className="options-grid" data-field-type="riskProfile" data-field-name="radius">
           {[
             { value: "local", label: "Around town", desc: "Under 50 miles" },
             { value: "regional", label: "Nearby states", desc: "50-200 miles" },
@@ -177,6 +177,8 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
               shouldValidate: true,
             })
           }
+          data-field-type="riskProfile"
+          data-field-name="fleetSize"
         />
         {showFleetDiscount && (
           <div style={{ marginTop: "0.75rem", padding: "0.75rem", background: "rgba(34, 197, 94, 0.1)", borderRadius: "8px" }}>
@@ -192,7 +194,7 @@ export function RiskClassifierStage({ form }: RiskClassifierStageProps) {
         <div className="question-counter">Question 4 of 8</div>
         <label className="form-label">What types of cargo do you haul?</label>
         <span className="form-sublabel">Select all that apply</span>
-        <div className="options-grid">
+        <div className="options-grid" data-field-type="riskProfile" data-field-name="cargoTypes">
           {[
             { value: "general_freight" as CargoType, label: "General Freight" },
             { value: "refrigerated" as CargoType, label: "Refrigerated" },

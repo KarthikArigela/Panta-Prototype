@@ -128,6 +128,9 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
               placeholder="e.g., ABC Trucking LLC"
               value={legalName || ""}
               onChange={(e) => setValue("business.legalName", e.target.value, { shouldValidate: true })}
+              data-field-type="business"
+              data-field-name="legalName"
+              required
             />
           </div>
 

@@ -277,6 +277,8 @@ function DocumentUploadZone({
         padding: "16px",
         backgroundColor: "#fff",
       }}
+      data-doc-required={required ? "true" : "false"}
+      data-doc-type={docType}
     >
       {/* Document label and tooltip */}
       <div style={{ marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>

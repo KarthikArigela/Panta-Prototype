@@ -119,7 +119,11 @@ export function KnockoutStage({ form }: KnockoutStageProps) {
             {"tooltip" in question && question.tooltip && <InfoTooltip content={question.tooltip} />}
           </label>
           <span className="form-sublabel">{question.sublabel}</span>
-          <div className="yes-no-grid">
+          <div
+            className="yes-no-grid"
+            data-field-type="knockout"
+            data-field-name={question.field}
+          >
             <button
               type="button"
               className={`yes-no-btn ${question.value === true ? "selected-yes" : ""}`}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useIntakeForm } from "@/hooks/useIntakeForm";
 import { ProgressIndicator } from "@/components/intake/ProgressIndicator";
 import { KnockoutStage } from "@/components/intake/KnockoutStage";
@@ -46,6 +46,26 @@ export default function SmartIntake() {
     }
   };
 
+  // Remove field-error class when fields become valid
+  useEffect(() => {
+    // Remove field-error class from any fields that are now valid
+    const errorFields = document.querySelectorAll('.field-error');
+    errorFields.forEach((field) => {
+      const fieldType = field.getAttribute('data-field-type');
+      const fieldName = field.getAttribute('data-field-name');
+
+      if (fieldType && fieldName) {
+        // Check if field is now valid
+        const value = form.watch(`${fieldType}.${fieldName}` as any);
+        const isValid = value !== null && value !== '' && (!Array.isArray(value) || value.length > 0);
+
+        if (isValid) {
+          field.classList.remove('field-error');
+        }
+      }
+    });
+  }, [form.watch(), form]);
+
   // Handle Continue button click with validation error display
   const handleContinueClick = () => {
     if (currentStage === totalStages) {
@@ -68,14 +88,79 @@ export default function SmartIntake() {
     }
   };
 
-  // Scroll to first unanswered required field
+  // Scroll to first invalid field and highlight it
   const scrollToFirstError = () => {
     // Wait for next tick to ensure error banner is rendered
     setTimeout(() => {
-      // Try to find first unanswered field or error banner
-      const errorBanner = document.querySelector('.validation-error-banner');
-      if (errorBanner) {
-        errorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Remove any existing field-error classes
+      document.querySelectorAll('.field-error').forEach(el => {
+        el.classList.remove('field-error');
+      });
+
+      // Find first invalid field based on current stage
+      let firstInvalidField: Element | null = null;
+
+      if (currentStage === 1) {
+        // Stage 1: Knockout - find first unanswered knockout question
+        const knockoutInputs = document.querySelectorAll('[data-field-type="knockout"]');
+        for (const input of knockoutInputs) {
+          const fieldName = input.getAttribute('data-field-name');
+          if (fieldName) {
+            const value = form.watch(`knockout.${fieldName}` as any);
+            if (value === null) {
+              firstInvalidField = input;
+              break;
+            }
+          }
+        }
+      } else if (currentStage === 2) {
+        // Stage 2: Risk Profile - find first unanswered risk profile field
+        const riskInputs = document.querySelectorAll('[data-field-type="riskProfile"]');
+        for (const input of riskInputs) {
+          const fieldName = input.getAttribute('data-field-name');
+          if (fieldName) {
+            const value = form.watch(`riskProfile.${fieldName}` as any);
+            if (value === null || value === '' || (Array.isArray(value) && value.length === 0)) {
+              firstInvalidField = input;
+              break;
+            }
+          }
+        }
+      } else if (currentStage === 3) {
+        // Stage 3: Business Details - find first invalid business field
+        const businessInputs = document.querySelectorAll('[data-field-type="business"]');
+        for (const input of businessInputs) {
+          const fieldName = input.getAttribute('data-field-name');
+          if (fieldName && input.hasAttribute('required')) {
+            const value = form.watch(`business.${fieldName}` as any);
+            if (!value || value === '' || (typeof value === 'number' && value === 0)) {
+              firstInvalidField = input;
+              break;
+            }
+          }
+        }
+      } else if (currentStage === 4) {
+        // Stage 4: Documents - find first missing document upload zone
+        const docZones = document.querySelectorAll('[data-doc-required="true"]');
+        for (const zone of docZones) {
+          const uploaded = zone.querySelector('.uploaded-file');
+          if (!uploaded) {
+            firstInvalidField = zone;
+            break;
+          }
+        }
+      }
+
+      // If we found an invalid field, scroll to it and add error class
+      if (firstInvalidField) {
+        firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        firstInvalidField.classList.add('field-error');
+      } else {
+        // Fall back to error banner if no specific field found
+        const errorBanner = document.querySelector('.validation-error-banner');
+        if (errorBanner) {
+          errorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       }
     }, 100);
   };
