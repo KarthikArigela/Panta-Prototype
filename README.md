@@ -8,6 +8,8 @@ Not auto insurance. Not home insurance. E&S. The stuff that standard carriers re
 
 Why would a YC company deliberately choose the hardest possible market to enter? I had to find out.
 
+Read My_entire_Prototype_Process.md file to understand the process I went through to build this.
+
 ---
 
 ## What I Actually Learned
@@ -176,3 +178,5 @@ That is it.
 This document exists because I wanted to understand the problem Panta is solving. Not at a surface level, but at the level of "here is what a California trucking company owner actually goes through in January 2026 when they need E&S coverage."
 
 I now understand it. And I built something to prove I understand it.
+
+Note: Read My entire Prototype Process.md file to understand the process I went through to build this.

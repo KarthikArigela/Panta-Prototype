@@ -308,7 +308,7 @@ export function VehicleScheduleSection({ form, isExpanded = true, onToggle }: Ve
               {/* Radius of Operation */}
               <div className="form-group" style={{ marginBottom: "1rem" }}>
                 <label className="form-label">
-                  Radius of Operation <span className="field-required">*</span>
+                  How far do you typically haul? <span className="field-required">*</span>
                 </label>
                 <div className="yes-no-grid">
                   {radiusOptions.map((option) => (
