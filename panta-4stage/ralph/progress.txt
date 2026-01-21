@@ -1075,3 +1075,33 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-026 except browser verification (no native browser tool available)
 ---
+
+## 2026-01-21 - US-027
+Thread: N/A
+- What was implemented:
+  - Updated all Stage 3 sections to use .field-required CSS class for required field indicators
+  - Replaced inline style={{ color: 'var(--color-danger)' }} with className='field-required' across all components
+  - BusinessInfoSection: Updated required indicators for business name, mailing address, phone, FEIN, entity type, date started, DOT number, annual revenue, full/part-time employees, garaging address (conditional)
+  - OperationsSafetySection: Updated required indicators for cargo description, states of operation, safety program, maintenance program, telematics/ELD, MVR checks, fleet percentage (conditional)
+  - VehicleScheduleSection: Updated required indicators for all vehicle fields (year, make, model, VIN, body type, GVW, stated value, radius, for-hire, garaging address, lienholder info)
+  - DriverSection: Updated required indicators for all driver fields (name, DOB, license number, license state, CDL experience, date hired)
+  
+- Files changed:
+  - src/components/intake/BusinessInfoSection.tsx (42 inline styles replaced with CSS class)
+  - src/components/intake/OperationsSafetySection.tsx (6 inline styles replaced with CSS class)
+  - src/components/intake/VehicleScheduleSection.tsx (19 inline styles replaced with CSS class)
+  - src/components/intake/DriverSection.tsx (6 inline styles replaced with CSS class)
+  - ralph/prd.json (updated US-027 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - CSS class .field-required already existed in globals.css (lines 635-639) with correct styling
+  - CSS class provides consistent styling: red color var(--color-danger), font-weight 600, margin-left 0.25rem
+  - Using CSS classes instead of inline styles improves maintainability and consistency
+  - Required field indicators help users understand which fields must be filled before submitting
+  - All required fields in Stage 3 now have visual indicators next to label text
+  - Acceptance criteria specified "Apply to: Business name, address, phone, FEIN, entity type, DOT, revenue, employees, vehicles, drivers"
+  - Replace all operation (replace_all: true) worked efficiently for repetitive changes across files
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-027 except browser verification (no native browser tool available)
+---
+
