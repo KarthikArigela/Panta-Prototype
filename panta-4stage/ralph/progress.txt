@@ -1129,3 +1129,27 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-028
 ---
+
+## 2026-01-21 - US-029
+Thread: N/A
+- What was implemented:
+  - Added InfoTooltip component to three coverage preference labels in CoveragePreferencesSection.tsx
+  - Liability Limit tooltip: "The maximum amount your insurance will pay for damages you cause to others."
+  - Comprehensive Deductible tooltip: "What you pay out-of-pocket before insurance covers theft, weather damage, or vandalism."
+  - Collision Deductible tooltip: "What you pay out-of-pocket before insurance covers damage from crashes."
+  - Imported InfoTooltip as named export (not default export)
+  - Used content prop (not text prop)
+
+- Files changed:
+  - src/components/intake/CoveragePreferencesSection.tsx (imported InfoTooltip, added tooltips to 3 labels)
+  - ralph/prd.json (updated US-029 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - InfoTooltip is a named export from @/components/ui/InfoTooltip (use import { InfoTooltip })
+  - InfoTooltip uses content prop, not text prop
+  - Tooltips improve accessibility by explaining insurance jargon in plain English
+  - Place InfoTooltip components after label text and required asterisk for proper visual flow
+  - Existing InfoTooltip component already has proper hover functionality from US-025
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-029
+---

@@ -589,8 +589,8 @@
     "Verify in browser using native Claude Code browser tool"
   ],
   "priority": 29,
-  "passes": false,
-  "notes": ""
+  "passes": true,
+  "notes": "Completed 2026-01-21. Added InfoTooltip component to three coverage preference labels in CoveragePreferencesSection.tsx. Liability Limit: 'The maximum amount your insurance will pay for damages you cause to others.' Comprehensive Deductible: 'What you pay out-of-pocket before insurance covers theft, weather damage, or vandalism.' Collision Deductible: 'What you pay out-of-pocket before insurance covers damage from crashes.' Imported InfoTooltip as named export from @/components/ui/InfoTooltip. Used content prop (not text). TypeScript compilation passes with npx tsc --noEmit."
 },
 {
   "id": "US-030",

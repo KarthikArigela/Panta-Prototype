@@ -20,8 +20,9 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
   const { watch, setValue } = form;
   const [isOpen, setIsOpen] = useState(true);
 
-  // Watch vehicles array
+  // Watch vehicles array and fleet size from Stage 2
   const vehicles = watch("vehicles") || [];
+  const fleetSize = watch("riskProfile.fleetSize") || 0;
 
   // Add new vehicle
   const addVehicle = () => {
@@ -91,13 +92,37 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
           marginBottom: isOpen ? "1rem" : 0,
         }}
       >
-        <div>
+        <div style={{ flex: 1 }}>
           <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 600 }}>
             Your Trucks
           </h3>
           <p style={{ margin: "0.25rem 0 0 0", fontSize: "0.875rem", color: "var(--color-muted)" }}>
-            {vehicles.length} {vehicles.length === 1 ? "truck" : "trucks"} added
+            {fleetSize > 0
+              ? `${vehicles.length} of ${fleetSize} trucks added`
+              : `${vehicles.length} ${vehicles.length === 1 ? "truck" : "trucks"} added`}
           </p>
+          {fleetSize > 0 && (
+            <div
+              style={{
+                marginTop: "0.5rem",
+                width: "100%",
+                maxWidth: "300px",
+                height: "8px",
+                backgroundColor: "#e5e5e5",
+                borderRadius: "4px",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  height: "100%",
+                  width: `${Math.min((vehicles.length / fleetSize) * 100, 100)}%`,
+                  backgroundColor: "var(--color-accent)",
+                  transition: "width 0.3s ease",
+                }}
+              />
+            </div>
+          )}
         </div>
         <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>
           {isOpen ? "−" : "+"}
