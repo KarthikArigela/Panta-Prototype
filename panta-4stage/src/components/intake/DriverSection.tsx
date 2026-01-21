@@ -19,19 +19,55 @@ interface DriverSectionProps {
 export function DriverSection({ form }: DriverSectionProps) {
   const { watch, setValue } = form;
   const [isOpen, setIsOpen] = useState(true);
+  // Track which drivers are expanded (showing all fields) vs collapsed (quick add mode)
+  const [expandedDrivers, setExpandedDrivers] = useState<Set<number>>(new Set());
 
   // Watch drivers array
   const drivers = watch("drivers") || [];
 
-  // Add new driver
+  // Add new driver with full details (expanded mode)
   const addDriver = () => {
+    const newIndex = drivers.length;
     setValue("drivers", [...drivers, { ...defaultDriver }]);
+    // Mark new driver as expanded
+    setExpandedDrivers(prev => new Set([...prev, newIndex]));
+  };
+
+  // Add new driver in quick mode (collapsed mode - only basic fields)
+  const addQuickDriver = () => {
+    setValue("drivers", [...drivers, { ...defaultDriver }]);
+    // Don't add to expandedDrivers - will show in collapsed state
+  };
+
+  // Toggle expand/collapse for a driver
+  const toggleDriverExpanded = (index: number) => {
+    setExpandedDrivers(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
   };
 
   // Remove driver at index
   const removeDriver = (index: number) => {
     const updated = drivers.filter((_, i) => i !== index);
     setValue("drivers", updated);
+    // Update expanded set to account for removed index
+    setExpandedDrivers(prev => {
+      const newSet = new Set<number>();
+      prev.forEach(idx => {
+        if (idx < index) {
+          newSet.add(idx);
+        } else if (idx > index) {
+          newSet.add(idx - 1);
+        }
+      });
+      return newSet;
+    });
   };
 
   // Update specific driver field
@@ -163,7 +199,10 @@ export function DriverSection({ form }: DriverSectionProps) {
             borderRadius: "var(--radius-lg)",
           }}
         >
-          {drivers.map((driver, driverIndex) => (
+          {drivers.map((driver, driverIndex) => {
+            const isExpanded = expandedDrivers.has(driverIndex);
+
+            return (
             <div key={driverIndex} className="card" style={{ marginBottom: "1.5rem", position: "relative" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
                 <h4>Driver #{driverIndex + 1}</h4>
@@ -184,7 +223,7 @@ export function DriverSection({ form }: DriverSectionProps) {
                 )}
               </div>
 
-              {/* Full Name */}
+              {/* Full Name - Always visible */}
               <div className="form-group">
                 <label className="form-label">
                   Full Legal Name <span className="field-required">*</span>
@@ -198,35 +237,7 @@ export function DriverSection({ form }: DriverSectionProps) {
                 />
               </div>
 
-              {/* DOB and License Number */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-                <div className="form-group">
-                  <label className="form-label">
-                    Date of Birth <span className="field-required">*</span>
-                  </label>
-                  <input
-                    type="date"
-                    className="form-input"
-                    value={driver.dateOfBirth || ""}
-                    onChange={(e) => updateDriver(driverIndex, "dateOfBirth", e.target.value)}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">
-                    Driver's License Number <span className="field-required">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={driver.licenseNumber || ""}
-                    onChange={(e) => updateDriver(driverIndex, "licenseNumber", e.target.value)}
-                    placeholder="License number"
-                  />
-                </div>
-              </div>
-
-              {/* License State */}
+              {/* License State - Always visible for quick add */}
               <div className="form-group">
                 <label className="form-label">
                   License State <span className="field-required">*</span>
@@ -245,70 +256,126 @@ export function DriverSection({ form }: DriverSectionProps) {
                 </select>
               </div>
 
-              {/* Years of Experience and Date Hired */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-                <div className="form-group">
-                  <label className="form-label">
-                    Years of CDL Experience <span className="field-required">*</span>
-                  </label>
-                  <input
-                    type="number"
-                    className="form-input"
-                    value={driver.yearsExperience ?? ""}
-                    onChange={(e) => {
-                      const val = e.target.value === "" ? null : parseInt(e.target.value);
-                      updateDriver(driverIndex, "yearsExperience", val);
-                    }}
-                    min="0"
-                    max="60"
-                    placeholder="Years"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">
-                    Date Hired <span className="field-required">*</span>
-                  </label>
-                  <input
-                    type="date"
-                    className="form-input"
-                    value={driver.dateHired || ""}
-                    onChange={(e) => updateDriver(driverIndex, "dateHired", e.target.value)}
-                  />
-                </div>
-              </div>
-
-              {/* Accidents in Last 3 Years */}
+              {/* Years of Experience - Always visible for quick add */}
               <div className="form-group">
-                <label className="form-label">Accidents in Last 3 Years</label>
-                <div className="yes-no-grid">
-                  <button
-                    type="button"
-                    className={`yes-no-btn ${driver.hasAccidents === true ? "active" : ""}`}
-                    onClick={() => {
-                      updateDriver(driverIndex, "hasAccidents", true);
-                      if (driver.accidents.length === 0) {
-                        addAccident(driverIndex);
-                      }
-                    }}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    type="button"
-                    className={`yes-no-btn ${driver.hasAccidents === false ? "active" : ""}`}
-                    onClick={() => {
-                      updateDriver(driverIndex, "hasAccidents", false);
-                      updateDriver(driverIndex, "accidents", []);
-                    }}
-                  >
-                    No
-                  </button>
-                </div>
+                <label className="form-label">
+                  Years of CDL Experience <span className="field-required">*</span>
+                </label>
+                <input
+                  type="number"
+                  className="form-input"
+                  value={driver.yearsExperience ?? ""}
+                  onChange={(e) => {
+                    const val = e.target.value === "" ? null : parseInt(e.target.value);
+                    updateDriver(driverIndex, "yearsExperience", val);
+                  }}
+                  min="0"
+                  max="60"
+                  placeholder="Years"
+                />
               </div>
 
-              {/* Accident Details */}
-              {driver.hasAccidents && (
+              {/* Expand Details Button - Only show if not expanded */}
+              {!isExpanded && (
+                <button
+                  type="button"
+                  onClick={() => toggleDriverExpanded(driverIndex)}
+                  style={{
+                    marginTop: "0.5rem",
+                    padding: "0.5rem 1rem",
+                    background: "transparent",
+                    color: "var(--color-accent)",
+                    border: "1px solid var(--color-accent)",
+                    borderRadius: "var(--radius-sm)",
+                    cursor: "pointer",
+                    fontSize: "0.9rem",
+                    fontWeight: 500,
+                    width: "100%"
+                  }}
+                >
+                  Expand Details (DOB, License, Hired Date, Accidents, Violations)
+                </button>
+              )}
+
+              {/* Expanded fields - Only show when expanded */}
+              {isExpanded && (
+                <>
+                  {/* DOB and License Number */}
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                    <div className="form-group">
+                      <label className="form-label">
+                        Date of Birth <span className="field-required">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        className="form-input"
+                        value={driver.dateOfBirth || ""}
+                        onChange={(e) => updateDriver(driverIndex, "dateOfBirth", e.target.value)}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label className="form-label">
+                        Driver's License Number <span className="field-required">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-input"
+                        value={driver.licenseNumber || ""}
+                        onChange={(e) => updateDriver(driverIndex, "licenseNumber", e.target.value)}
+                        placeholder="License number"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Date Hired */}
+                  <div className="form-group">
+                    <label className="form-label">
+                      Date Hired <span className="field-required">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      className="form-input"
+                      value={driver.dateHired || ""}
+                      onChange={(e) => updateDriver(driverIndex, "dateHired", e.target.value)}
+                    />
+                  </div>
+                </>
+              )}
+
+              {/* Accidents in Last 3 Years - Only in expanded mode */}
+              {isExpanded && (
+                <div className="form-group">
+                  <label className="form-label">Accidents in Last 3 Years</label>
+                  <div className="yes-no-grid">
+                    <button
+                      type="button"
+                      className={`yes-no-btn ${driver.hasAccidents === true ? "active" : ""}`}
+                      onClick={() => {
+                        updateDriver(driverIndex, "hasAccidents", true);
+                        if (driver.accidents.length === 0) {
+                          addAccident(driverIndex);
+                        }
+                      }}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      type="button"
+                      className={`yes-no-btn ${driver.hasAccidents === false ? "active" : ""}`}
+                      onClick={() => {
+                        updateDriver(driverIndex, "hasAccidents", false);
+                        updateDriver(driverIndex, "accidents", []);
+                      }}
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Accident Details - Only in expanded mode */}
+              {isExpanded && driver.hasAccidents && (
                 <div style={{ marginLeft: "1rem", paddingLeft: "1rem", borderLeft: "3px solid var(--color-accent)" }}>
                   {driver.accidents.map((accident, accidentIndex) => (
                     <div key={accidentIndex} className="card" style={{ marginBottom: "1rem", backgroundColor: "#f9f9f9" }}>
@@ -378,37 +445,39 @@ export function DriverSection({ form }: DriverSectionProps) {
                 </div>
               )}
 
-              {/* Moving Violations in Last 3 Years */}
-              <div className="form-group">
-                <label className="form-label">Moving Violations in Last 3 Years</label>
-                <div className="yes-no-grid">
-                  <button
-                    type="button"
-                    className={`yes-no-btn ${driver.hasViolations === true ? "active" : ""}`}
-                    onClick={() => {
-                      updateDriver(driverIndex, "hasViolations", true);
-                      if (driver.violations.length === 0) {
-                        addViolation(driverIndex);
-                      }
-                    }}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    type="button"
-                    className={`yes-no-btn ${driver.hasViolations === false ? "active" : ""}`}
-                    onClick={() => {
-                      updateDriver(driverIndex, "hasViolations", false);
-                      updateDriver(driverIndex, "violations", []);
-                    }}
-                  >
-                    No
-                  </button>
+              {/* Moving Violations in Last 3 Years - Only in expanded mode */}
+              {isExpanded && (
+                <div className="form-group">
+                  <label className="form-label">Moving Violations in Last 3 Years</label>
+                  <div className="yes-no-grid">
+                    <button
+                      type="button"
+                      className={`yes-no-btn ${driver.hasViolations === true ? "active" : ""}`}
+                      onClick={() => {
+                        updateDriver(driverIndex, "hasViolations", true);
+                        if (driver.violations.length === 0) {
+                          addViolation(driverIndex);
+                        }
+                      }}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      type="button"
+                      className={`yes-no-btn ${driver.hasViolations === false ? "active" : ""}`}
+                      onClick={() => {
+                        updateDriver(driverIndex, "hasViolations", false);
+                        updateDriver(driverIndex, "violations", []);
+                      }}
+                    >
+                      No
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* Violation Details */}
-              {driver.hasViolations && (
+              {/* Violation Details - Only in expanded mode */}
+              {isExpanded && driver.hasViolations && (
                 <div style={{ marginLeft: "1rem", paddingLeft: "1rem", borderLeft: "3px solid var(--color-accent)" }}>
                   {driver.violations.map((violation, violationIndex) => (
                     <div key={violationIndex} className="card" style={{ marginBottom: "1rem", backgroundColor: "#f9f9f9" }}>
@@ -473,31 +542,76 @@ export function DriverSection({ form }: DriverSectionProps) {
                 </div>
               )}
             </div>
-          ))}
+            );
+          })}
 
-          {/* Add Driver Button */}
-          <button
-            type="button"
-            onClick={addDriver}
-            style={{
-              width: "100%",
-              padding: "1rem",
-              background: "var(--color-accent)",
-              color: "white",
-              border: "none",
-              borderRadius: "var(--radius-md)",
-              cursor: "pointer",
-              fontSize: "1rem",
-              fontWeight: 600,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.5rem",
-            }}
-          >
-            <span style={{ fontSize: "1.25rem" }}>+</span>
-            Add Driver
-          </button>
+          {/* Add Driver Buttons */}
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            {/* Quick Add Button */}
+            <button
+              type="button"
+              onClick={addQuickDriver}
+              style={{
+                flex: "1 1 calc(50% - 0.5rem)",
+                minWidth: "200px",
+                padding: "1rem",
+                background: "var(--color-accent)",
+                color: "white",
+                border: "none",
+                borderRadius: "var(--radius-md)",
+                cursor: "pointer",
+                fontSize: "1rem",
+                fontWeight: 600,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.5rem",
+              }}
+            >
+              <span style={{ fontSize: "1.25rem" }}>+</span>
+              Quick Add
+            </button>
+
+            {/* Add Driver (Full) Button */}
+            <button
+              type="button"
+              onClick={addDriver}
+              style={{
+                flex: "1 1 calc(50% - 0.5rem)",
+                minWidth: "200px",
+                padding: "1rem",
+                background: "transparent",
+                color: "var(--color-accent)",
+                border: "2px solid var(--color-accent)",
+                borderRadius: "var(--radius-md)",
+                cursor: "pointer",
+                fontSize: "1rem",
+                fontWeight: 600,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.5rem",
+              }}
+            >
+              <span style={{ fontSize: "1.25rem" }}>+</span>
+              Add Driver (Full)
+            </button>
+          </div>
+
+          {/* Help text */}
+          <div style={{
+            marginTop: "0.75rem",
+            padding: "0.75rem",
+            background: "rgba(34, 197, 94, 0.1)",
+            borderRadius: "var(--radius-sm)",
+            fontSize: "0.9rem",
+            color: "var(--color-text-secondary)",
+            textAlign: "center"
+          }}>
+            <strong>Quick Add:</strong> Add basic driver info (Name, License State, Experience). You can expand details later.
+            <br />
+            <strong>Add Driver (Full):</strong> Add driver with all details (DOB, License, Accidents, Violations).
+          </div>
         </div>
       )}
     </div>
