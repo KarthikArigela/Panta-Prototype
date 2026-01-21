@@ -1274,3 +1274,35 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-036
 ---
+
+## 2026-01-21 - US-031
+Thread: N/A
+- What was implemented:
+  - Added Quick Add Driver mode to DriverSection.tsx for faster driver entry
+  - Created two add buttons: "Quick Add" (primary green button) and "Add Driver (Full)" (bordered secondary button)
+  - Quick Add creates driver showing only 3 essential fields: Full Name, License State, Years of CDL Experience
+  - Full Add creates driver with all fields expanded by default (including DOB, License Number, Date Hired, Accidents, Violations)
+  - Added expandedDrivers state using Set<number> to track which drivers show full details
+  - Added "Expand Details" button on quick-add drivers with descriptive text: "(DOB, License, Hired Date, Accidents, Violations)"
+  - Clicking Expand Details reveals all remaining fields conditionally
+  - Wrapped DOB, License Number, Date Hired, Accidents section, and Violations section in isExpanded conditional rendering
+  - Updated removeDriver function to maintain correct expanded state indexes when removing drivers
+  - Added help text below buttons explaining difference between Quick Add and Full Add modes
+  - Help text styled with light green background matching existing confirmation message pattern
+
+- Files changed:
+  - src/components/intake/DriverSection.tsx (major refactor - added expandedDrivers state, split add functions, conditional field rendering)
+  - ralph/prd.json (updated US-031 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - Quick Add pattern improves UX for users with large driver rosters (common in trucking industry)
+  - Use Set<number> to track expanded items by index - efficient for checking membership
+  - When removing items from dynamic array, update Set to adjust for shifted indexes
+  - Conditional rendering pattern: {isExpanded && <ExpandedFields />} keeps collapsed view clean
+  - Two-button layout with flex: "1 1 calc(50% - 0.5rem)" creates responsive side-by-side buttons
+  - Primary button (Quick Add) uses solid background, secondary button uses bordered style
+  - Help text provides crucial context for users unfamiliar with the feature
+  - All acceptance criteria from US-031 met except browser verification (no native browser tool available)
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+---
+
