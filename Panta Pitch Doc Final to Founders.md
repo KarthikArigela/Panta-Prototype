@@ -155,7 +155,7 @@ What I figured out during this process (Based on My Opinion only):
 
 3. The specific questions matter with a readability of a 5th grader. "Do you haul Hazmat?" is not the same as "Do you haul chemicals?" One triggers specific carrier appetite flags. The other is vague enough to get ignored. Domain knowledge is not optional here.
 
-To be frank, I do not have years of insurance industry experience. I learned all of this in the past two weeks by reading, simulating (Not real User Journey) customer journeys, and mapping out the regulatory requirements.
+To be frank, I do not have years of insurance industry experience. I learned all of this in the past one week by reading, simulating (Not real User Journey) customer journeys, and mapping out the regulatory requirements.
 
 What I do have: the ability to go deep on a complex domain quickly, identify where the leverage is, and build something that works. I have done this before in other contexts. The insurance industry is new to me, but the process is not.
 

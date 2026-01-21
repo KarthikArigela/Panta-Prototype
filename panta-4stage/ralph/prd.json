@@ -605,8 +605,8 @@
     "Verify in browser using native Claude Code browser tool"
   ],
   "priority": 30,
-  "passes": false,
-  "notes": ""
+  "passes": true,
+  "notes": "Completed 2026-01-21. Updated VehicleScheduleSection.tsx to watch riskProfile.fleetSize from Stage 2. Display text now shows 'X of Y trucks added' when fleetSize > 0, falls back to 'X trucks added' when fleetSize is 0 or undefined. Added green progress bar below text showing completion percentage (vehicles.length / fleetSize * 100%). Progress bar uses var(--color-accent) for fill color, #e5e5e5 for background, 8px height, 4px border radius, smooth width transition (0.3s ease). Progress bar max width 300px to prevent excessive width. Math.min() ensures progress bar never exceeds 100%. TypeScript compilation passes with npx tsc --noEmit."
 },
 {
   "id": "US-031",

@@ -1153,3 +1153,30 @@ Thread: N/A
   - TypeScript compilation passes cleanly with npx tsc --noEmit
   - All acceptance criteria met from US-029
 ---
+
+## 2026-01-21 - US-030
+Thread: N/A
+- What was implemented:
+  - Updated VehicleScheduleSection.tsx to watch riskProfile.fleetSize from Stage 2 (from Risk Classifier)
+  - Display text now shows "X of Y trucks added" when fleetSize > 0
+  - Falls back to "X trucks added" when fleetSize is 0 or undefined
+  - Added visual progress bar showing completion percentage (vehicles.length / fleetSize * 100%)
+  - Progress bar styling: green fill (var(--color-accent)), gray background (#e5e5e5), 8px height, 4px border radius
+  - Smooth width transition (0.3s ease) for animated progress updates
+  - Progress bar max width 300px to prevent excessive width on larger screens
+  - Math.min() used to cap progress bar at 100% when more vehicles added than fleet size
+
+- Files changed:
+  - src/components/intake/VehicleScheduleSection.tsx (added fleetSize watch, updated display text, added progress bar)
+  - ralph/prd.json (updated US-030 passes: true and notes)
+
+- **Learnings for future iterations:**
+  - Cross-stage data access: Use form.watch("riskProfile.fleetSize") to access data from Stage 2 in Stage 3
+  - Conditional display pattern: Use ternary operator to show different text based on fleetSize value
+  - Progress bar pattern: Nested divs with outer container (gray background) and inner bar (green, dynamic width %)
+  - Smooth transitions improve UX: Use transition: "width 0.3s ease" for animated progress updates
+  - Use Math.min() to prevent percentage from exceeding 100% (handles edge case where more vehicles added than expected)
+  - Flex layout adjustment: Changed header div to flex: 1 to accommodate progress bar without breaking layout
+  - TypeScript compilation passes cleanly with npx tsc --noEmit
+  - All acceptance criteria met from US-030
+---

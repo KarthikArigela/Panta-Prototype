@@ -3,6 +3,7 @@
 import { UseFormReturn } from "react-hook-form";
 import { SmartIntakeData, ClaimType, Claim } from "@/types/intake";
 import { useState } from "react";
+import { InfoTooltip } from "@/components/ui/InfoTooltip";
 
 interface PriorInsuranceSectionProps {
   form: UseFormReturn<SmartIntakeData>;
@@ -452,7 +453,10 @@ export default function PriorInsuranceSection({
                     }}
                   >
                     <div className="form-group">
-                      <label className="form-label">Amount Paid</label>
+                      <label className="form-label">
+                        Amount Paid
+                        <InfoTooltip content="The total amount your insurance company has already paid for this claim." />
+                      </label>
                       <input
                         type="text"
                         className="form-input"
@@ -474,7 +478,10 @@ export default function PriorInsuranceSection({
                     </div>
 
                     <div className="form-group">
-                      <label className="form-label">Amount Reserved</label>
+                      <label className="form-label">
+                        Amount Reserved
+                        <InfoTooltip content="The amount your insurance company has set aside for future payments on this claim." />
+                      </label>
                       <input
                         type="text"
                         className="form-input"
