@@ -39,20 +39,36 @@ export function CoveragePreferencesSection({ form }: CoveragePreferencesSectionP
   };
 
   return (
-    <div className="card">
+    <div style={{ marginBottom: "2rem" }}>
       <div
-        className="card-header"
         onClick={() => setIsOpen(!isOpen)}
-        style={{ cursor: "pointer" }}
+        style={{
+          padding: "1rem 1.5rem",
+          background: "var(--color-surface)",
+          border: "2px solid var(--color-border)",
+          borderRadius: "var(--radius-lg)",
+          cursor: "pointer",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: isOpen ? "1rem" : 0,
+        }}
       >
-        <h3 style={{ margin: 0, fontSize: "1.25rem" }}>
+        <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text)" }}>
           Coverage Preferences
         </h3>
-        <span style={{ fontSize: "1.5rem" }}>{isOpen ? "−" : "+"}</span>
+        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isOpen ? "−" : "+"}</span>
       </div>
 
       {isOpen && (
-        <div className="card-body">
+        <div
+          style={{
+            padding: "2rem",
+            background: "var(--color-surface)",
+            border: "2px solid var(--color-border)",
+            borderRadius: "var(--radius-lg)",
+          }}
+        >
           {/* Liability Limit */}
           <div className="form-group">
             <label className="form-label">

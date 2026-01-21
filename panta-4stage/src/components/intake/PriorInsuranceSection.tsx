@@ -94,34 +94,34 @@ export default function PriorInsuranceSection({
   };
 
   return (
-    <div style={{ marginBottom: "2.5rem" }}>
+    <div style={{ marginBottom: "2rem" }}>
       <div
         onClick={() => setIsOpen(!isOpen)}
         style={{
+          padding: "1rem 1.5rem",
+          background: "var(--color-surface)",
+          border: "2px solid var(--color-border)",
+          borderRadius: "var(--radius-lg)",
+          cursor: "pointer",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          cursor: "pointer",
-          padding: "1rem 1.5rem",
-          backgroundColor: "var(--color-primary)",
-          color: "white",
-          borderRadius: "8px",
-          marginBottom: isOpen ? "1.5rem" : "0",
+          marginBottom: isOpen ? "1rem" : 0,
         }}
       >
-        <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: "600" }}>
+        <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text)" }}>
           Prior Insurance &amp; Claims History
         </h3>
-        <span style={{ fontSize: "1.5rem" }}>{isOpen ? "−" : "+"}</span>
+        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isOpen ? "−" : "+"}</span>
       </div>
 
       {isOpen && (
         <div
           style={{
-            padding: "1.5rem",
-            backgroundColor: "white",
-            borderRadius: "8px",
-            border: "1px solid #e5e5e5",
+            padding: "2rem",
+            background: "var(--color-surface)",
+            border: "2px solid var(--color-border)",
+            borderRadius: "var(--radius-lg)",
           }}
         >
           {/* Currently Insured */}
@@ -133,18 +133,16 @@ export default function PriorInsuranceSection({
             <div className="yes-no-grid">
               <button
                 type="button"
-                className={`yes-no-btn ${
-                  priorInsurance.currentlyInsured === true ? "selected" : ""
-                }`}
+                className={`yes-no-btn ${priorInsurance.currentlyInsured === true ? "selected" : ""
+                  }`}
                 onClick={() => updatePriorInsurance("currentlyInsured", true)}
               >
                 Yes
               </button>
               <button
                 type="button"
-                className={`yes-no-btn ${
-                  priorInsurance.currentlyInsured === false ? "selected" : ""
-                }`}
+                className={`yes-no-btn ${priorInsurance.currentlyInsured === false ? "selected" : ""
+                  }`}
                 onClick={() => updatePriorInsurance("currentlyInsured", false)}
               >
                 No
@@ -208,8 +206,8 @@ export default function PriorInsuranceSection({
                   value={
                     priorInsurance.annualPremium
                       ? formatCurrency(
-                          priorInsurance.annualPremium.toString()
-                        )
+                        priorInsurance.annualPremium.toString()
+                      )
                       : ""
                   }
                   onChange={(e) => {
@@ -277,11 +275,10 @@ export default function PriorInsuranceSection({
                 <button
                   key={reason.value}
                   type="button"
-                  className={`option-card ${
-                    priorInsurance.shoppingReason === reason.value
+                  className={`option-card ${priorInsurance.shoppingReason === reason.value
                       ? "selected"
                       : ""
-                  }`}
+                    }`}
                   onClick={() =>
                     updatePriorInsurance("shoppingReason", reason.value)
                   }
@@ -301,9 +298,8 @@ export default function PriorInsuranceSection({
             <div className="yes-no-grid">
               <button
                 type="button"
-                className={`yes-no-btn ${
-                  lossHistory.hasClaims === true ? "selected" : ""
-                }`}
+                className={`yes-no-btn ${lossHistory.hasClaims === true ? "selected" : ""
+                  }`}
                 onClick={() => {
                   form.setValue("lossHistory", {
                     ...lossHistory,
@@ -319,9 +315,8 @@ export default function PriorInsuranceSection({
               </button>
               <button
                 type="button"
-                className={`yes-no-btn ${
-                  lossHistory.hasClaims === false ? "selected" : ""
-                }`}
+                className={`yes-no-btn ${lossHistory.hasClaims === false ? "selected" : ""
+                  }`}
                 onClick={() => {
                   form.setValue("lossHistory", {
                     hasClaims: false,
@@ -490,18 +485,16 @@ export default function PriorInsuranceSection({
                     <div className="yes-no-grid">
                       <button
                         type="button"
-                        className={`yes-no-btn ${
-                          claim.stillOpen === true ? "selected" : ""
-                        }`}
+                        className={`yes-no-btn ${claim.stillOpen === true ? "selected" : ""
+                          }`}
                         onClick={() => updateClaim(index, "stillOpen", true)}
                       >
                         Yes
                       </button>
                       <button
                         type="button"
-                        className={`yes-no-btn ${
-                          claim.stillOpen === false ? "selected" : ""
-                        }`}
+                        className={`yes-no-btn ${claim.stillOpen === false ? "selected" : ""
+                          }`}
                         onClick={() => updateClaim(index, "stillOpen", false)}
                       >
                         No

@@ -99,7 +99,7 @@ export function VehicleScheduleSection({ form }: VehicleScheduleSectionProps) {
             {vehicles.length} {vehicles.length === 1 ? "truck" : "trucks"} added
           </p>
         </div>
-        <span style={{ fontSize: "1.5rem", color: "var(--color-muted)" }}>
+        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>
           {isOpen ? "−" : "+"}
         </span>
       </div>

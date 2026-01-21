@@ -100,10 +100,10 @@ export function BusinessInfoSection({ form }: BusinessInfoSectionProps) {
           marginBottom: isOpen ? "1rem" : 0,
         }}
       >
-        <h3 style={{ fontSize: "1.25rem", fontWeight: 600, color: "var(--color-primary)" }}>
-          📋 Business Information
+        <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text)" }}>
+          Business Information
         </h3>
-        <span style={{ fontSize: "1.5rem", color: "var(--color-primary)" }}>{isOpen ? "▼" : "▶"}</span>
+        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isOpen ? "−" : "+"}</span>
       </div>
 
       {/* Section Content */}

@@ -128,25 +128,41 @@ export function DriverSection({ form }: DriverSectionProps) {
   ];
 
   return (
-    <div className="section">
+    <div style={{ marginBottom: "2rem" }}>
       <div
-        className="section-header"
         onClick={() => setIsOpen(!isOpen)}
-        style={{ cursor: "pointer" }}
+        style={{
+          padding: "1rem 1.5rem",
+          background: "var(--color-surface)",
+          border: "2px solid var(--color-border)",
+          borderRadius: "var(--radius-lg)",
+          cursor: "pointer",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: isOpen ? "1rem" : 0,
+        }}
       >
-        <h3>
+        <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text)" }}>
           Your Drivers
           {drivers.length > 0 && (
-            <span style={{ marginLeft: "0.5rem", color: "var(--color-accent)", fontSize: "0.9em" }}>
+            <span style={{ marginLeft: "0.5rem", color: "var(--color-accent)", fontSize: "0.8em", fontWeight: "normal" }}>
               ({drivers.length} {drivers.length === 1 ? "driver" : "drivers"} added)
             </span>
           )}
         </h3>
-        <span>{isOpen ? "▼" : "▶"}</span>
+        <span style={{ fontSize: "1.5rem", color: "var(--color-text-muted)" }}>{isOpen ? "−" : "+"}</span>
       </div>
 
       {isOpen && (
-        <div className="section-content">
+        <div
+          style={{
+            padding: "2rem",
+            background: "var(--color-surface)",
+            border: "2px solid var(--color-border)",
+            borderRadius: "var(--radius-lg)",
+          }}
+        >
           {drivers.map((driver, driverIndex) => (
             <div key={driverIndex} className="card" style={{ marginBottom: "1.5rem", position: "relative" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
