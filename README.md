@@ -1,7 +1,8 @@
 # How I Ended Up Spending a Week Understanding E&S Insurance
 
-> ### 💬 Response from Panta Co-Founder (YC W26)
-> ![Reply from Panta Co-Founder](Reply%20from%20Panta%20Co%20Founder.png)
+### 💬 Response from Panta Co-Founder (YC W26)
+
+<img src="Reply%20from%20Panta%20Co%20Founder.png" alt="Reply from Panta Co-Founder" width="450">
 
 ---
 
