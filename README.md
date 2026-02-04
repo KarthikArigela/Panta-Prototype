@@ -1,5 +1,10 @@
 # How I Ended Up Spending a Week Understanding E&S Insurance
 
+> ### 💬 Response from Panta Co-Founder (YC W26)
+> ![Reply from Panta Co-Founder](Reply%20from%20Panta%20Co%20Founder.png)
+
+---
+
 I found Panta while going through YC W26 companies. Honestly, most insurtech pitches are the same thing repackaged. "We're making insurance simple with AI." "Insurance in an app." "Disrupting the $X trillion industry." After a while, you stop reading.
 
 But Panta's positioning made me pause. Digital E&S Brokerage.
